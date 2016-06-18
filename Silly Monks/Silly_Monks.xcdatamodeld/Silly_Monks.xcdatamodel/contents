@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10171" systemVersion="15B42" minimumToolsVersion="Automatic">
+    <entity name="CX_AllMalls" representedClassName="CX_AllMalls" syncable="YES">
+        <attribute name="category" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="city" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="country" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="countryCode" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="countryName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="coverImage" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="currencyType" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="defStoreID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="defStoreItemCode" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="fbPageLink" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="langCode" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="langName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="latitude" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="location" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="logo" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="longitude" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mainCategory" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="malDescription" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mobile" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="offersCount" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="primaryColor" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="productCount" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="promotionUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="publicUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="secondaryColor" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="state" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="storesCount" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="website" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="CX_Product_Category" representedClassName="CX_Product_Category" syncable="YES">
+        <attribute name="categoryMall" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="createdByFullName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="createdById" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="createdOn" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="currentJobStatus" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="icon_name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="icon_url" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="itemCode" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="jobTypeID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="jobTypeName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mallID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="overallRating" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="packageName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="pid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="productDescription" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="publicUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="storeID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="totalReviews" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="CX_Products" representedClassName="CX_Products" syncable="YES">
+        <attribute name="addToCart" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="createdByID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="favourite" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="itemCode" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="json" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mallID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="pID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="quantity" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="storeID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="subCatNameID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="tagValue" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="CX_SingleMall" representedClassName="CX_SingleMall" syncable="YES">
+        <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="city" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="countryCode" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="countryName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="coverImage" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="fbLink" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="location" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mallDesc" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mallID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mobile" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="state" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="CX_Stores" representedClassName="CX_Stores" syncable="YES">
+        <attribute name="createdById" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="favourite" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="itemCode" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="json" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mallID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="CX_AllMalls" positionX="-63" positionY="-18" width="128" height="510"/>
+        <element name="CX_Product_Category" positionX="-63" positionY="135" width="128" height="330"/>
+        <element name="CX_Products" positionX="-63" positionY="135" width="128" height="240"/>
+        <element name="CX_SingleMall" positionX="-63" positionY="135" width="128" height="240"/>
+        <element name="CX_Stores" positionX="-63" positionY="135" width="128" height="165"/>
+    </elements>
+</model>
