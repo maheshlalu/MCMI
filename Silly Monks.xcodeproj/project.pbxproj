@@ -205,7 +205,7 @@
 		69F03FC11CBAC5D800A0484D /* CXGalleryCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CXGalleryCollectionViewCell.swift; sourceTree = "<group>"; };
 		69F5FF2A1CBE148C0018E739 /* CX_Product_Category+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CX_Product_Category+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		69F5FF2B1CBE148C0018E739 /* CX_Product_Category.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CX_Product_Category.swift; sourceTree = "<group>"; };
-		69F89E1D1C9915150032F68D /* Silly Monks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Silly Monks.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		69F89E1D1C9915150032F68D /* SillyMonks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SillyMonks.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		69F89E201C9915150032F68D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		69F89E221C9915150032F68D /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		69F89E281C9915150032F68D /* Silly_Monks.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Silly_Monks.xcdatamodel; sourceTree = "<group>"; };
@@ -403,7 +403,7 @@
 		69F89E1E1C9915150032F68D /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				69F89E1D1C9915150032F68D /* Silly Monks.app */,
+				69F89E1D1C9915150032F68D /* SillyMonks.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -535,6 +535,7 @@
 				8E4C3CF6157FB79548789200 /* [CP] Copy Pods Resources */,
 				B63240C25024DC5FDF479E13 /* 📦 Embed Pods Frameworks */,
 				77073410BD166E5C60D32312 /* 📦 Copy Pods Resources */,
+				2A33556566642055C58A1DA3 /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -542,7 +543,7 @@
 			);
 			name = "Silly Monks";
 			productName = "Silly Monks";
-			productReference = 69F89E1D1C9915150032F68D /* Silly Monks.app */;
+			productReference = 69F89E1D1C9915150032F68D /* SillyMonks.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -623,6 +624,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		2A33556566642055C58A1DA3 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Silly Monks/Pods-Silly Monks-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		2AD6669532DEEC02EC3D8584 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -899,7 +915,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.creativexperts.sillymonks;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = SillyMonks;
 				PROVISIONING_PROFILE = "4b6b858d-7d98-4ac5-ab79-a6070d074e7c";
 				SWIFT_OBJC_BRIDGING_HEADER = "Silly Monks/CX-Bridge-Header.h";
 			};
@@ -925,7 +941,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.creativexperts.sillymonks;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = SillyMonks;
 				PROVISIONING_PROFILE = "4b6b858d-7d98-4ac5-ab79-a6070d074e7c";
 				SWIFT_OBJC_BRIDGING_HEADER = "Silly Monks/CX-Bridge-Header.h";
 			};
