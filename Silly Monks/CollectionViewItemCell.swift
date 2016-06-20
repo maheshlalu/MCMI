@@ -33,7 +33,7 @@ class CollectionViewItemCell: UICollectionViewCell {
         contentView.addSubview(imageView)
         
         
-        let textFrame = CGRect(x: 0, y: 5, width: cellBackGroundView.frame.size.width, height: 30)
+        let textFrame = CGRect(x: 0, y: 2, width: cellBackGroundView.frame.size.width, height: 30)
         textLabel = UILabel(frame: textFrame)
         textLabel.textAlignment = .Center
         textLabel.font = UIFont(name: "Roboto-Bold",size: 15)

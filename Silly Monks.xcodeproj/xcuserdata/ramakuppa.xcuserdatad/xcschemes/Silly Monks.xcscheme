@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "69F89E1C1C9915150032F68D"
-               BuildableName = "Silly Monks.app"
+               BuildableName = "SillyMonks.app"
                BlueprintName = "Silly Monks"
                ReferencedContainer = "container:Silly Monks.xcodeproj">
             </BuildableReference>
@@ -33,7 +33,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "69F89E1C1C9915150032F68D"
-            BuildableName = "Silly Monks.app"
+            BuildableName = "SillyMonks.app"
             BlueprintName = "Silly Monks"
             ReferencedContainer = "container:Silly Monks.xcodeproj">
          </BuildableReference>
@@ -56,7 +56,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "69F89E1C1C9915150032F68D"
-            BuildableName = "Silly Monks.app"
+            BuildableName = "SillyMonks.app"
             BlueprintName = "Silly Monks"
             ReferencedContainer = "container:Silly Monks.xcodeproj">
          </BuildableReference>
@@ -75,7 +75,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "69F89E1C1C9915150032F68D"
-            BuildableName = "Silly Monks.app"
+            BuildableName = "SillyMonks.app"
             BlueprintName = "Silly Monks"
             ReferencedContainer = "container:Silly Monks.xcodeproj">
          </BuildableReference>

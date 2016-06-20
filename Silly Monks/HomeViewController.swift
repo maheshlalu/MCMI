@@ -48,6 +48,7 @@ class HomeViewController: UIViewController  ,UITableViewDelegate,UITableViewData
        //self.setUpSplashAnimation()
         self.homeViewCustomization()
         CXDBSettings.sharedInstance.delegate = self
+        self.arrangeCategoryListOrder()
 //        self.stopImageAnimation()
         
         
@@ -279,12 +280,42 @@ class HomeViewController: UIViewController  ,UITableViewDelegate,UITableViewData
     }
     
     func getCategoryItems() {
-        self.categoryList = CX_AllMalls.MR_findAll()
+        let categoryListByorder : NSMutableArray = NSMutableArray()
+        let list : NSArray =  CX_AllMalls.MR_findAll()
+        
+        let itemOrderList :  NSArray = ["Silly Monks Tollywood","Silly Monks Bollywood","Silly Monks Kollywood","Silly Monks Mollywood","Silly Monks Hollywood","Creators"]
+        
+        for orderItem in itemOrderList {
+            
+            for element in list {
+                
+                let allMalls : CX_AllMalls = element as! CX_AllMalls
+                
+                if orderItem as! String == allMalls.name! {
+                    print("all mall Category Name \(allMalls.name)");
+                    categoryListByorder.addObject(allMalls)
+                    break
+                }
+            }
+            
+        }
+        
+        self.categoryList = categoryListByorder
+        self.catTableView.reloadData()
+    
+    }
+    
+    func arrangeCategoryListOrder(){
+        //Tolly,Bolly,Kolly,Molly,Holly,Creaters
+        //     return CX_AllMalls.MR_findAll().count
+        
     }
     
     func moveAction(){
         self.initialSync()
     }
+    
+    //MARK:Intial Sync
     
     func initialSync() {
         self.activityIndicatorView.startActivity()
@@ -432,9 +463,10 @@ class HomeViewController: UIViewController  ,UITableViewDelegate,UITableViewData
        // print("Screen refreshing")
     }
     
+
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-     return CX_AllMalls.MR_findAll().count
+     return self.categoryList.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -458,6 +490,10 @@ class HomeViewController: UIViewController  ,UITableViewDelegate,UITableViewData
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return CXConstant.tableViewHeigh;
     }
+    
+    //MARK: Arrange The Order
+
+    
 }
 
 
@@ -469,7 +505,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        let mall:CX_AllMalls = CX_AllMalls.MR_findAll()[collectionView.tag] as! CX_AllMalls
+        let mall:CX_AllMalls = self.categoryList[collectionView.tag] as! CX_AllMalls
         let menuView = SMCategoryViewController.init()
         menuView.mall = mall
         
@@ -500,7 +536,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         cell.imageView.image = nil
         cell.imageView.contentMode = UIViewContentMode.ScaleAspectFit
         cell.activity.hidden = true
-        let allMall:CX_AllMalls = CX_AllMalls.MR_findAll()[collectionView.tag] as! CX_AllMalls
+        let allMall:CX_AllMalls = self.categoryList[collectionView.tag] as! CX_AllMalls
         if allMall.mid != nil {
             self.configureCell(allMall, cell: cell, indexPath: indexPath)
         } else {
@@ -521,5 +557,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             cell.imageView.image = UIImage(named: "smlogo.png")
         }
     }
+    
+    
 }
 
