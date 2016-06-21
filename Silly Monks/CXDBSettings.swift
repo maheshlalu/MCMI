@@ -582,7 +582,12 @@ class CXDBSettings: NSObject {
     
     static func getStoreJSON(mallID: String) -> NSDictionary {
         let predicate: NSPredicate = NSPredicate(format: "mallID == %@",mallID)
-        let stores :NSArray = CX_Stores.MR_findAllWithPredicate(predicate)
+        //sID
+        let fetchRequest = CX_Stores.MR_requestAllSortedBy("sID", ascending: false)
+        fetchRequest.predicate = predicate
+        let stores :NSArray = CX_Stores.MR_executeFetchRequest(fetchRequest)
+        
+        //let stores :NSArray = CX_Stores.MR_findAllWithPredicate(predicate)
             //CXDBSettings.sharedInstance.getRequiredItemsFromDB("CX_Stores", predicate: predicate)
         if stores.count > 0 {
             let store : CX_Stores = stores.lastObject as! CX_Stores
