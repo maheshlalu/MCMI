@@ -84,8 +84,10 @@ class HomeViewController: UIViewController  ,UITableViewDelegate,UITableViewData
         } else {
             self.getCategoryItems()
         }
-        self.designHomeTableView()
-         self.customizeSidePanelView()
+        dispatch_async(dispatch_get_main_queue()) {
+            self.designHomeTableView()
+            self.customizeSidePanelView()        }
+      
 
     }
     func customizeSidePanelView() {
@@ -292,7 +294,7 @@ class HomeViewController: UIViewController  ,UITableViewDelegate,UITableViewData
                 let allMalls : CX_AllMalls = element as! CX_AllMalls
                 
                 if orderItem as! String == allMalls.name! {
-                    print("all mall Category Name \(allMalls.name)");
+                   // print("all mall Category Name \(allMalls.name)");
                     categoryListByorder.addObject(allMalls)
                     break
                 }

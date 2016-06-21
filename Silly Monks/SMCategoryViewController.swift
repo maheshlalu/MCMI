@@ -24,6 +24,7 @@ class SMCategoryViewController: UIViewController,ENSideMenuDelegate,UITableViewD
     var titleLabel : UILabel!
     var storeInfo: NSMutableArray!
     var storeJSON: NSDictionary!
+    var isItemSelected : Bool!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,6 +38,11 @@ class SMCategoryViewController: UIViewController,ENSideMenuDelegate,UITableViewD
         self.sideMenuController()?.sideMenu?.delegate = self        
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        isItemSelected = false
+    }
+    
     func initialSyncOperations() {
         if self.getAllProductCategoriesFromDB(self.mall.mid!).count == 0 {
             if self.spinner == nil {
@@ -48,7 +54,9 @@ class SMCategoryViewController: UIViewController,ENSideMenuDelegate,UITableViewD
             if self.spinner != nil {
                 self.spinner.stopActivity()
             }
-            self.mainViewOperations()
+            dispatch_async(dispatch_get_main_queue()) {
+                self.mainViewOperations()
+            }
         }
     }
     
@@ -106,7 +114,7 @@ class SMCategoryViewController: UIViewController,ENSideMenuDelegate,UITableViewD
                 let allMalls : CX_Product_Category = element as! CX_Product_Category
                 
                 if orderItem as! String == allMalls.name! {
-                    print("all mall Category Name \(allMalls.name)");
+                   // print("all mall Category Name \(allMalls.name)");
                     categoryListByorder.addObject(allMalls)
                     break
                 }
@@ -289,6 +297,7 @@ class SMCategoryViewController: UIViewController,ENSideMenuDelegate,UITableViewD
             cell = tableView.dequeueReusableCellWithIdentifier(identifier) as? CXDetailTableViewCell
         }
         cell.setCollectionViewDataSourceDelegate(self, forRow: indexPath.row)
+        cell.detailCollectionView.allowsSelection = true
         cell.collectionViewOffset = storedOffsets[indexPath.row] ?? 0
         
         if indexPath.row == self.mallProductCategories.count {
@@ -376,6 +385,11 @@ extension SMCategoryViewController: UICollectionViewDelegate, UICollectionViewDa
     
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        print("did select item clicked")
+        if (isItemSelected == true) {
+            return
+        }
+        isItemSelected = true
         if collectionView.tag == self.mallProductCategories.count {
             let store :NSDictionary = self.storeInfo[indexPath.row] as! NSDictionary
             let galleryView =  CXGalleryViewController.init()
@@ -394,10 +408,13 @@ extension SMCategoryViewController: UICollectionViewDelegate, UICollectionViewDa
                 detailView.product = product
                 detailView.productCategory = prodCategory
                 self.navigationController?.pushViewController(detailView, animated: true)
+
                 
             }
         }
+
     }
+
 }
 
 /* http://stackoverflow.com/questions/24176362/nsurlconnection-using-ios-swift */

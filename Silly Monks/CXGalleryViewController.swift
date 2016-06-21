@@ -119,7 +119,7 @@ class CXGalleryViewController: UIViewController,UICollectionViewDataSource, UICo
         cell.activity.hidden = true
         
         cell.picView.sd_setImageWithURL(NSURL(string:gallImage)!, placeholderImage: UIImage(named: "smlogo.png"), options: SDWebImageOptions.RefreshCached) { (image, error, cacheType, url) in
-            print ("Success")
+            //print ("Success")
             self.imagesDict.setValue(image, forKey: String(indexPath.row))
             //self.galleryCollectionView.collectionViewLayout.invalidateLayout()
             self.galleryCollectionView.reloadItemsAtIndexPaths([indexPath])
