@@ -74,11 +74,11 @@
                   moduleName = "SillyMonks"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/ramakuppa/CX/SillyMonks/Silly%20Monks/HomeViewController.swift"
-                  timestampString = "488017029.584815"
+                  timestampString = "488176675.410511"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "333"
-                  endingLineNumber = "333"
+                  startingLineNumber = "328"
+                  endingLineNumber = "328"
                   offsetFromSymbolStart = "19">
                </Location>
                <Location
@@ -89,11 +89,11 @@
                   moduleName = "SillyMonks"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/ramakuppa/CX/SillyMonks/Silly%20Monks/HomeViewController.swift"
-                  timestampString = "488017029.585003"
+                  timestampString = "488176675.410684"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "332"
-                  endingLineNumber = "332"
+                  startingLineNumber = "327"
+                  endingLineNumber = "327"
                   offsetFromSymbolStart = "4">
                </Location>
             </Locations>
@@ -160,6 +160,86 @@
             startingLineNumber = "304"
             endingLineNumber = "304"
             landmarkName = "getCategoryItems()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Silly Monks/SMCategoryViewController.swift"
+            timestampString = "488175732.346674"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "30"
+            endingLineNumber = "30"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Silly Monks/SMCategoryViewController.swift"
+            timestampString = "488175760.653323"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "55"
+            endingLineNumber = "55"
+            landmarkName = "productCategorySync()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Silly Monks/SMCategoryViewController.swift"
+            timestampString = "488176424.475913"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "105"
+            endingLineNumber = "105"
+            landmarkName = "mainViewOperations()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Silly Monks/CXDBSettings.swift"
+            timestampString = "488177524.010116"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "537"
+            endingLineNumber = "537"
+            landmarkName = "getProductsWithCategory(_:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Silly Monks/SMCategoryViewController.swift"
+            timestampString = "488178892.455523"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "99"
+            endingLineNumber = "99"
+            landmarkName = "mainViewOperations()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
