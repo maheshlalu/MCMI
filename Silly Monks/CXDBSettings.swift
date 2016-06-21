@@ -535,7 +535,11 @@ class CXDBSettings: NSObject {
     
     static func getProductsWithCategory(proCategory:CX_Product_Category) -> NSMutableArray {
         let predicate: NSPredicate = NSPredicate(format: "type == %@ && mallID == %@",proCategory.name!,proCategory.mallID!)
-        let productCatList :NSArray = CX_Products.MR_findAllWithPredicate(predicate)
+        //let productCatList :NSArray = CX_Products.MR_findAllWithPredicate(predicate)
+        
+        let fetchRequest = CX_Products.MR_requestAllSortedBy("pID", ascending: false)
+        fetchRequest.predicate = predicate
+        let productCatList :NSArray = CX_Products.MR_executeFetchRequest(fetchRequest)
         
            // CXDBSettings.sharedInstance.getRequiredItemsFromDB("CX_Products", predicate: predicate)
         let proKatList : NSMutableArray = NSMutableArray(array: productCatList)
