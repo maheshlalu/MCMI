@@ -95,9 +95,33 @@ class SMCategoryViewController: UIViewController,ENSideMenuDelegate,UITableViewD
         }
     }
     
+    func arrangeTheProductOrder() -> NSArray {
+        //category
+        let categoryListByorder : NSMutableArray = NSMutableArray()
+        let list : NSArray = self.getAllProductCategoriesFromDB(self.mall.mid!)
+        if self.mall.name == "Silly Monks Tollywood" {
+        let itemOrderList :  NSArray = ["Premium Content","Tollywood News","SILLY Punch","Music","Movies","Reviews","Celebrities"]
+        for orderItem in itemOrderList {
+            for element in list {
+                let allMalls : CX_Product_Category = element as! CX_Product_Category
+                
+                if orderItem as! String == allMalls.name! {
+                    print("all mall Category Name \(allMalls.name)");
+                    categoryListByorder.addObject(allMalls)
+                    break
+                }
+            }
+        }
+        
+        return categoryListByorder;
+    }
+        return list
+    }
     
     func mainViewOperations() {
-        let mallProductCats = self.getAllProductCategoriesFromDB(self.mall.mid!)
+        let mallProductCats = self.arrangeTheProductOrder()
+        
+        
         self.mallProductCategories = NSMutableArray()
         for proCat in mallProductCats {
             let produkts = CXDBSettings.getProductsWithCategory(proCat as! CX_Product_Category)
