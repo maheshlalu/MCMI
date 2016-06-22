@@ -108,11 +108,12 @@ class SMCategoryViewController: UIViewController,ENSideMenuDelegate,UITableViewD
         let categoryListByorder : NSMutableArray = NSMutableArray()
         let list : NSArray = self.getAllProductCategoriesFromDB(self.mall.mid!)
         if self.mall.name == "Silly Monks Tollywood" {
-        let itemOrderList :  NSArray = ["Premium Content","Tollywood News","SILLY Punch","Music","Movies","Reviews","Celebrities"]
+        let itemOrderList :  NSArray = ["Premium Content","Tollywood News","Teasers and Trailers","SILLY Punch","Music","Movies","Reviews","Celebrities"]
         for orderItem in itemOrderList {
             for element in list {
                 let allMalls : CX_Product_Category = element as! CX_Product_Category
-                
+                 //print("all mall Category Name \(allMalls.name)");
+
                 if orderItem as! String == allMalls.name! {
                    // print("all mall Category Name \(allMalls.name)");
                     categoryListByorder.addObject(allMalls)

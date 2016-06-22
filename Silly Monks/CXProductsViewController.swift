@@ -21,12 +21,17 @@ class CXProductsViewController: UIViewController,UITableViewDelegate,UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.smBackgroundColor()
+  
+
+        // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         self.products = CXDBSettings.getProductsWithCategory(self.productCategory)
         self.customizeHeaderView()
         self.customizeMainView()
 
-
-        // Do any additional setup after loading the view.
     }
     
     func customizeHeaderView() {

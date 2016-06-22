@@ -221,7 +221,7 @@ class SMDetailViewController: UIViewController, FloatRatingViewDelegate,UITableV
         
         let comentBtn = self.createButton(CGRectMake(rView.frame.size.width-((numBtns * btnWidth)+((numBtns-1)*space)), self.floatRatingView.frame.origin.y, btnWidth, btnWidth), img: UIImage(named: "comments_108.png")!)
         comentBtn.addTarget(self, action: #selector(SMDetailViewController.commentAction), forControlEvents: UIControlEvents.TouchUpInside)
-        rView.addSubview(comentBtn)
+        //rView.addSubview(comentBtn)
 
         let shareBtn = self.createButton(CGRectMake(comentBtn.frame.size.width+comentBtn.frame.origin.x+space, self.floatRatingView.frame.origin.y, btnWidth, btnWidth), img: UIImage(named: "share_108.png")!)
         shareBtn.addTarget(self, action: #selector(SMDetailViewController.shareAction), forControlEvents: UIControlEvents.TouchUpInside)
