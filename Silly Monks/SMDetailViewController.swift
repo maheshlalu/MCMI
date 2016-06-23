@@ -38,6 +38,8 @@ class SMDetailViewController: UIViewController, FloatRatingViewDelegate,UITableV
         self.customizeMainView()
     }
     
+    
+    
     func getRelatedProducts() {
         if (self.product.tagValue != nil){
             self.relatedArticles = CXDBSettings.getRelatedProductsWithCategory(self.product.tagValue!, mallID: self.productCategory.mallID!)
@@ -370,12 +372,12 @@ class SMDetailViewController: UIViewController, FloatRatingViewDelegate,UITableV
         }
     }
     func floatRatingView(ratingView: FloatRatingView, isUpdating rating:Float) {
-        if NSUserDefaults.standardUserDefaults().valueForKey("USER_ID") == nil{
+       /* if NSUserDefaults.standardUserDefaults().valueForKey("USER_ID") == nil{
             ratingView.rating = 0
             let signInView = CXSignInSignUpViewController.init()
             signInView.orgID = self.product.createdByID
             self.navigationController?.pushViewController(signInView, animated: true)
-        }
+        }*/
     }
     
     func floatRatingView(ratingView: FloatRatingView, didUpdate rating: Float) {

@@ -185,7 +185,7 @@ class HomeViewController: UIViewController  ,UITableViewDelegate,UITableViewData
     func signInAction() {
         self.panelBtnAction()
         let signInView = CXSignInSignUpViewController.init()
-        self.navigationController?.pushViewController(signInView, animated: true)
+        //self.navigationController?.pushViewController(signInView, animated: true)
     }
     
     func aboutUsAction() {
@@ -223,19 +223,19 @@ class HomeViewController: UIViewController  ,UITableViewDelegate,UITableViewData
     }
     
     func fbAction() {
-        let path = "https://www.facebook.com"
+        let path = "https://www.facebook.com/sillymonks/"
         let url = NSURL(string: path)
         UIApplication.sharedApplication().openURL(url!)
     }
     
     func twitterAction() {
-        let path = "https://www.twitter.com"
+        let path = "https://twitter.com/SillyMonks"
         let url = NSURL(string: path)
         UIApplication.sharedApplication().openURL(url!)
     }
     
     func googleAction () {
-        let path = "https://www.google.com"
+        let path = "https://plus.google.com/+SillymonksnetworkDotCom/posts"
         let url = NSURL(string: path)
         UIApplication.sharedApplication().openURL(url!)
     }

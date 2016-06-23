@@ -89,14 +89,14 @@ class CXCommentViewController: UIViewController {
     }
     
     func writeCommentAction() {
-        if NSUserDefaults.standardUserDefaults().valueForKey("USER_ID") != nil {
+       /* if NSUserDefaults.standardUserDefaults().valueForKey("USER_ID") != nil {
             let comRatView = CXCommentRatingViewController.init()
             self.navigationController?.pushViewController(comRatView, animated: true)
         } else {
             let signInView = CXSignInSignUpViewController.init()
             signInView.orgID = self.orgID
             self.navigationController?.pushViewController(signInView, animated: true)
-        }
+        }*/
     }
     
     func overallRatingAction() {
