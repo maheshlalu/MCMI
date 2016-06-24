@@ -104,18 +104,37 @@ class HomeViewController: UIViewController  ,UITableViewDelegate,UITableViewData
     }
     
     func designSidePanel() {
-        self.signInBtn = self.createButton(CGRectMake(10, 5, self.sidePanelView.frame.size.width-20, 50), title: "SIGN IN", tag: 1, bgColor: UIColor.clearColor())
+        
+        let signFrame : CGRect = CGRectMake(10, 3, self.sidePanelView.frame.size.width-20, 50)
+
+        
+       /* self.signInBtn = self.createButton(CGRectMake(10, 5, self.sidePanelView.frame.size.width-20, 50), title: "SIGN IN", tag: 1, bgColor: UIColor.clearColor())
         self.signInBtn.addTarget(self, action: #selector(HomeViewController.signInAction), forControlEvents: UIControlEvents.TouchUpInside)
-        self.sidePanelView.addSubview(self.signInBtn)
+        self.sidePanelView.addSubview(self.signInBtn)*/
         
+        // let profileImage = UIImageView.init(frame: CGRectMake(self.signInBtn.frame.size.width+self.signInBtn.frame.origin.x-80, 0, 70, 70))
         
-        let profileImage = UIImageView.init(frame: CGRectMake(self.signInBtn.frame.size.width+self.signInBtn.frame.origin.x-80, 0, 70, 70))
+        let prjTitle = UILabel(frame: CGRectMake(10, 10,150,50))//CGRectMake(20, 80,140,50)
+        //prjTitle.backgroundColor = UIColor.yellowColor()
+        prjTitle.textAlignment = NSTextAlignment.Right
+        prjTitle.font = UIFont(name: "RobotoCondensed-Bold", size: 25)
+        prjTitle.textColor = UIColor.blackColor()
+        prjTitle.text = "SILLY MONKS"
+        self.sidePanelView.addSubview(prjTitle)
+        
+        let lImageView = UIImageView(frame: CGRectMake(prjTitle.frame.size.width + prjTitle.frame.origin.x, prjTitle.frame.origin.y, 50, 50))
+        lImageView.image = UIImage(named: "smlogo.png")
+        self.sidePanelView.addSubview(lImageView);
+
+       /* let profileImage = UIImageView.init(frame: CGRectMake(signFrame.size.width+signFrame.origin.x-80, 0, 70, 70))
         profileImage.image = UIImage(named:"smlogo.png")
         profileImage.layer.cornerRadius = 25
         profileImage.layer.masksToBounds = true
-        self.sidePanelView.addSubview(profileImage)
+        self.sidePanelView.addSubview(profileImage)*/
         
-        self.aboutUsBtn = self.createButton(CGRectMake(10, self.signInBtn.frame.size.height+self.signInBtn.frame.origin.y+5, self.sidePanelView.frame.size.width-20, 50), title: "About Sillymonks", tag: 1, bgColor: UIColor.clearColor())
+        //self.aboutUsBtn = self.createButton(CGRectMake(10, self.signInBtn.frame.size.height+self.signInBtn.frame.origin.y+5, self.sidePanelView.frame.size.width-20, 50), title: "About Sillymonks", tag: 1, bgColor: UIColor.clearColor())
+
+        self.aboutUsBtn = self.createButton(CGRectMake(10, signFrame.size.height+signFrame.origin.y+5, self.sidePanelView.frame.size.width-20, 50), title: "About Sillymonks", tag: 1, bgColor: UIColor.clearColor())
         self.aboutUsBtn.addTarget(self, action: #selector(HomeViewController.aboutUsAction), forControlEvents: UIControlEvents.TouchUpInside)
         self.sidePanelView.addSubview(self.aboutUsBtn)
         

@@ -162,9 +162,13 @@ class SMDetailViewController: UIViewController, FloatRatingViewDelegate,UITableV
         let cellHeight = (self.contentScrollView.frame.size.width-20)/2
         
         if self.relatedArticles.count > 0 {
-            tableHeight = (CGFloat(cellls)*cellHeight)+(2*CXConstant.RELATED_ARTICLES_CELL_HEIGHT)-50
+            tableHeight = 2*CXConstant.RELATED_ARTICLES_CELL_HEIGHT
+           // tableHeight = (CGFloat(cellls)*cellHeight)+(2*CXConstant.RELATED_ARTICLES_CELL_HEIGHT)-50
         } else {
-            tableHeight = (CGFloat(cellls)*cellHeight)+CXConstant.RELATED_ARTICLES_CELL_HEIGHT-50
+            
+            tableHeight = CXConstant.RELATED_ARTICLES_CELL_HEIGHT
+            
+            //tableHeight = (CGFloat(cellls)*cellHeight)+CXConstant.RELATED_ARTICLES_CELL_HEIGHT-50
         }
 
         self.detailTableView = self.customizeTableView(CGRectMake(10, ratingComentsView.frame.size.height+ratingComentsView.frame.origin.y+12.5, self.contentScrollView.frame.size.width-20,tableHeight))// y= 25+5
@@ -394,23 +398,28 @@ class SMDetailViewController: UIViewController, FloatRatingViewDelegate,UITableV
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 2
+        return 1
     }
 
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 1 {
+        if self.relatedArticles.count > 0 {
+            return 2
+        }
+        return 1
+        
+      /*  if section == 1 {
             if self.relatedArticles.count > 0 {
                 return 2
             }
             return 1//self.detailItems.count
         }
-        return CXDBSettings.getProductAttachments(self.product).count
+        return CXDBSettings.getProductAttachments(self.product).count*/
         
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if indexPath.section == 1 {
+       // if indexPath.section == 1 {
             let identifier = "DetailCell"
             
             var cell: CXRelatedArticleTableViewCell! = tableView.dequeueReusableCellWithIdentifier(identifier) as? CXRelatedArticleTableViewCell
@@ -431,7 +440,7 @@ class SMDetailViewController: UIViewController, FloatRatingViewDelegate,UITableV
                 cell.headerLbl.text = self.productCategory.name
             }
             return cell;
-        } else {
+       /* } else {
             let identifier = "ImageCellID"
             
             var cell: CXImageDetailTableViewCell! = tableView.dequeueReusableCellWithIdentifier(identifier) as? CXImageDetailTableViewCell
@@ -447,15 +456,18 @@ class SMDetailViewController: UIViewController, FloatRatingViewDelegate,UITableV
             cell.detailImageView.sd_setImageWithURL(NSURL(string:prodImage)!, placeholderImage: UIImage(named: "smlogo.png"), options:SDWebImageOptions.RefreshCached)
             cell.descLabel.text = attachment.valueForKey("Image_Name") as? String
             return cell;
-        }
+        }*/
         return UITableViewCell()
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if indexPath.section == 1 {
+        
+        return CXConstant.RELATED_ARTICLES_CELL_HEIGHT;
+
+       /* if indexPath.section == 1 {
             return CXConstant.RELATED_ARTICLES_CELL_HEIGHT;
         }
-        return CXConstant.DETAIL_IMAGE_CELL_HEIGHT
+        return CXConstant.DETAIL_IMAGE_CELL_HEIGHT*/
     }
     
     
