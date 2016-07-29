@@ -10,6 +10,11 @@
 		12F49DA81CA81F5300B32FC5 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F49DA71CA81F5300B32FC5 /* TableViewCell.swift */; };
 		12F49DAA1CA81F5C00B32FC5 /* CollectionViewItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F49DA91CA81F5C00B32FC5 /* CollectionViewItemCell.swift */; };
 		12F49DAE1CA81F8400B32FC5 /* CXConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F49DAD1CA81F8400B32FC5 /* CXConstant.swift */; };
+		3B5FCCFE1D4B2AC80068990A /* CXProfilePageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5FCCFD1D4B2AC80068990A /* CXProfilePageView.swift */; };
+		3B5FCD031D4B30970068990A /* SMProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5FCCFF1D4B30970068990A /* SMProfileViewController.swift */; };
+		3B5FCD041D4B30970068990A /* SMProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B5FCD001D4B30970068990A /* SMProfileViewController.xib */; };
+		3B5FCD051D4B30970068990A /* UserFavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5FCD011D4B30970068990A /* UserFavoritesViewController.swift */; };
+		3B5FCD061D4B30970068990A /* UserFavoritesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B5FCD021D4B30970068990A /* UserFavoritesViewController.xib */; };
 		69023AD21C9BC6CF003F8245 /* Roboto-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 69023ACC1C9BC4AC003F8245 /* Roboto-Black.ttf */; };
 		69023AD31C9BC6CF003F8245 /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 69023ACD1C9BC4AC003F8245 /* Roboto-Bold.ttf */; };
 		69023AD41C9BC6CF003F8245 /* Roboto-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 69023ACE1C9BC4AC003F8245 /* Roboto-Italic.ttf */; };
@@ -114,6 +119,11 @@
 		12F49DA91CA81F5C00B32FC5 /* CollectionViewItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewItemCell.swift; sourceTree = "<group>"; };
 		12F49DAD1CA81F8400B32FC5 /* CXConstant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CXConstant.swift; sourceTree = "<group>"; };
 		30F7C9EA364A1853E11F23B8 /* Pods_Silly_Monks.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Silly_Monks.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3B5FCCFD1D4B2AC80068990A /* CXProfilePageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CXProfilePageView.swift; sourceTree = "<group>"; };
+		3B5FCCFF1D4B30970068990A /* SMProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SMProfileViewController.swift; sourceTree = "<group>"; };
+		3B5FCD001D4B30970068990A /* SMProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SMProfileViewController.xib; sourceTree = "<group>"; };
+		3B5FCD011D4B30970068990A /* UserFavoritesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserFavoritesViewController.swift; sourceTree = "<group>"; };
+		3B5FCD021D4B30970068990A /* UserFavoritesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserFavoritesViewController.xib; sourceTree = "<group>"; };
 		5FEF1C9ABFDEED1E328FD320 /* Pods-Silly Monks.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Silly Monks.release.xcconfig"; path = "Pods/Target Support Files/Pods-Silly Monks/Pods-Silly Monks.release.xcconfig"; sourceTree = "<group>"; };
 		69023ACC1C9BC4AC003F8245 /* Roboto-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Roboto-Black.ttf"; path = "Fonts/Roboto-Black.ttf"; sourceTree = "<group>"; };
 		69023ACD1C9BC4AC003F8245 /* Roboto-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Roboto-Bold.ttf"; path = "Fonts/Roboto-Bold.ttf"; sourceTree = "<group>"; };
@@ -258,6 +268,18 @@
 				69A8116D1CF08E3C00F71F93 /* SMUserDetails.swift */,
 			);
 			name = Constants;
+			sourceTree = "<group>";
+		};
+		3B5FCCFC1D4B2A790068990A /* SMProfile */ = {
+			isa = PBXGroup;
+			children = (
+				3B5FCCFF1D4B30970068990A /* SMProfileViewController.swift */,
+				3B5FCD001D4B30970068990A /* SMProfileViewController.xib */,
+				3B5FCD011D4B30970068990A /* UserFavoritesViewController.swift */,
+				3B5FCD021D4B30970068990A /* UserFavoritesViewController.xib */,
+				3B5FCCFD1D4B2AC80068990A /* CXProfilePageView.swift */,
+			);
+			name = SMProfile;
 			sourceTree = "<group>";
 		};
 		69023ACB1C9BC47F003F8245 /* Fonts */ = {
@@ -411,6 +433,7 @@
 		69F89E1F1C9915150032F68D /* Silly Monks */ = {
 			isa = PBXGroup;
 			children = (
+				3B5FCCFC1D4B2A790068990A /* SMProfile */,
 				6909027E1CF9FBED00E19885 /* GIF */,
 				69C5C2371CECDC1B00B7BF92 /* GoogleService-Info.plist */,
 				69270CA81CEB925F006F93BC /* FB */,
@@ -526,7 +549,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 69F89E321C9915150032F68D /* Build configuration list for PBXNativeTarget "Silly Monks" */;
 			buildPhases = (
-				3776F544B091B1C72E28F8F9 /* 📦 Check Pods Manifest.lock */,
+				3776F544B091B1C72E28F8F9 /* [CP] Check Pods Manifest.lock */,
 				2AD6669532DEEC02EC3D8584 /* [CP] Check Pods Manifest.lock */,
 				69F89E191C9915150032F68D /* Sources */,
 				69F89E1A1C9915150032F68D /* Frameworks */,
@@ -597,6 +620,7 @@
 				6909027D1CF9FB3600E19885 /* silly.gif in Resources */,
 				69023AD31C9BC6CF003F8245 /* Roboto-Bold.ttf in Resources */,
 				69023AD41C9BC6CF003F8245 /* Roboto-Italic.ttf in Resources */,
+				3B5FCD041D4B30970068990A /* SMProfileViewController.xib in Resources */,
 				694769631CCBEC2F00878BF9 /* play_shadow.png in Resources */,
 				69F9D3301C9C88D100E2A288 /* men_icon.png in Resources */,
 				69023AD51C9BC6CF003F8245 /* Roboto-Light.ttf in Resources */,
@@ -614,6 +638,7 @@
 				694769621CCBEC2F00878BF9 /* play.png in Resources */,
 				69076FD81CAA35060028A8A0 /* smnocover.png in Resources */,
 				690891431CFCBD660063222F /* logo_store.jpg in Resources */,
+				3B5FCD061D4B30970068990A /* UserFavoritesViewController.xib in Resources */,
 				69FFD6961CA0679100B20D66 /* smhome_icon.png in Resources */,
 				69F89E361C991F8F0032F68D /* smlogo.png in Resources */,
 				697293A71CC9625000E8BC1D /* share_108.png in Resources */,
@@ -654,14 +679,14 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		3776F544B091B1C72E28F8F9 /* 📦 Check Pods Manifest.lock */ = {
+		3776F544B091B1C72E28F8F9 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -751,6 +776,7 @@
 				690533591CA111990094D272 /* DTIAnimRotatingPlane.swift in Sources */,
 				6972CB2F1D031D5A009A2746 /* CXProductsViewController.swift in Sources */,
 				692102D71CEE40BC009F32FF /* CXCommentViewController.swift in Sources */,
+				3B5FCD051D4B30970068990A /* UserFavoritesViewController.swift in Sources */,
 				69F5FF2C1CBE148C0018E739 /* CX_Product_Category+CoreDataProperties.swift in Sources */,
 				690533541CA111990094D272 /* DTIActivityIndicatorView.swift in Sources */,
 				6908913B1CFCB7B70063222F /* CXTermsAndConditionsViewController.swift in Sources */,
@@ -785,11 +811,13 @@
 				6905335B1CA111990094D272 /* DTIAnimWanderingCubes.swift in Sources */,
 				690533581CA111990094D272 /* DTIAnimPulse.swift in Sources */,
 				6905335E1CA111990094D272 /* DTIIndicatorStyle.swift in Sources */,
+				3B5FCD031D4B30970068990A /* SMProfileViewController.swift in Sources */,
 				695E40F61C9A7945003466B4 /* ENSideMenuNavigationController.swift in Sources */,
 				69F89E291C9915150032F68D /* Silly_Monks.xcdatamodeld in Sources */,
 				69FD29CB1CA2509C005DB4BA /* UIColor+SMColor.swift in Sources */,
 				693556F61D05FE6300873A88 /* CXProcuctTableViewCell.swift in Sources */,
 				6947695F1CCBE81100878BF9 /* CXVideoPlayerViewController.swift in Sources */,
+				3B5FCCFE1D4B2AC80068990A /* CXProfilePageView.swift in Sources */,
 				69F5FF2D1CBE148C0018E739 /* CX_Product_Category.swift in Sources */,
 				691998C81CED93A200B08423 /* CX_Products+CoreDataProperties.swift in Sources */,
 				69F03FC01CBAC18F00A0484D /* CXGalleryViewController.swift in Sources */,

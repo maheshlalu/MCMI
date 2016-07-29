@@ -19,6 +19,6 @@ pod 'Google/SignIn'
 pod 'SDWebImage', '~>3.8'
 
 pod 'MagicalRecord/Shorthand'
-
+pod 'EVTopTabBar'
 end
 

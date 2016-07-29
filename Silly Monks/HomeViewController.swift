@@ -203,12 +203,16 @@ class HomeViewController: UIViewController  ,UITableViewDelegate,UITableViewData
     
     func signInAction() {
         self.panelBtnAction()
-        let signInView = CXSignInSignUpViewController.init()
-        //self.navigationController?.pushViewController(signInView, animated: true)
+        let signInView = CXProfilePageView.init()
+        self.navigationController?.pushViewController(signInView, animated: true)
     }
     
     func aboutUsAction() {
         self.panelBtnAction()
+
+        let signInView = CXProfilePageView.init()
+        self.navigationController?.pushViewController(signInView, animated: true)
+        return
         let aboutUsView = CXAboutUsViewController.init()
         self.navigationController?.pushViewController(aboutUsView, animated: true)
     }
