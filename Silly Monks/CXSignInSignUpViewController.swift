@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Foundation
 import FBSDKCoreKit
 import FBSDKLoginKit
 
@@ -27,10 +28,11 @@ class CXSignInSignUpViewController: UIViewController,UITextFieldDelegate,FBSDKLo
     var googleBtn:GIDSignInButton!
     
     var orgID:String!
-    
+    var profileImageStr:String!
+    var profileImagePic:UIImageView!
     var delegate:CXSingInDelegate?
     
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.smBackgroundColor();
@@ -42,8 +44,10 @@ class CXSignInSignUpViewController: UIViewController,UITextFieldDelegate,FBSDKLo
         self.customizeHeaderView()
         self.customizeMainView()
         
+        // NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateNotificationSentLabel", name: "UpdateProfilePic", object: nil)
+        
     }
-
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -60,12 +64,12 @@ class CXSignInSignUpViewController: UIViewController,UITextFieldDelegate,FBSDKLo
         button.setImage(lImage, forState: .Normal)
         button.backgroundColor = UIColor.clearColor()
         button.addTarget(self, action: #selector(CXSignInSignUpViewController.backAction), forControlEvents: .TouchUpInside)
-
+        
         let navSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem:UIBarButtonSystemItem.FixedSpace,target: nil, action: nil)
         navSpacer.width = -16;
         self.navigationItem.leftBarButtonItems = [navSpacer,UIBarButtonItem.init(customView: button)]
         
-
+        
         let tLabel : UILabel = UILabel()
         tLabel.frame = CGRectMake(0, 0, 120, 40);
         tLabel.backgroundColor = UIColor.clearColor()
@@ -144,7 +148,7 @@ class CXSignInSignUpViewController: UIViewController,UITextFieldDelegate,FBSDKLo
         self.signUpBtn = self.createPlainTextButton(CGRectMake(25, self.forgotPwdBtn.frame.size.height+self.forgotPwdBtn.frame.origin.y+5,self.view.frame.size.width-50, 30), title: "Want to sign up?", tag: 5)
         self.signUpBtn.addTarget(self, action: #selector(CXSignInSignUpViewController.signUpAction), forControlEvents: .TouchUpInside)
         self.cScrollView.addSubview(self.signUpBtn)
-
+        
     }
     
     func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!) {
@@ -155,30 +159,31 @@ class CXSignInSignUpViewController: UIViewController,UITextFieldDelegate,FBSDKLo
                 let strFirstName: String = (result.objectForKey("first_name") as? String)!
                 let strLastName: String = (result.objectForKey("last_name") as? String)!
                 let userID: String = (result.objectForKey("id") as? String)!
-                //let strPictureURL: String = (result.objectForKey("picture")?.objectForKey("data")?.objectForKey("url") as? String)!
-                //print("Welcome, \(strFirstName) \(strLastName) \(userID)")
+                self.profileImageStr = (result.objectForKey("picture")?.objectForKey("data")?.objectForKey("url") as? String)!
+                print("Welcome, \(strFirstName) \(strLastName) \(userID)")
                 
                 NSUserDefaults.standardUserDefaults().setObject(userID, forKey: "USER_ID")
                 NSUserDefaults.standardUserDefaults().setObject(strFirstName, forKey: "FIRST_NAME")
                 NSUserDefaults.standardUserDefaults().setObject(strLastName, forKey: "LAST_NAME")
+                NSUserDefaults.standardUserDefaults().setObject(self.profileImageStr, forKey: "PROFILE_PIC")
                 NSUserDefaults.standardUserDefaults().synchronize()
                 self.showAlertView("Login successfully.", status: 1)
             }
-            //UIImage(data: NSData(contentsOfURL: NSURL(string: strPictureURL)!)!)
+                NSNotificationCenter.defaultCenter().postNotificationName("UpdateProfilePic", object: nil)
         }
     }
-
+    
     
     func loginButtonDidLogOut(loginButton: FBSDKLoginButton!) {
         let loginManager: FBSDKLoginManager = FBSDKLoginManager()
         loginManager.logOut()
     }
-
     
-    // Google 
+    
+    // Google
     
     func signInWillDispatch(signIn: GIDSignIn!, error: NSError!) {
-      //  myActivityIndicator.stopAnimating()
+        //  myActivityIndicator.stopAnimating()
     }
     
     // Present a view that prompts the user to sign in with Google
@@ -203,7 +208,7 @@ class CXSignInSignUpViewController: UIViewController,UITextFieldDelegate,FBSDKLo
         button.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
         button.backgroundColor = UIColor.clearColor()
         return button
- 
+        
     }
     
     func showAlertView(message:String, status:Int) {
@@ -221,10 +226,10 @@ class CXSignInSignUpViewController: UIViewController,UITextFieldDelegate,FBSDKLo
     func sendSignDetails() {
         let signInUrl = "http://sillymonksapp.com:8081/MobileAPIs/loginConsumerForOrg?orgId="+self.orgID+"&email="+self.emailAddressField.text!+"&dt=DEVICES&password="+self.passwordField.text!
         SMSyncService.sharedInstance.startSyncProcessWithUrl(signInUrl) { (responseDict) in
-           // print("Login response \(responseDict)")
+            // print("Login response \(responseDict)")
             
             let status: Int = Int(responseDict.valueForKey("status") as! String)!
-        
+            
             if status == 1 {
                 let userDetails = SMUserDetails.sharedInstance
                 userDetails.userFirstName = responseDict.valueForKey("firstName") as? String
@@ -236,7 +241,7 @@ class CXSignInSignUpViewController: UIViewController,UITextFieldDelegate,FBSDKLo
                 userDetails.userID = CXConstant.resultString(responseDict.valueForKey("UserId")!)
                 CXConstant.saveDataInUserDefaults(userDetails)
                 self.showAlertView("Login successfully.", status: status)
- 
+                
             } else {
                 self.showAlertView("Please enter valid credentials.", status: status)
             }
@@ -244,7 +249,7 @@ class CXSignInSignUpViewController: UIViewController,UITextFieldDelegate,FBSDKLo
     }
     
     func signInAction() {
-       // print ("Sign In action")
+        // print ("Sign In action")
         self.view.endEditing(true)
         if self.isValidEmail(self.emailAddressField.text!) {
             self.sendSignDetails()
@@ -255,9 +260,9 @@ class CXSignInSignUpViewController: UIViewController,UITextFieldDelegate,FBSDKLo
             //print("Please enter valid email")
         }
     }
-
+    
     func signUpAction() {
-         print ("Sign Up action")
+        print ("Sign Up action")
         self.view.endEditing(true)
         let signUpView = CXSignUpViewController.init()
         signUpView.orgID = self.orgID
@@ -287,7 +292,7 @@ class CXSignInSignUpViewController: UIViewController,UITextFieldDelegate,FBSDKLo
         }
         return false
     }
-
+    
     
     func createField(frame:CGRect, tag:Int, placeHolder:String) -> UITextField {
         let txtField : UITextField = UITextField()

@@ -214,6 +214,10 @@ class SMCategoryViewController: UIViewController,ENSideMenuDelegate,UITableViewD
         self.navigationItem.titleView = self.titleLabel
     }
     
+//    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+//        toggleSideMenuView()
+//    }
+    
     func menuAction(){
         toggleSideMenuView()
     }

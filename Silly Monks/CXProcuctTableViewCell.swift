@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CXProcuctTableViewCell: UITableViewCell {
+class CXProcuctTableViewCell: UITableViewCell{
     
     var bgView : UIView = UIView()
     var productDesc: UILabel = UILabel()
@@ -86,5 +86,6 @@ class CXProcuctTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    
 
 }

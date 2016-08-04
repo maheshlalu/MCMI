@@ -36,10 +36,10 @@ class CXConstant: NSObject {
     }
     
     
-    static let tableViewHeigh : CGFloat = 280
+    static let tableViewHeigh : CGFloat = 275
     
     static let someString : String = "Some Text" // struct
-    static let collectiViewCellSize :  CGSize = CGSize(width: UIScreen.mainScreen().bounds.size.width-20,height: tableViewHeigh-50)
+    static let collectiViewCellSize :  CGSize = CGSize(width: UIScreen.mainScreen().bounds.size.width-20,height: tableViewHeigh)
     
     static let collectionViewFrame : CGRect = CGRectMake(8, 30, UIScreen.mainScreen().bounds.size.width-20, tableViewHeigh-50)
     
@@ -111,7 +111,7 @@ class CXConstant: NSObject {
     static let ALL_MALLS_URL = "http://52.74.102.199:8081/services/getmasters?type=allMalls"
     static let SINGLE_MALL_URL = "http://m.sillymonks.com:8081/Services/getMasters?type=singleMall&mallId=" //3
     static let STORE_URL = "http://52.74.102.199:8081/services/getmasters?type=stores&mallId="
-    
+    static let NATIVEADD_UNITI_ID = "4af8f892da924673aa0d9db92b49cc10"
     
     
     static let PRODUCT_CATEGORY_URL = "http://52.74.102.199:8081/services/getmasters?type=ProductCategories&mallId="

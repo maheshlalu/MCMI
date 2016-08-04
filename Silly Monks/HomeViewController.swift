@@ -7,7 +7,6 @@
 //
 
 import UIKit
-
 import GoogleMobileAds
 import MagicalRecord
 import SDWebImage
@@ -30,9 +29,13 @@ class HomeViewController: UIViewController  ,UITableViewDelegate,UITableViewData
     var sidePanelView:UIView!
     var transparentView:UIView!
     var isPanelOpened:Bool!
+    var orgID: String!
+    var strProfile: String!
+    var profileDPImageView:UIImageView!
     
     var signInBtn:UIButton!
     var aboutUsBtn:UIButton!
+    var profileBtn:UIButton!
     var termsConditionsBtn:UIButton!
     var contactUsBtn:UIButton!
     var advertiseBtn:UIButton!
@@ -40,37 +43,36 @@ class HomeViewController: UIViewController  ,UITableViewDelegate,UITableViewData
     var fbButton:UIButton!
     var twitterButton:UIButton!
     var googlePlusButton:UIButton!
-
+    let signInView = CXSignInSignUpViewController.init()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.isPanelOpened = false
-       //self.setUpSplashAnimation()
+        //self.setUpSplashAnimation()
         self.homeViewCustomization()
         CXDBSettings.sharedInstance.delegate = self
         self.arrangeCategoryListOrder()
-//        self.stopImageAnimation()
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:Selector(profileUpdateNotif()), name: "UpdateProfilePic", object: nil)
         
-        //self.performSelector(#selector(HomeViewController.stopImageAnimation), withObject: self, afterDelay: 4)
     }
     
-//    func setUpSplashAnimation() {
-//        self.navigationController?.setNavigationBarHidden(true, animated: false)
-//        self.splashImageView = UIImageView.init(frame: self.view.frame)
-//        let url = NSBundle.mainBundle().URLForResource("silly", withExtension: "gif")
-//        self.splashImageView.image = UIImage.animatedImageWithAnimatedGIFURL(url!)
-//        self.view.addSubview(self.splashImageView)
-//        NSTimer.scheduledTimerWithTimeInterval(4, target: self, selector: #selector(HomeViewController.stopImageAnimation), userInfo: nil, repeats: false)
-//    }
-//    
-//    func stopImageAnimation() {
-//        dispatch_async(dispatch_get_main_queue()) { [unowned self] in
-//            self.navigationController?.setNavigationBarHidden(false, animated: false)
-//            self.splashImageView.hidden = true
-//            self.homeViewCustomization()
-//        }
-//    }
+    //    func setUpSplashAnimation() {
+    //        self.navigationController?.setNavigationBarHidden(true, animated: false)
+    //        self.splashImageView = UIImageView.init(frame: self.view.frame)
+    //        let url = NSBundle.mainBundle().URLForResource("silly", withExtension: "gif")
+    //        self.splashImageView.image = UIImage.animatedImageWithAnimatedGIFURL(url!)
+    //        self.view.addSubview(self.splashImageView)
+    //        NSTimer.scheduledTimerWithTimeInterval(4, target: self, selector: #selector(HomeViewController.stopImageAnimation), userInfo: nil, repeats: false)
+    //    }
+    //
+    //    func stopImageAnimation() {
+    //        dispatch_async(dispatch_get_main_queue()) { [unowned self] in
+    //            self.navigationController?.setNavigationBarHidden(false, animated: false)
+    //            self.splashImageView.hidden = true
+    //            self.homeViewCustomization()
+    //        }
+    //    }
     
     func homeViewCustomization() {
         self.customizeHeaderView()
@@ -87,8 +89,8 @@ class HomeViewController: UIViewController  ,UITableViewDelegate,UITableViewData
         dispatch_async(dispatch_get_main_queue()) {
             self.designHomeTableView()
             self.customizeSidePanelView()        }
-      
-
+        
+        
     }
     func customizeSidePanelView() {
         self.transparentView = UIView.init(frame: CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height))
@@ -103,38 +105,57 @@ class HomeViewController: UIViewController  ,UITableViewDelegate,UITableViewData
         self.view.addSubview(self.sidePanelView)
     }
     
+    
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        self.isPanelOpened = false
+        self.moveSideBarToXposition(-250, shouldHideBackView: true)
+    }
+    
     func designSidePanel() {
         
         let signFrame : CGRect = CGRectMake(10, 3, self.sidePanelView.frame.size.width-20, 50)
-
         
-       /* self.signInBtn = self.createButton(CGRectMake(10, 5, self.sidePanelView.frame.size.width-20, 50), title: "SIGN IN", tag: 1, bgColor: UIColor.clearColor())
-        self.signInBtn.addTarget(self, action: #selector(HomeViewController.signInAction), forControlEvents: UIControlEvents.TouchUpInside)
-        self.sidePanelView.addSubview(self.signInBtn)*/
+        
+        /* self.signInBtn = self.createButton(CGRectMake(10, 5, self.sidePanelView.frame.size.width-20, 50), title: "SIGN IN", tag: 1, bgColor: UIColor.clearColor())
+         self.signInBtn.addTarget(self, action: #selector(HomeViewController.signInAction), forControlEvents: UIControlEvents.TouchUpInside)
+         self.sidePanelView.addSubview(self.signInBtn)*/
         
         // let profileImage = UIImageView.init(frame: CGRectMake(self.signInBtn.frame.size.width+self.signInBtn.frame.origin.x-80, 0, 70, 70))
         
-        let prjTitle = UILabel(frame: CGRectMake(10, 10,150,50))//CGRectMake(20, 80,140,50)
-        //prjTitle.backgroundColor = UIColor.yellowColor()
-        prjTitle.textAlignment = NSTextAlignment.Right
-        prjTitle.font = UIFont(name: "RobotoCondensed-Bold", size: 25)
-        prjTitle.textColor = UIColor.blackColor()
-        prjTitle.text = "SILLY MONKS"
-        self.sidePanelView.addSubview(prjTitle)
+        //        let prjTitle = UILabel(frame: CGRectMake(10, 10,150,50))//CGRectMake(20, 80,140,50)
+        //        //prjTitle.backgroundColor = UIColor.yellowColor()
+        //        prjTitle.textAlignment = NSTextAlignment.Right
+        //        prjTitle.font = UIFont(name: "RobotoCondensed-Bold", size: 25)
+        //        prjTitle.textColor = UIColor.blackColor()
+        //        prjTitle.text = "SILLY MONKS"
+        //        self.sidePanelView.addSubview(prjTitle)
         
-        let lImageView = UIImageView(frame: CGRectMake(prjTitle.frame.size.width + prjTitle.frame.origin.x, prjTitle.frame.origin.y, 50, 50))
-        lImageView.image = UIImage(named: "smlogo.png")
-        self.sidePanelView.addSubview(lImageView);
-
-       /* let profileImage = UIImageView.init(frame: CGRectMake(signFrame.size.width+signFrame.origin.x-80, 0, 70, 70))
-        profileImage.image = UIImage(named:"smlogo.png")
+        //        let lImageView = UIImageView(frame: CGRectMake(prjTitle.frame.size.width + prjTitle.frame.origin.x, prjTitle.frame.origin.y, 50, 50))
+        //        lImageView.image = UIImage(named: "smlogo.png")
+        //        self.sidePanelView.addSubview(lImageView)
+        
+        let profileImage = UIImageView.init(frame: CGRectMake(5,10,self.sidePanelView.frame.size.width-10, 60))
+        profileImage.image = UIImage(named:"sm_navigation_logo")
         profileImage.layer.cornerRadius = 25
         profileImage.layer.masksToBounds = true
-        self.sidePanelView.addSubview(profileImage)*/
+        self.sidePanelView.addSubview(profileImage)
+        
         
         //self.aboutUsBtn = self.createButton(CGRectMake(10, self.signInBtn.frame.size.height+self.signInBtn.frame.origin.y+5, self.sidePanelView.frame.size.width-20, 50), title: "About Sillymonks", tag: 1, bgColor: UIColor.clearColor())
-
-        self.aboutUsBtn = self.createButton(CGRectMake(10, signFrame.size.height+signFrame.origin.y+5, self.sidePanelView.frame.size.width-20, 50), title: "About Sillymonks", tag: 1, bgColor: UIColor.clearColor())
+        
+        self.profileBtn = self.createButton(CGRectMake(10, signFrame.size.height+signFrame.origin.y+25, self.sidePanelView.frame.size.width-60, 50), title: "SIGN IN", tag: 1, bgColor: UIColor.clearColor())
+        self.profileBtn.addTarget(self, action: #selector(HomeViewController.signInAction), forControlEvents: UIControlEvents.TouchUpInside)
+        self.sidePanelView.addSubview(self.profileBtn)
+        
+        
+        self.profileDPImageView = UIImageView.init(frame: CGRectMake(self.profileBtn.frame.size.width-15,signFrame.size.height+signFrame.origin.y+25,60,60))
+        self.profileDPImageView .image = UIImage(named: "profile_placeholder.png")
+        self.profileDPImageView .layer.cornerRadius = self.profileDPImageView.frame.size.width / 2
+        self.profileDPImageView .clipsToBounds = true
+        self.sidePanelView.addSubview(self.profileDPImageView )
+        
+        
+        self.aboutUsBtn = self.createButton(CGRectMake(10, self.profileBtn.frame.size.height+self.profileBtn.frame.origin.y+5, self.sidePanelView.frame.size.width-20, 50), title: "About Sillymonks", tag: 1, bgColor: UIColor.clearColor())
         self.aboutUsBtn.addTarget(self, action: #selector(HomeViewController.aboutUsAction), forControlEvents: UIControlEvents.TouchUpInside)
         self.sidePanelView.addSubview(self.aboutUsBtn)
         
@@ -149,7 +170,7 @@ class HomeViewController: UIViewController  ,UITableViewDelegate,UITableViewData
         self.advertiseBtn = self.createButton(CGRectMake(10, self.contactUsBtn.frame.size.height+self.contactUsBtn.frame.origin.y+5, self.sidePanelView.frame.size.width-20, 50), title: "Advertise  With Us", tag: 1, bgColor: UIColor.clearColor())
         self.advertiseBtn.addTarget(self, action: #selector(HomeViewController.advertiseWithUsAction), forControlEvents: UIControlEvents.TouchUpInside)
         self.sidePanelView.addSubview(self.advertiseBtn)
-
+        
         
         self.shareAppBtn = self.createButton(CGRectMake(10, self.advertiseBtn.frame.size.height+self.advertiseBtn.frame.origin.y+5, self.sidePanelView.frame.size.width-20, 40), title: "SHARE THE APP", tag: 1, bgColor: UIColor.clearColor())
         self.shareAppBtn.addTarget(self, action: #selector(HomeViewController.shareAppAction), forControlEvents: UIControlEvents.TouchUpInside)
@@ -182,10 +203,11 @@ class HomeViewController: UIViewController  ,UITableViewDelegate,UITableViewData
         let powerLbl = UILabel.init(frame: CGRectMake(10, self.googlePlusButton.frame.size.height+self.googlePlusButton.frame.origin.y+20, 100, 35))
         powerLbl.text = "Powered by"
         powerLbl.font = UIFont(name:"Roboto-Regular",size: 14)
+        powerLbl.textColor = UIColor.grayColor()
         self.sidePanelView.addSubview(powerLbl)
         
-        let logoImage = UIImageView.init(frame: CGRectMake(powerLbl.frame.size.width+powerLbl.frame.origin.x+5, powerLbl.frame.origin.y-10, 120, 50))
-        logoImage.image = UIImage(named: "logo_store.jpg")
+        let logoImage = UIImageView.init(frame: CGRectMake(powerLbl.frame.size.width+powerLbl.frame.origin.x+5, powerLbl.frame.origin.y-10, 110, 40))
+        logoImage.image = UIImage(named: "storeongo_gray.png")
         self.sidePanelView.addSubview(logoImage)
         
     }
@@ -203,16 +225,60 @@ class HomeViewController: UIViewController  ,UITableViewDelegate,UITableViewData
     
     func signInAction() {
         self.panelBtnAction()
-        let signInView = CXProfilePageView.init()
-        self.navigationController?.pushViewController(signInView, animated: true)
+        if NSUserDefaults.standardUserDefaults().valueForKey("USER_ID") != nil {
+            NSLog("it has an userid")
+            self.showAlertView("COMING SOON!!!", status: 0)
+        } else {
+           self.navigationController?.pushViewController(signInView, animated: true)
+        }
     }
+    
+    func profileUpdateNotif(){
+        
+        self.strProfile = NSUserDefaults.standardUserDefaults().valueForKey("PROFILE_PIC") as? String
+        let imgURL: NSURL = NSURL(string: strProfile)!
+        let request: NSURLRequest = NSURLRequest(URL: imgURL)
+        NSURLConnection.sendAsynchronousRequest(
+            request, queue: NSOperationQueue.mainQueue(),
+            completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?) -> Void in
+                if error == nil {
+                    self.profileDPImageView.image = UIImage(data: data!)
+                }
+        })
+        //use this one later to escape the warning!!!!
+        //dataTaskWithRequest(request: NSURLRequest, completionHandler: (NSData?, NSURLResponse?, NSError?) -> Void) -> NSURLSessionDataTask
+    }
+    
+    func profileUpdateAtLogoutNotif(){
+        
+    }
+    
+    
+    
+    func showAlertView(message:String, status:Int) {
+        let alert = UIAlertController(title: "Silly Monks", message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        //alert.addAction(UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default, handler: nil))
+        let okAction = UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default) {
+            UIAlertAction in
+            if status == 1 {
+                //self.navigationController?.popViewControllerAnimated(true)
+            }
+        }
+        alert.addAction(okAction)
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+
+    
+    /*NSNotificationCenter.defaultCenter().postNotificationName("profileUpdate", object: nil)
+     Then I recognized the notification in my viewDidLoad function with this:
+     
+     
+     Then I made this function under my viewDidLoad function:
+     */
+    
     
     func aboutUsAction() {
         self.panelBtnAction()
-
-        let signInView = CXProfilePageView.init()
-        self.navigationController?.pushViewController(signInView, animated: true)
-        return
         let aboutUsView = CXAboutUsViewController.init()
         self.navigationController?.pushViewController(aboutUsView, animated: true)
     }
@@ -242,7 +308,7 @@ class HomeViewController: UIViewController  ,UITableViewDelegate,UITableViewData
         let activityViewController:UIActivityViewController = UIActivityViewController(activityItems: shareItems, applicationActivities: nil)
         activityViewController.excludedActivityTypes = [UIActivityTypePrint, UIActivityTypePostToWeibo, UIActivityTypeCopyToPasteboard, UIActivityTypeAddToReadingList, UIActivityTypePostToVimeo]
         self.presentViewController(activityViewController, animated: true, completion: nil)
- 
+        
     }
     
     func fbAction() {
@@ -295,7 +361,7 @@ class HomeViewController: UIViewController  ,UITableViewDelegate,UITableViewData
         button.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
         return button
     }
-
+    
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -317,7 +383,7 @@ class HomeViewController: UIViewController  ,UITableViewDelegate,UITableViewData
                 let allMalls : CX_AllMalls = element as! CX_AllMalls
                 
                 if orderItem as! String == allMalls.name! {
-                   // print("all mall Category Name \(allMalls.name)");
+                    // print("all mall Category Name \(allMalls.name)");
                     categoryListByorder.addObject(allMalls)
                     break
                 }
@@ -327,7 +393,7 @@ class HomeViewController: UIViewController  ,UITableViewDelegate,UITableViewData
         
         self.categoryList = categoryListByorder
         self.catTableView.reloadData()
-    
+        
     }
     
     func arrangeCategoryListOrder(){
@@ -445,7 +511,7 @@ class HomeViewController: UIViewController  ,UITableViewDelegate,UITableViewData
         tLabel.frame = CGRectMake(0, 0, 120, 40);
         tLabel.backgroundColor = UIColor.clearColor()
         tLabel.font = UIFont.init(name: "Roboto-Bold", size: 18)
-        tLabel.text = "Silly Monks"
+        tLabel.text = "Sislly Monks"
         tLabel.textAlignment = NSTextAlignment.Center
         tLabel.textColor = UIColor.whiteColor()
         self.navigationItem.titleView = tLabel
@@ -467,7 +533,7 @@ class HomeViewController: UIViewController  ,UITableViewDelegate,UITableViewData
         self.catTableView.contentInset = UIEdgeInsetsMake(yAxis, 0,60, 0)//-10
         self.catTableView.rowHeight = UITableViewAutomaticDimension
         
-        self.view.addSubview(self.catTableView)        
+        self.view.addSubview(self.catTableView)
     }
     
     func customizeRefreshController() {
@@ -485,13 +551,13 @@ class HomeViewController: UIViewController  ,UITableViewDelegate,UITableViewData
     }
     
     func refreshAction() {
-       // print("Screen refreshing")
+        // print("Screen refreshing")
     }
     
-
+    
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-     return self.categoryList.count
+        return self.categoryList.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -517,7 +583,7 @@ class HomeViewController: UIViewController  ,UITableViewDelegate,UITableViewData
     }
     
     //MARK: Arrange The Order
-
+    
     
 }
 
@@ -525,8 +591,8 @@ class HomeViewController: UIViewController  ,UITableViewDelegate,UITableViewData
 extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(collectionView: UICollectionView,
-        numberOfItemsInSection section: Int) -> Int {
-            return 1;
+                        numberOfItemsInSection section: Int) -> Int {
+        return 1;
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
@@ -575,7 +641,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             let singleMalls = CXDBSettings.sharedInstance.getSingleMalls(allMall.mid!)
             let singleMall:CX_SingleMall = singleMalls[0] as! CX_SingleMall
             cell.imageView.sd_setImageWithURL(NSURL(string:singleMall.coverImage!)!, placeholderImage: UIImage(named: "smlogo.png"), options:SDWebImageOptions.RefreshCached)
-            cell.textLabel.text = allMall.name
+            //cell.textLabel.text = allMall.name
         } else {
             cell.activity.stopActivity()
             cell.activity.hidden = true

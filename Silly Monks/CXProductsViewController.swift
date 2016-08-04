@@ -8,13 +8,19 @@
 
 import UIKit
 import SDWebImage
+import mopub_ios_sdk
+import CoreLocation
+import LocationManager
 
-class CXProductsViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
+class CXProductsViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,MPTableViewAdPlacerDelegate, MPInterstitialAdControllerDelegate {
     
     var mall: CX_AllMalls!
     var products: NSMutableArray!
     var productCategory: CX_Product_Category!
     var headerTitle:String!
+    var placer: MPTableViewAdPlacer!
+    var objects = [AnyObject]()
+
     
     var productsTableView:UITableView!
 
@@ -25,6 +31,68 @@ class CXProductsViewController: UIViewController,UITableViewDelegate,UITableView
 
         // Do any additional setup after loading the view.
     }
+    
+    //MARK: Add mopubs
+    
+    func setUpmopubs(){
+        
+        self.setupAdPlacer()
+        
+        // Data must be pre-populated into table for ads to appear
+        for _ in 1...10 {
+            self.insertNewObject(self)
+        }
+
+    }
+    
+    func insertNewObject(sender: AnyObject) {
+        objects.insert(NSDate(), atIndex: 0)
+        let indexPath = NSIndexPath(forRow: 0, inSection: 0)
+        self.productsTableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+        
+        // TODO: Depending on your use of UITableView, you will need to
+        // add "mp_" to other method calls in addition to this one.
+        // See http://t.co/mopub-ios-native-category for a list of
+        // required replacements.
+        self.productsTableView.mp_insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+    }
+
+    
+    func setupAdPlacer() {
+        let targeting: MPNativeAdRequestTargeting! = MPNativeAdRequestTargeting()
+        // TODO: Use the device's location
+        targeting.location = CLLocation(latitude: 17.3850, longitude: 78.4867)
+        
+       /* LocationManager.getCurrentLocation().then { location in
+            // targeting.location = CLLocation(latitude: 17.3850, longitude: 78.4867)
+
+            targeting.location = CLLocation(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+            }.error { error in
+        }*/
+        
+        targeting.desiredAssets = Set([kAdIconImageKey, kAdMainImageKey, kAdCTATextKey, kAdTextKey, kAdTitleKey])
+        
+        let settings = MPStaticNativeAdRendererSettings()
+        // TODO: Create your own UIView subclass that implements MPNativeAdRendering
+        settings.renderingViewClass = NativeAdCell.self
+        // TODO: Calculate the size of your ad cell given a maximum width
+        settings.viewSizeHandler = {(maxWidth: CGFloat) -> CGSize in
+            return CGSizeMake(maxWidth, 300);
+        };
+        
+        let config = MPStaticNativeAdRenderer.rendererConfigurationWithRendererSettings(settings)
+        
+        // TODO: Create your own UITableViewCell subclass that implements MPNativeAdRendering
+        self.placer = MPTableViewAdPlacer(tableView: self.productsTableView, viewController: self, rendererConfigurations: [config])
+        
+        // We have configured the test ad unit ID to place ads at fixed
+        // cell positions 2 and 10 and show an ad every 10 cells after
+        // that.
+        //
+        // TODO: Replace this test id with your personal ad unit id
+        self.placer.loadAdsForAdUnitID(CXConstant.NATIVEADD_UNITI_ID, targeting: targeting)
+    }
+
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -68,6 +136,8 @@ class CXProductsViewController: UIViewController,UITableViewDelegate,UITableView
         let screenWidth = UIScreen.mainScreen().bounds.size.width
         self.productsTableView = self.customizeTableView(CGRectMake(0, 0,screenWidth, self.view.frame.size.height))
         self.view.addSubview(self.productsTableView)
+        self.setUpmopubs()
+
     }
 
     func customizeTableView(tFrame: CGRect) -> UITableView {
@@ -92,8 +162,9 @@ class CXProductsViewController: UIViewController,UITableViewDelegate,UITableView
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let identifier = "ProductCell"
-        
-        var cell: CXProcuctTableViewCell! = tableView.dequeueReusableCellWithIdentifier(identifier) as? CXProcuctTableViewCell
+        //        let cell = tableView.mp_dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! UITableViewCell
+
+        var cell: CXProcuctTableViewCell! =  tableView.mp_dequeueReusableCellWithIdentifier("ProductCell", forIndexPath: indexPath) as? CXProcuctTableViewCell
         if cell == nil {
             tableView.registerNib(UINib(nibName: "CXProcuctTableViewCell", bundle: nil), forCellReuseIdentifier: identifier)
             cell = tableView.dequeueReusableCellWithIdentifier(identifier) as? CXProcuctTableViewCell
@@ -158,3 +229,11 @@ class CXProductsViewController: UIViewController,UITableViewDelegate,UITableView
     */
 
 }
+
+//extension CXProductsViewController : MPTableViewAdPlacerDelegate{
+//    
+//
+//    
+//    
+//    
+//}

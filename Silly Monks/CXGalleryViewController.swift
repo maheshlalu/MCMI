@@ -8,8 +8,11 @@
 
 import UIKit
 import SDWebImage
+import mopub_ios_sdk
+import CoreLocation
+import LocationManager
 
-class CXGalleryViewController: UIViewController,UICollectionViewDataSource, UICollectionViewDelegate,CHTCollectionViewDelegateWaterfallLayout {
+class CXGalleryViewController: UIViewController,UICollectionViewDataSource, UICollectionViewDelegate,CHTCollectionViewDelegateWaterfallLayout,MPTableViewAdPlacerDelegate, MPInterstitialAdControllerDelegate {
     
     var galleryCollectionView: UICollectionView!
     var spinner:DTIActivityIndicatorView!

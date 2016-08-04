@@ -41,7 +41,9 @@ class CXProfilePageView: UIViewController, EVTabBar  {
         topTabBar.setupUI()
         topTabBar.delegate = self
         let firstVC = SMProfileViewController(nibName:"SMProfileViewController", bundle: nil)
-        let secondVC = UserFavoritesViewController(nibName:"UserFavoritesViewController", bundle: nil)
+        let secondVC = UserFavoritesViewController(nibName:"SMUserFavoritesViewController", bundle: nil)
+
+       // let secondVC = UserFavoritesViewController(nibName:"SMUserFavoritesViewController", bundle: nil)
         subviewControllers = [firstVC, secondVC]
     }
     /*

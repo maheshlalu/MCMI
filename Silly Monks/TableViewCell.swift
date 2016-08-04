@@ -34,21 +34,28 @@ class TableViewCell: UITableViewCell {
     func designBackGroundView(){
         
         // backGrooundView.frame = CGRectMake(0, 5, UIScreen.mainScreen().bounds.size.width, CXConstant.tableViewHeigh-10);// x-8
-        backGrooundView.frame = CGRectMake(0, 5, UIScreen.mainScreen().bounds.size.width, CXConstant.tableViewHeigh-10);// x-8
-        backgroundView?.layer.cornerRadius = 1.0
-        backgroundView?.layer.borderWidth = 1.0
-        backgroundView?.layer.borderColor = UIColor.grayColor().CGColor
-        backGrooundView.backgroundColor = UIColor.whiteColor()//UIColor.whiteColor()
+        
+        
+           // backGrooundView.frame = CGRectMake(20, 0, UIScreen.mainScreen().bounds.size.width-40,200);
+            backGrooundView.frame = CGRectMake(20, 0, UIScreen.mainScreen().bounds.size.width-40, CXConstant.tableViewHeigh-10);// x-8
+        
+//        backgroundView?.layer.cornerRadius = 1.0
+//        backgroundView?.layer.borderWidth = 1.0
+//        backgroundView?.layer.borderColor = UIColor.blueColor().CGColor
+        backGrooundView.layer.cornerRadius = 1.0
+        backGrooundView.layer.borderWidth = 1.0
+        backGrooundView.layer.borderColor = UIColor.grayColor().CGColor
+        backGrooundView.backgroundColor = UIColor.whiteColor()
         self.contentView.addSubview(backGrooundView)
         
         //Title Lbl
         
-        cellTitlelbl.frame = CGRectMake(0, -20, UIScreen.mainScreen().bounds.size.width-20, 70)
-        //cellTitlelbl.text = "Tollywood News"
+        cellTitlelbl.frame = CGRectMake(-10,-20, UIScreen.mainScreen().bounds.size.width, 70)
+        cellTitlelbl.text = "Tollywood News"
         cellTitlelbl.font = UIFont.boldSystemFontOfSize(15)
         cellTitlelbl.textAlignment = NSTextAlignment.Center;
-        cellTitlelbl.textColor = CXConstant.titleLabelColor
-        //backGrooundView.addSubview(cellTitlelbl)
+        cellTitlelbl.textColor = UIColor.grayColor()
+        backGrooundView.addSubview(cellTitlelbl)
         
         //CeolectionView
     }

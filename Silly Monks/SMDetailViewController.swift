@@ -69,9 +69,9 @@ class SMDetailViewController: UIViewController, FloatRatingViewDelegate,UITableV
         self.navigationController?.navigationBar.translucent = false;
         self.navigationController?.navigationBar.barTintColor = UIColor.navBarColor()
         
-        let lImage = UIImage(named: "smlogo.png") as UIImage?
+        let lImage = UIImage(named: "left_aarow.png") as UIImage?
         let button = UIButton (type: UIButtonType.Custom) as UIButton
-        button.frame = CGRectMake(0, 0, 50, 50)
+        button.frame = CGRectMake(0, 0, 40, 40)
         button.setImage(lImage, forState: .Normal)
         button.addTarget(self, action: #selector(SMDetailViewController.backAction), forControlEvents: .TouchUpInside)
         self.navigationItem.leftBarButtonItem = UIBarButtonItem.init(customView: button)

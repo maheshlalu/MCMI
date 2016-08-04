@@ -13,8 +13,20 @@
 		3B5FCCFE1D4B2AC80068990A /* CXProfilePageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5FCCFD1D4B2AC80068990A /* CXProfilePageView.swift */; };
 		3B5FCD031D4B30970068990A /* SMProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5FCCFF1D4B30970068990A /* SMProfileViewController.swift */; };
 		3B5FCD041D4B30970068990A /* SMProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B5FCD001D4B30970068990A /* SMProfileViewController.xib */; };
-		3B5FCD051D4B30970068990A /* UserFavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5FCD011D4B30970068990A /* UserFavoritesViewController.swift */; };
-		3B5FCD061D4B30970068990A /* UserFavoritesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B5FCD021D4B30970068990A /* UserFavoritesViewController.xib */; };
+		3B5FCD051D4B30970068990A /* SMUserFavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5FCD011D4B30970068990A /* SMUserFavoritesViewController.swift */; };
+		3B5FCD061D4B30970068990A /* SMUserFavoritesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B5FCD021D4B30970068990A /* SMUserFavoritesViewController.xib */; };
+		434C3D531D4B702400752805 /* SMFavoritesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434C3D511D4B702400752805 /* SMFavoritesCell.swift */; };
+		434C3D541D4B702400752805 /* SMFavoritesCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 434C3D521D4B702400752805 /* SMFavoritesCell.xib */; };
+		434C3D591D4B7B9C00752805 /* eega.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 434C3D571D4B7B9C00752805 /* eega.jpg */; };
+		434C3D5D1D4B7BE500752805 /* paatshala.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 434C3D5C1D4B7BE500752805 /* paatshala.jpeg */; };
+		434C3D5F1D4B872F00752805 /* Dikkulu_Choodaku_Ramayya.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 434C3D5E1D4B872F00752805 /* Dikkulu_Choodaku_Ramayya.jpg */; };
+		434C3D611D4B878D00752805 /* Oohalu Gusagusalade.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 434C3D601D4B878D00752805 /* Oohalu Gusagusalade.jpg */; };
+		4354B9151D4F235000A435D2 /* profile_placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 4354B9141D4F235000A435D2 /* profile_placeholder.png */; };
+		4354B9171D4F235500A435D2 /* sm_navigation_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 4354B9161D4F235500A435D2 /* sm_navigation_logo.png */; };
+		4354B9191D4F235A00A435D2 /* storeongo_gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 4354B9181D4F235A00A435D2 /* storeongo_gray.png */; };
+		43B2125D1D535A83006D49C8 /* NativeAdCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43B2125C1D535A83006D49C8 /* NativeAdCell.swift */; };
+		43B2125F1D535C78006D49C8 /* NativeAdCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 43B2125E1D535C78006D49C8 /* NativeAdCell.xib */; };
+		43B212611D5376F0006D49C8 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43B212601D5376F0006D49C8 /* CoreLocation.framework */; };
 		69023AD21C9BC6CF003F8245 /* Roboto-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 69023ACC1C9BC4AC003F8245 /* Roboto-Black.ttf */; };
 		69023AD31C9BC6CF003F8245 /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 69023ACD1C9BC4AC003F8245 /* Roboto-Bold.ttf */; };
 		69023AD41C9BC6CF003F8245 /* Roboto-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 69023ACE1C9BC4AC003F8245 /* Roboto-Italic.ttf */; };
@@ -122,8 +134,20 @@
 		3B5FCCFD1D4B2AC80068990A /* CXProfilePageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CXProfilePageView.swift; sourceTree = "<group>"; };
 		3B5FCCFF1D4B30970068990A /* SMProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SMProfileViewController.swift; sourceTree = "<group>"; };
 		3B5FCD001D4B30970068990A /* SMProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SMProfileViewController.xib; sourceTree = "<group>"; };
-		3B5FCD011D4B30970068990A /* UserFavoritesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserFavoritesViewController.swift; sourceTree = "<group>"; };
-		3B5FCD021D4B30970068990A /* UserFavoritesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserFavoritesViewController.xib; sourceTree = "<group>"; };
+		3B5FCD011D4B30970068990A /* SMUserFavoritesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SMUserFavoritesViewController.swift; sourceTree = "<group>"; };
+		3B5FCD021D4B30970068990A /* SMUserFavoritesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SMUserFavoritesViewController.xib; sourceTree = "<group>"; };
+		434C3D511D4B702400752805 /* SMFavoritesCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SMFavoritesCell.swift; sourceTree = "<group>"; };
+		434C3D521D4B702400752805 /* SMFavoritesCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SMFavoritesCell.xib; sourceTree = "<group>"; };
+		434C3D571D4B7B9C00752805 /* eega.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = eega.jpg; sourceTree = "<group>"; };
+		434C3D5C1D4B7BE500752805 /* paatshala.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = paatshala.jpeg; sourceTree = "<group>"; };
+		434C3D5E1D4B872F00752805 /* Dikkulu_Choodaku_Ramayya.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Dikkulu_Choodaku_Ramayya.jpg; sourceTree = "<group>"; };
+		434C3D601D4B878D00752805 /* Oohalu Gusagusalade.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Oohalu Gusagusalade.jpg"; sourceTree = "<group>"; };
+		4354B9141D4F235000A435D2 /* profile_placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = profile_placeholder.png; sourceTree = "<group>"; };
+		4354B9161D4F235500A435D2 /* sm_navigation_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sm_navigation_logo.png; sourceTree = "<group>"; };
+		4354B9181D4F235A00A435D2 /* storeongo_gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = storeongo_gray.png; sourceTree = "<group>"; };
+		43B2125C1D535A83006D49C8 /* NativeAdCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NativeAdCell.swift; sourceTree = "<group>"; };
+		43B2125E1D535C78006D49C8 /* NativeAdCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NativeAdCell.xib; sourceTree = "<group>"; };
+		43B212601D5376F0006D49C8 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		5FEF1C9ABFDEED1E328FD320 /* Pods-Silly Monks.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Silly Monks.release.xcconfig"; path = "Pods/Target Support Files/Pods-Silly Monks/Pods-Silly Monks.release.xcconfig"; sourceTree = "<group>"; };
 		69023ACC1C9BC4AC003F8245 /* Roboto-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Roboto-Black.ttf"; path = "Fonts/Roboto-Black.ttf"; sourceTree = "<group>"; };
 		69023ACD1C9BC4AC003F8245 /* Roboto-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Roboto-Bold.ttf"; path = "Fonts/Roboto-Bold.ttf"; sourceTree = "<group>"; };
@@ -236,6 +260,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				43B212611D5376F0006D49C8 /* CoreLocation.framework in Frameworks */,
 				69270CAE1CEB92C6006F93BC /* FBSDKShareKit.framework in Frameworks */,
 				C2C8302D3C8E03BECC401CD4 /* Pods_Silly_Monks.framework in Frameworks */,
 				69270CAC1CEB92C6006F93BC /* FBSDKCoreKit.framework in Frameworks */,
@@ -273,13 +298,36 @@
 		3B5FCCFC1D4B2A790068990A /* SMProfile */ = {
 			isa = PBXGroup;
 			children = (
+				434C3D551D4B7B7B00752805 /* images */,
 				3B5FCCFF1D4B30970068990A /* SMProfileViewController.swift */,
 				3B5FCD001D4B30970068990A /* SMProfileViewController.xib */,
-				3B5FCD011D4B30970068990A /* UserFavoritesViewController.swift */,
-				3B5FCD021D4B30970068990A /* UserFavoritesViewController.xib */,
+				3B5FCD011D4B30970068990A /* SMUserFavoritesViewController.swift */,
+				3B5FCD021D4B30970068990A /* SMUserFavoritesViewController.xib */,
 				3B5FCCFD1D4B2AC80068990A /* CXProfilePageView.swift */,
+				434C3D511D4B702400752805 /* SMFavoritesCell.swift */,
+				434C3D521D4B702400752805 /* SMFavoritesCell.xib */,
 			);
 			name = SMProfile;
+			sourceTree = "<group>";
+		};
+		434C3D551D4B7B7B00752805 /* images */ = {
+			isa = PBXGroup;
+			children = (
+				434C3D601D4B878D00752805 /* Oohalu Gusagusalade.jpg */,
+				434C3D5E1D4B872F00752805 /* Dikkulu_Choodaku_Ramayya.jpg */,
+				434C3D5C1D4B7BE500752805 /* paatshala.jpeg */,
+				434C3D571D4B7B9C00752805 /* eega.jpg */,
+			);
+			name = images;
+			sourceTree = "<group>";
+		};
+		43B212551D535275006D49C8 /* Ads */ = {
+			isa = PBXGroup;
+			children = (
+				43B2125C1D535A83006D49C8 /* NativeAdCell.swift */,
+				43B2125E1D535C78006D49C8 /* NativeAdCell.xib */,
+			);
+			name = Ads;
 			sourceTree = "<group>";
 		};
 		69023ACB1C9BC47F003F8245 /* Fonts */ = {
@@ -433,6 +481,7 @@
 		69F89E1F1C9915150032F68D /* Silly Monks */ = {
 			isa = PBXGroup;
 			children = (
+				43B212551D535275006D49C8 /* Ads */,
 				3B5FCCFC1D4B2A790068990A /* SMProfile */,
 				6909027E1CF9FBED00E19885 /* GIF */,
 				69C5C2371CECDC1B00B7BF92 /* GoogleService-Info.plist */,
@@ -482,8 +531,11 @@
 		69F89E371C991F930032F68D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				4354B9141D4F235000A435D2 /* profile_placeholder.png */,
 				69A8116F1CF0AB6B00F71F93 /* write_coment.png */,
 				69EFC8001CE8A1F900862AF6 /* down_icon.png */,
+				4354B9181D4F235A00A435D2 /* storeongo_gray.png */,
+				4354B9161D4F235500A435D2 /* sm_navigation_logo.png */,
 				69EFC7FE1CE89AA300862AF6 /* left_aarow.png */,
 				697293A21CC9623900E8BC1D /* star_sel_108.png */,
 				697293A31CC9623900E8BC1D /* star_unsel_108.png */,
@@ -528,6 +580,7 @@
 		A3DC9D15DAD3E826B42D6DA5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				43B212601D5376F0006D49C8 /* CoreLocation.framework */,
 				30F7C9EA364A1853E11F23B8 /* Pods_Silly_Monks.framework */,
 			);
 			name = Frameworks;
@@ -559,6 +612,7 @@
 				B63240C25024DC5FDF479E13 /* 📦 Embed Pods Frameworks */,
 				77073410BD166E5C60D32312 /* 📦 Copy Pods Resources */,
 				2A33556566642055C58A1DA3 /* Embed Pods Frameworks */,
+				43B212541D533F7B006D49C8 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -608,6 +662,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4354B9151D4F235000A435D2 /* profile_placeholder.png in Resources */,
 				69714A1A1C9FCA7C00B20EDA /* RobotoCondensed-Bold.ttf in Resources */,
 				69714A1B1C9FCA7C00B20EDA /* RobotoCondensed-Light.ttf in Resources */,
 				6908913F1CFCBCEC0063222F /* Facebook.png in Resources */,
@@ -615,15 +670,21 @@
 				690891411CFCBCEC0063222F /* Twitter.png in Resources */,
 				6917AFDD1CE87B0700281E36 /* lock_icon.png in Resources */,
 				69023AD21C9BC6CF003F8245 /* Roboto-Black.ttf in Resources */,
+				434C3D591D4B7B9C00752805 /* eega.jpg in Resources */,
 				697293A91CC9626200E8BC1D /* comments_108.png in Resources */,
 				697293AD1CC9627400E8BC1D /* favourite_unsel_108.png in Resources */,
 				6909027D1CF9FB3600E19885 /* silly.gif in Resources */,
 				69023AD31C9BC6CF003F8245 /* Roboto-Bold.ttf in Resources */,
+				434C3D5F1D4B872F00752805 /* Dikkulu_Choodaku_Ramayya.jpg in Resources */,
+				4354B9171D4F235500A435D2 /* sm_navigation_logo.png in Resources */,
 				69023AD41C9BC6CF003F8245 /* Roboto-Italic.ttf in Resources */,
 				3B5FCD041D4B30970068990A /* SMProfileViewController.xib in Resources */,
 				694769631CCBEC2F00878BF9 /* play_shadow.png in Resources */,
 				69F9D3301C9C88D100E2A288 /* men_icon.png in Resources */,
+				434C3D5D1D4B7BE500752805 /* paatshala.jpeg in Resources */,
+				434C3D541D4B702400752805 /* SMFavoritesCell.xib in Resources */,
 				69023AD51C9BC6CF003F8245 /* Roboto-Light.ttf in Resources */,
+				434C3D611D4B878D00752805 /* Oohalu Gusagusalade.jpg in Resources */,
 				69023AD61C9BC6CF003F8245 /* Roboto-Medium.ttf in Resources */,
 				69EFC7FF1CE89AA300862AF6 /* left_aarow.png in Resources */,
 				69A811701CF0AB6B00F71F93 /* write_coment.png in Resources */,
@@ -634,11 +695,13 @@
 				697293AC1CC9627400E8BC1D /* favourite_sel_108.png in Resources */,
 				69EFC8011CE8A1F900862AF6 /* down_icon.png in Resources */,
 				69F89E2B1C9915150032F68D /* Assets.xcassets in Resources */,
+				43B2125F1D535C78006D49C8 /* NativeAdCell.xib in Resources */,
 				697858D61CB6252700AC5784 /* sm_right_pic.png in Resources */,
 				694769621CCBEC2F00878BF9 /* play.png in Resources */,
 				69076FD81CAA35060028A8A0 /* smnocover.png in Resources */,
 				690891431CFCBD660063222F /* logo_store.jpg in Resources */,
-				3B5FCD061D4B30970068990A /* UserFavoritesViewController.xib in Resources */,
+				3B5FCD061D4B30970068990A /* SMUserFavoritesViewController.xib in Resources */,
+				4354B9191D4F235A00A435D2 /* storeongo_gray.png in Resources */,
 				69FFD6961CA0679100B20D66 /* smhome_icon.png in Resources */,
 				69F89E361C991F8F0032F68D /* smlogo.png in Resources */,
 				697293A71CC9625000E8BC1D /* share_108.png in Resources */,
@@ -693,6 +756,19 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
+		};
+		43B212541D533F7B006D49C8 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Fabric/run\" 84c8d06cc3f7651784b94de5de1c21ff0809f47b 3f3847533ddfd27728140b1d24a8bc96602139fdb28f8d8c2bbbe94f48bd3a96";
 		};
 		77073410BD166E5C60D32312 /* 📦 Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -766,9 +842,11 @@
 				695E40F51C9A7945003466B4 /* ENSideMenu.swift in Sources */,
 				690891391CFCB7AC0063222F /* CXContactUsViewController.swift in Sources */,
 				697858D41CB614F100AC5784 /* CXSignInSignUpViewController.swift in Sources */,
+				434C3D531D4B702400752805 /* SMFavoritesCell.swift in Sources */,
 				69B35BBD1CA8ED0D00E6433F /* CX_AllMalls+CoreDataProperties.swift in Sources */,
 				6905335C1CA111990094D272 /* DTIAnimWave.swift in Sources */,
 				691998C91CED93A200B08423 /* CX_Products.swift in Sources */,
+				43B2125D1D535A83006D49C8 /* NativeAdCell.swift in Sources */,
 				69C129A61CA4FF1E00C566DC /* CXBannerView.swift in Sources */,
 				69FD29C61CA23DF0005DB4BA /* SMSyncService.swift in Sources */,
 				69EFC7FD1CE898CE00862AF6 /* CXImageViewController.swift in Sources */,
@@ -776,7 +854,7 @@
 				690533591CA111990094D272 /* DTIAnimRotatingPlane.swift in Sources */,
 				6972CB2F1D031D5A009A2746 /* CXProductsViewController.swift in Sources */,
 				692102D71CEE40BC009F32FF /* CXCommentViewController.swift in Sources */,
-				3B5FCD051D4B30970068990A /* UserFavoritesViewController.swift in Sources */,
+				3B5FCD051D4B30970068990A /* SMUserFavoritesViewController.swift in Sources */,
 				69F5FF2C1CBE148C0018E739 /* CX_Product_Category+CoreDataProperties.swift in Sources */,
 				690533541CA111990094D272 /* DTIActivityIndicatorView.swift in Sources */,
 				6908913B1CFCB7B70063222F /* CXTermsAndConditionsViewController.swift in Sources */,

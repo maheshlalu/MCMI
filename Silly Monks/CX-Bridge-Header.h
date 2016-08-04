@@ -57,6 +57,5 @@
 
 
 #import <SDWebImage/UIView+WebCacheOperation.h>
-
-
+ #import <mopub_ios_sdk/MoPub-Bridging-Header.h>
 #endif /* CX_Bridge_Header_h */

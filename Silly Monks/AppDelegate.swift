@@ -11,22 +11,25 @@ import CoreData
 import AVFoundation
 import FBSDKCoreKit
 import MagicalRecord
-
+import Fabric
+import mopub_ios_sdk
 
 @UIApplicationMain
+
 class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate{
 
     var window: UIWindow?
     var restrictRotation: Bool = true
     var splashImageView: UIImageView!
 
-
+   
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         //self.window?.backgroundColor = UIColor.yellowColor()
         //NSThread.sleepForTimeInterval(10)
         
         self.setUpMagicalDB()
+        self.setupMopupbs()
         
         let wFrame = CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, UIScreen.mainScreen().bounds.size.height)
         self.window = UIWindow.init(frame: wFrame)
@@ -89,6 +92,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate{
        //[NSPersistentStore MR_urlForStoreName:[MagicalRecord defaultStoreName]]
         
         return true
+    }
+    
+    func setupMopupbs(){
+        Fabric.with([MoPub.self])
     }
     
     func setUpMagicalDB() {

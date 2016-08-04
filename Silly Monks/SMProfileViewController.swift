@@ -10,10 +10,6 @@ import UIKit
 
 class SMProfileViewController: UIViewController {
     
-    @IBOutlet weak var myProfileView: UIView!
-    @IBOutlet weak var favoriteView: UIView!
-    
-    @IBOutlet weak var viewTabButtons: UIView!
     
     @IBOutlet weak var profileImageView: UIImageView!
     
@@ -22,27 +18,20 @@ class SMProfileViewController: UIViewController {
         
     }
     
-    @IBAction func myProfileBtnAction(sender: AnyObject) {
-        
-        
-        
-    }
-    
-    @IBAction func favoritesBtnAction(sender: AnyObject) {
-        
-        let favoritesViewController = UserFavoritesViewController(nibName: "UserFavoritesViewController", bundle: nil)
-        self.navigationController?.pushViewController(favoritesViewController, animated: true)
-        
-    }
+       
+//    @IBAction func favoritesBtnAction(sender: AnyObject) {
+//        
+//        let favoritesViewController = UserFavoritesViewController(nibName: "UserFavoritesViewController", bundle: nil)
+//        self.navigationController?.pushViewController(favoritesViewController, animated: true)
+//        
+//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-
         profileImageView.layer.cornerRadius = profileImageView.frame.size.height / 2
         profileImageView.layer.masksToBounds = true
         profileImageView.clipsToBounds = true
-
 
         
         // Do any additional setup after loading the view.

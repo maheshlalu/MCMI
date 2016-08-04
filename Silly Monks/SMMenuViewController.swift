@@ -83,11 +83,12 @@ public class SMMenuViewController: UIViewController, UITableViewDelegate,UITable
         
         let powerLbl = UILabel.init(frame: CGRectMake(10, self.menuTableView.frame.size.height+self.menuTableView.frame.origin.y, 80, 35))
         powerLbl.text = "Powered by"
+        powerLbl.textColor = UIColor.grayColor()
         powerLbl.font = UIFont(name:"Roboto-Regular",size: 14)
         self.view.addSubview(powerLbl)
         
         let logoImage = UIImageView.init(frame: CGRectMake(powerLbl.frame.size.width+powerLbl.frame.origin.x+5, powerLbl.frame.origin.y-10, 120, 50))
-        logoImage.image = UIImage(named: "logo_store.jpg")
+        logoImage.image = UIImage(named: "storeongo_gray.png")
         self.view.addSubview(logoImage)
     }
     
