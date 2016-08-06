@@ -85,6 +85,7 @@ class CXProductsViewController: UIViewController,UITableViewDelegate,UITableView
         // TODO: Create your own UITableViewCell subclass that implements MPNativeAdRendering
         self.placer = MPTableViewAdPlacer(tableView: self.productsTableView, viewController: self, rendererConfigurations: [config])
         
+        
         // We have configured the test ad unit ID to place ads at fixed
         // cell positions 2 and 10 and show an ad every 10 cells after
         // that.

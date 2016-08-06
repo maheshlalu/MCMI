@@ -52,7 +52,6 @@ class HomeViewController: UIViewController  ,UITableViewDelegate,UITableViewData
         self.homeViewCustomization()
         CXDBSettings.sharedInstance.delegate = self
         self.arrangeCategoryListOrder()
-        
         NSNotificationCenter.defaultCenter().addObserver(self, selector:Selector(profileUpdateNotif()), name: "UpdateProfilePic", object: nil)
         
     }
@@ -80,18 +79,30 @@ class HomeViewController: UIViewController  ,UITableViewDelegate,UITableViewData
         self.imageCache = NSCache.init()
         self.view.backgroundColor = UIColor.smBackgroundColor()
         self.activityIndicatorView = DTIActivityIndicatorView(frame: CGRect(x:150.0, y:200.0, width:60.0, height:60.0))
-        if CXDBSettings.sharedInstance.getAllMallsInDB().count == 0 {
-            self.view.addSubview(self.activityIndicatorView)
-            self.initialSync()
-        } else {
-            self.getCategoryItems()
+        
+        if CXDBSettings.sharedInstance.isToday() {
+            //If this condition was satisfied no need to get the all malls
+            if CXDBSettings.sharedInstance.getAllMallsInDB().count == 0 {
+                self.view.addSubview(self.activityIndicatorView)
+                self.initialSync()
+            } else {
+                self.getCategoryItems()
+            }
+        }else{
+            print("get the lates data ")
+            //Remove the data in CX_AllMalls and clear the cache data only for all malls 
+            CX_AllMalls.MR_truncateAll()
+             self.initialSync()
         }
+
         dispatch_async(dispatch_get_main_queue()) {
             self.designHomeTableView()
             self.customizeSidePanelView()        }
         
         
     }
+
+    
     func customizeSidePanelView() {
         self.transparentView = UIView.init(frame: CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height))
         self.transparentView.backgroundColor = UIColor.blackColor()
@@ -234,7 +245,7 @@ class HomeViewController: UIViewController  ,UITableViewDelegate,UITableViewData
     }
     
     func profileUpdateNotif(){
-        
+        //  self.profileBtn
         self.strProfile = NSUserDefaults.standardUserDefaults().valueForKey("PROFILE_PIC") as? String
         let imgURL: NSURL = NSURL(string: strProfile)!
         let request: NSURLRequest = NSURLRequest(URL: imgURL)
@@ -413,6 +424,7 @@ class HomeViewController: UIViewController  ,UITableViewDelegate,UITableViewData
         SMSyncService.sharedInstance.startSyncProcessWithUrl(CXConstant.ALL_MALLS_URL) { (responseDict) -> Void in
             CXDBSettings.sharedInstance.saveAllMallsInDB((responseDict.valueForKey("orgs") as? NSArray)!)
         }
+        CXDBSettings.sharedInstance.saveTheIntialSyncDate()
     }
     
     func didFinishAllMallsSaving() {
@@ -651,4 +663,6 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     
     
 }
+
+
 

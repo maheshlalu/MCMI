@@ -42,6 +42,24 @@ class CXDBSettings: NSObject {
         _SingletonSharedInstance = nil
     }
     
+    func saveTheIntialSyncDate(){
+        
+        let date = NSDate()
+        NSUserDefaults.standardUserDefaults().setObject(date, forKey: "dataSyncDate")
+        
+    }
+    
+    func isToday() -> Bool{
+        
+        let syncDate = NSUserDefaults.standardUserDefaults().valueForKey("dataSyncDate") as? NSDate
+        if syncDate == nil {
+            return false
+        }
+        let calendar = NSCalendar.currentCalendar()
+        let isYesterday :Bool = calendar.isDateInYesterday(syncDate!)
+        return !isYesterday
+    }
+    
     func saveAllMallsInDB(allMallsResponseArray:NSArray) {
         //print("All malls to save DB\(allMallsResponseArray)")
         if self.getAllMallsInDB().count == 0 {

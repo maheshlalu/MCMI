@@ -23,6 +23,9 @@ class CXGalleryViewController: UIViewController,UICollectionViewDataSource, UICo
     var imagesCache: NSCache = NSCache()
     var imagesDict:NSMutableDictionary = NSMutableDictionary()
     
+    var placer: MPCollectionViewAdPlacer!
+    var objects = [AnyObject]()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.smBackgroundColor()
@@ -88,6 +91,8 @@ class CXGalleryViewController: UIViewController,UICollectionViewDataSource, UICo
         self.view.addSubview(self.galleryCollectionView)
         
          self.activityIndicatorView.stopActivity()
+        self.setUpmopubs()
+
     }
     
     override func didReceiveMemoryWarning() {
@@ -210,6 +215,76 @@ class CXGalleryViewController: UIViewController,UICollectionViewDataSource, UICo
         let imgSize = gImage.size
         return imgSize
     }
+    
+    
+    //MARK: Setup the Mopubs
+    
+    func setUpmopubs(){
+        
+        self.setupAdPlacer()
+        
+        // Data must be pre-populated into table for ads to appear
+        for _ in 1...10 {
+            self.insertNewObject(self)
+        }
+        
+    }
+    
+    func insertNewObject(sender: AnyObject) {
+        objects.insert(NSDate(), atIndex: 0)
+       // let indexPath = NSIndexPath(forItem: 0, inSection: 0)
+        let indexPath  = NSIndexPath(forRow: 1, inSection: 0)
+//        self.productsTableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+        self.galleryCollectionView.insertItemsAtIndexPaths([indexPath])
+        // TODO: Depending on your use of UITableView, you will need to
+        // add "mp_" to other method calls in addition to this one.
+        // See http://t.co/mopub-ios-native-category for a list of
+        // required replacements.
+        self.galleryCollectionView.mp_insertItemsAtIndexPaths([indexPath])
+       // self.galleryCollectionView.mp_insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+    }
+    
+    
+    func setupAdPlacer() {
+        let targeting: MPNativeAdRequestTargeting! = MPNativeAdRequestTargeting()
+        // TODO: Use the device's location
+        targeting.location = CLLocation(latitude: 17.3850, longitude: 78.4867)
+        
+        /* LocationManager.getCurrentLocation().then { location in
+         // targeting.location = CLLocation(latitude: 17.3850, longitude: 78.4867)
+         
+         targeting.location = CLLocation(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+         }.error { error in
+         }*/
+        
+        targeting.desiredAssets = Set([kAdIconImageKey, kAdMainImageKey, kAdCTATextKey, kAdTextKey, kAdTitleKey])
+        
+        let settings = MPStaticNativeAdRendererSettings()
+        // TODO: Create your own UIView subclass that implements MPNativeAdRendering
+        settings.renderingViewClass = NativeAdCell.self
+        // TODO: Calculate the size of your ad cell given a maximum width
+        settings.viewSizeHandler = {(maxWidth: CGFloat) -> CGSize in
+            return CGSizeMake(maxWidth, 300);
+        };
+        
+        let config = MPStaticNativeAdRenderer.rendererConfigurationWithRendererSettings(settings)
+        
+        // TODO: Create your own UITableViewCell subclass that implements MPNativeAdRendering
+        
+       self.placer = MPCollectionViewAdPlacer(collectionView: self.galleryCollectionView, viewController: self, rendererConfigurations: [config])
+        //self.placer = MPTableViewAdPlacer(tableView: self.productsTableView, viewController: self, rendererConfigurations: [config])
+        
+        
+        // We have configured the test ad unit ID to place ads at fixed
+        // cell positions 2 and 10 and show an ad every 10 cells after
+        // that.
+        //
+        // TODO: Replace this test id with your personal ad unit id
+        self.placer.loadAdsForAdUnitID(CXConstant.NATIVEADD_UNITI_ID, targeting: targeting)
+    }
+    
+
+    
 }
 
 
