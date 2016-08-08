@@ -156,7 +156,15 @@ class HomeViewController: UIViewController  ,UITableViewDelegate,UITableViewData
         
         self.profileBtn = self.createButton(CGRectMake(10, signFrame.size.height+signFrame.origin.y+25, self.sidePanelView.frame.size.width-60, 50), title: "SIGN IN", tag: 1, bgColor: UIColor.clearColor())
         self.profileBtn.addTarget(self, action: #selector(HomeViewController.signInAction), forControlEvents: UIControlEvents.TouchUpInside)
+        
+        
+        if NSUserDefaults.standardUserDefaults().valueForKey("PROFILE_PIC") != nil {
+            self.profileBtn.setTitle("MY PROFILE", forState: .Normal)
+            self.profileBtn.addTarget(self, action: #selector(HomeViewController.signInAction), forControlEvents: UIControlEvents.TouchUpInside)
+        }
         self.sidePanelView.addSubview(self.profileBtn)
+        
+        
         
         
         self.profileDPImageView = UIImageView.init(frame: CGRectMake(self.profileBtn.frame.size.width-15,signFrame.size.height+signFrame.origin.y+25,60,60))
@@ -238,7 +246,9 @@ class HomeViewController: UIViewController  ,UITableViewDelegate,UITableViewData
         self.panelBtnAction()
         if NSUserDefaults.standardUserDefaults().valueForKey("USER_ID") != nil {
             NSLog("it has an userid")
-            self.showAlertView("COMING SOON!!!", status: 0)
+            let profile = CXProfilePageView.init()
+            self.navigationController?.pushViewController(profile, animated: true)
+//            self.showAlertView("COMING SOON!!!", status: 0)
         } else {
            self.navigationController?.pushViewController(signInView, animated: true)
         }
@@ -246,16 +256,25 @@ class HomeViewController: UIViewController  ,UITableViewDelegate,UITableViewData
     
     func profileUpdateNotif(){
         //  self.profileBtn
-        self.strProfile = NSUserDefaults.standardUserDefaults().valueForKey("PROFILE_PIC") as? String
-        let imgURL: NSURL = NSURL(string: strProfile)!
-        let request: NSURLRequest = NSURLRequest(URL: imgURL)
-        NSURLConnection.sendAsynchronousRequest(
-            request, queue: NSOperationQueue.mainQueue(),
-            completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?) -> Void in
-                if error == nil {
-                    self.profileDPImageView.image = UIImage(data: data!)
-                }
-        })
+        if NSUserDefaults.standardUserDefaults().valueForKey("PROFILE_PIC") != nil {
+            self.strProfile = NSUserDefaults.standardUserDefaults().valueForKey("PROFILE_PIC") as? String
+            let imgURL: NSURL = NSURL(string: strProfile)!
+            let request: NSURLRequest = NSURLRequest(URL: imgURL)
+            NSURLConnection.sendAsynchronousRequest(
+                request, queue: NSOperationQueue.mainQueue(),
+                completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?) -> Void in
+                    if error == nil {
+                        self.profileDPImageView.image = UIImage(data: data!)
+                    }
+            })
+        } else {
+            NSLog("User is signout")
+        }
+        
+        
+        
+        
+        
         //use this one later to escape the warning!!!!
         //dataTaskWithRequest(request: NSURLRequest, completionHandler: (NSData?, NSURLResponse?, NSError?) -> Void) -> NSURLSessionDataTask
     }
@@ -376,6 +395,8 @@ class HomeViewController: UIViewController  ,UITableViewDelegate,UITableViewData
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        //NSNotificationCenter.defaultCenter().addObserver(self, selector:Selector(profileUpdateNotif()), name: "UpdateProfilePic", object: nil)
+        self.profileUpdateNotif()
         sideMenuController()?.sideMenu?.allowRightSwipe = false
         sideMenuController()?.sideMenu?.allowLeftSwipe = false
         sideMenuController()?.sideMenu?.allowPanGesture = false
