@@ -70,5 +70,34 @@ public class SMSyncService: NSObject , NSURLSessionDelegate{
 //    }
     
     
+    public func checkProductCategoryCountSyncProcessWithUrl(iUrl:String, completion:(responseDict:NSMutableArray) -> Void) {
+        print("Requested Url:\(iUrl)")
+        let urlPath: String = iUrl
+        let url: NSURL = NSURL(string: urlPath)!
+        let request1: NSURLRequest = NSURLRequest(URL: url)
+        //let session = NSURLSession.sharedSession()
+        
+        let urlconfig = NSURLSessionConfiguration.defaultSessionConfiguration()
+        urlconfig.timeoutIntervalForRequest = 30
+        urlconfig.timeoutIntervalForResource = 60
+        let session = NSURLSession(configuration: urlconfig, delegate: self, delegateQueue: nil)
+        
+        let task = session.dataTaskWithRequest(request1) { (resData:NSData?, response:NSURLResponse?, sError:NSError?) -> Void in
+            var jsonData : NSMutableArray = NSMutableArray()
+            if sError == nil && resData != nil && response != nil {
+                do {
+                    jsonData = try NSJSONSerialization.JSONObjectWithData(resData!, options:NSJSONReadingOptions.MutableContainers ) as! NSMutableArray
+                } catch {
+                    print("Error in parsing\(sError?.description)")
+                }
+                
+                completion(responseDict: jsonData)
+            } else {
+                print("Error in parsing\(sError?.description)")
+            }
+        }
+        task.resume()
+    }
+
     
 }

@@ -28,6 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate{
         //self.window?.backgroundColor = UIColor.yellowColor()
         //NSThread.sleepForTimeInterval(10)
         
+        
         self.setUpMagicalDB()
         self.setupMopupbs()
         

@@ -133,6 +133,14 @@ class CXConstant: NSObject {
         return reqString
     }
     
+    func checkProductCountURL(productType:String, mallId: String) -> String {
+        let escapedString = productType.stringByAddingPercentEncodingWithAllowedCharacters(.URLHostAllowedCharacterSet())
+        let reqString = "http://sillymonksapp.com:8081/Services/categoryJobsCount?"+"mallId="+mallId+"&type="+escapedString!
+        //http://sillymonksapp.com:8081/Services/categoryJobsCount?mallId=3&type=movies
+        //type="+escapedString!
+        return reqString
+    }
+    
     static func resultString(input: AnyObject) -> String{
         if let value: AnyObject = input {
             var reqType : String!

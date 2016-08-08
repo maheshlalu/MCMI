@@ -476,6 +476,21 @@ class CXDBSettings: NSObject {
         return proNames
     }
     
+    static func getProductsCount(poductName : NSString) -> NSNumber {
+        let predicate: NSPredicate = NSPredicate(format: "type == %@",poductName)
+        let product :NSArray = CX_Products.MR_findAllWithPredicate(predicate)
+        let count = NSNumber(integer:product.count)
+        print("name\(poductName) and count \(count)" )
+       return count
+    }
+    
+    static func deleteTheProducts (productName : NSString){
+        let predicate: NSPredicate = NSPredicate(format: "type == %@",productName)
+        CX_Products.MR_deleteAllMatchingPredicate(predicate)
+        NSManagedObjectContext.MR_contextForCurrentThread().MR_saveToPersistentStoreAndWait()
+        
+    }
+    
     
     func getAllMallsInDB() -> NSArray{
 //        let managedContext = self.appDelegate.managedObjectContext

@@ -43,6 +43,7 @@ class SMCategoryViewController: UIViewController,ENSideMenuDelegate,UITableViewD
         isItemSelected = false
     }
     
+    // MARK:initialSyncOperations
     func initialSyncOperations() {
         if self.getAllProductCategoriesFromDB(self.mall.mid!).count == 0 {
             if self.spinner == nil {
@@ -51,6 +52,44 @@ class SMCategoryViewController: UIViewController,ENSideMenuDelegate,UITableViewD
             }
             self.productCategorySync()
         } else {
+            //Check the today date
+            if CXDBSettings.sharedInstance.isToday() {
+                
+            }else{
+                self.productCategories = NSMutableArray()
+                let getProductCountUrl = "http://sillymonksapp.com:8081/Services/categoryJobsCount?mallId=3&type=productCategories&status=active"//CXConstant.sharedInstance.checkProductCountURL(productName, mallId: mallId)
+                SMSyncService.sharedInstance.checkProductCategoryCountSyncProcessWithUrl(getProductCountUrl) { (responseDict) in
+                    print(responseDict)
+                    for dataDic in responseDict {
+                        let countFromServer : NSNumber =  (dataDic.valueForKey("Count") as? NSNumber)!
+                        let nameFromServer : NSString =  (dataDic.valueForKey("Name") as? NSString)!
+                        if (countFromServer == CXDBSettings.getProductsCount(nameFromServer)){
+                            
+                        }else{
+                            //If count not equel to server count refresh the data and delete the data with name
+                            CXDBSettings.deleteTheProducts(nameFromServer)
+                            self.productCategories.addObject(nameFromServer)
+                        }
+                        
+                    }
+                    if(self.productCategories.count != 0){
+                        if self.spinner == nil {
+                            self.spinner = DTIActivityIndicatorView(frame: CGRect(x:(self.view.frame.size.width-60)/2, y:200.0, width:60.0, height:60.0))
+                            self.view.addSubview(self.spinner)
+                        }
+                        self.getProducts()
+                    }else{
+                        if self.spinner != nil {
+                            self.spinner.stopActivity()
+                        }
+                        dispatch_async(dispatch_get_main_queue()) {
+                            self.mainViewOperations()
+                        }
+                    }
+                }
+                return
+            }
+            
             if self.spinner != nil {
                 self.spinner.stopActivity()
             }
@@ -103,6 +142,11 @@ class SMCategoryViewController: UIViewController,ENSideMenuDelegate,UITableViewD
         }
     }
     
+   
+    
+ 
+    
+    
     func arrangeTheProductOrder() -> NSArray {
         //category
         let categoryListByorder : NSMutableArray = NSMutableArray()
@@ -128,6 +172,9 @@ class SMCategoryViewController: UIViewController,ENSideMenuDelegate,UITableViewD
     }
     
     func mainViewOperations() {
+        //Here we chek the count count of the categories
+        
+        
         let mallProductCats = self.arrangeTheProductOrder()
         
         
@@ -158,7 +205,14 @@ class SMCategoryViewController: UIViewController,ENSideMenuDelegate,UITableViewD
         return proKatList
     }
     
+    
+    
     func getProuctsOfProductCategory(productName: String,mallId:String) {
+        
+        //http://sillymonksapp.com:8081/Services/categoryJobsCount?mallId=3&type=movies
+        
+     
+        
         let productUrl = CXConstant.sharedInstance.productURL(productName, mallId: mallId)
         SMSyncService.sharedInstance.startSyncProcessWithUrl(productUrl) { (responseDict) -> Void in
             let response = responseDict.valueForKey("jobs")! as! NSArray
