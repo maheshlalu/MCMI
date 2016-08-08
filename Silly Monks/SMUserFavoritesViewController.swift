@@ -24,6 +24,7 @@ class UserFavoritesViewController: UIViewController,UITableViewDataSource,UITabl
         
         favoritesTableView.delegate = self;
         favoritesTableView.dataSource = self;
+        self.namesArray.removeAll()
         
         // Do any additional setup after loading the view.
     }
