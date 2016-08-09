@@ -13,7 +13,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SMProfileViewController" customModule="SillyMonks" customModuleProvider="target">
             <connections>
+                <outlet property="fullNameLbl" destination="FXf-at-f9B" id="hGn-aW-odL"/>
                 <outlet property="imgView" destination="Rt1-0H-ykG" id="VW0-hT-MQm"/>
+                <outlet property="userEmailLbl" destination="u7o-pV-TT6" id="HoL-A3-X0s"/>
+                <outlet property="userFullName" destination="Xnu-Um-g9q" id="jze-wL-NYX"/>
+                <outlet property="userGender" destination="Vrb-JS-7S0" id="xgj-Fv-bCa"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -24,7 +28,7 @@
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K1J-vE-euw">
                     <rect key="frame" x="0.0" y="522" width="320" height="46"/>
-                    <color key="backgroundColor" red="1" green="0.095245184139999994" blue="0.17732421370000001" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" red="0.93725490196078431" green="0.29411764705882354" blue="0.14901960784313725" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="46" id="bD1-My-BpZ"/>
                     </constraints>
@@ -106,7 +110,7 @@
                     </subviews>
                 </stackView>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <color key="backgroundColor" red="0.70196078431372544" green="0.70196078431372544" blue="0.70196078431372544" alpha="0.23434729609929078" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstItem="Xnu-Um-g9q" firstAttribute="top" secondItem="Rt1-0H-ykG" secondAttribute="bottom" constant="17" id="7Zb-ab-8Mq"/>
                 <constraint firstAttribute="trailing" secondItem="B4u-mC-Nvi" secondAttribute="trailing" id="AFF-Tt-oPR"/>

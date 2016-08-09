@@ -153,18 +153,24 @@ class CXSignInSignUpViewController: UIViewController,UITextFieldDelegate,FBSDKLo
     
     func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!) {
         print("Response \(result)")
-        FBSDKGraphRequest.init(graphPath: "me", parameters: ["fields":"first_name, last_name, picture.type(large),id"]).startWithCompletionHandler { (connection, result, error) -> Void in
-            //print ("FB Result is \(result)")
+        FBSDKGraphRequest.init(graphPath: "me", parameters: ["fields":"first_name,email,last_name,gender,picture.type(large),id"]).startWithCompletionHandler { (connection, result, error) -> Void in
+            print ("FB Result is \(result)")
             if result != nil {
                 let strFirstName: String = (result.objectForKey("first_name") as? String)!
                 let strLastName: String = (result.objectForKey("last_name") as? String)!
                 let userID: String = (result.objectForKey("id") as? String)!
+                let gender: String = (result.objectForKey("gender") as? String)!
+                let email: String = (result.objectForKey("email") as? String)!
+
+
                 self.profileImageStr = (result.objectForKey("picture")?.objectForKey("data")?.objectForKey("url") as? String)!
                 print("Welcome, \(strFirstName) \(strLastName) \(userID)")
                 
                 NSUserDefaults.standardUserDefaults().setObject(userID, forKey: "USER_ID")
+                NSUserDefaults.standardUserDefaults().setObject(email, forKey: "USER_EMAIL")
                 NSUserDefaults.standardUserDefaults().setObject(strFirstName, forKey: "FIRST_NAME")
                 NSUserDefaults.standardUserDefaults().setObject(strLastName, forKey: "LAST_NAME")
+                NSUserDefaults.standardUserDefaults().setObject(gender, forKey: "GENDER")
                 NSUserDefaults.standardUserDefaults().setObject(self.profileImageStr, forKey: "PROFILE_PIC")
                 NSUserDefaults.standardUserDefaults().synchronize()
                 self.showAlertView("Login successfully.", status: 1)

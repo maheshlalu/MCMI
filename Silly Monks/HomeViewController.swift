@@ -239,6 +239,10 @@ class HomeViewController: UIViewController  ,UITableViewDelegate,UITableViewData
             self.isPanelOpened = true
             self.transparentView.hidden = false
             self.moveSideBarToXposition(0, shouldHideBackView: false)
+            if NSUserDefaults.standardUserDefaults().valueForKey("PROFILE_PIC") != nil {
+                self.profileBtn.setTitle("MY PROFILE", forState: .Normal)
+                self.profileBtn.addTarget(self, action: #selector(HomeViewController.signInAction), forControlEvents: UIControlEvents.TouchUpInside)
+            }
         }
     }
     
