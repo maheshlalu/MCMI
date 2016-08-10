@@ -91,7 +91,7 @@ class CXGalleryViewController: UIViewController,UICollectionViewDataSource, UICo
         self.view.addSubview(self.galleryCollectionView)
         
          self.activityIndicatorView.stopActivity()
-        self.setUpmopubs()
+       // self.setUpmopubs()
 
     }
     
