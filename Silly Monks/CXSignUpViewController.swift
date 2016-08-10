@@ -135,6 +135,7 @@ class CXSignUpViewController: UIViewController,UITextFieldDelegate {
     func sendSignUpDetails() {
         //http://sillymonksapp.com:8081/MobileAPIs/regAndloyaltyAPI?orgId=3&userEmailId
 
+//        NSLog("Print values orgid: %@ email: %@ firstname: %@ lastname: %@ psw: %@ ", orgID, self.emailAddressField.text, self.firstNameField.text, self.lastNameField.text, self.passwordField.text)
         let signUpUrl = "http://sillymonksapp.com:8081/MobileAPIs/regAndloyaltyAPI?orgId="+orgID+"&userEmailId="+self.emailAddressField.text!+"&dt=DEVICES&firstName="+self.firstNameField.text!.urlEncoding()+"&lastName="+self.lastNameField.text!.urlEncoding()+"&password="+self.passwordField.text!.urlEncoding()
         SMSyncService.sharedInstance.startSyncProcessWithUrl(signUpUrl) { (responseDict) in
            // print("Sign up response \(responseDict)")

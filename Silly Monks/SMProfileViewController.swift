@@ -90,27 +90,42 @@ class SMProfileViewController: UIViewController {
         self.fullNameLbl.text = self.userFullName.text
         self.userGender.text = NSUserDefaults.standardUserDefaults().valueForKey("GENDER") as? String
         self.userEmailLbl.text = NSUserDefaults.standardUserDefaults().valueForKey("USER_EMAIL") as? String
-
-        
-        /*
-         NSUserDefaults.standardUserDefaults().setObject(userID, forKey: "USER_ID")
-         NSUserDefaults.standardUserDefaults().setObject(strFirstName, forKey: "FIRST_NAME")
-         NSUserDefaults.standardUserDefaults().setObject(strLastName, forKey: "LAST_NAME")
-         NSUserDefaults.standardUserDefaults().setObject(gender, forKey: "GENDER")
-         NSUserDefaults.standardUserDefaults().setObject(self.profileImageStr, forKey: "PROFILE_PIC")
-         NSUserDefaults.standardUserDefaults().synchronize()
-         */
         
     }
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    @IBAction func logoutAction(sender: AnyObject) {
+        
+        NSUserDefaults.standardUserDefaults().removeObjectForKey("USER_ID")
+        NSUserDefaults.standardUserDefaults().removeObjectForKey("FIRST_NAME")
+        NSUserDefaults.standardUserDefaults().removeObjectForKey("LAST_NAME")
+        NSUserDefaults.standardUserDefaults().removeObjectForKey("EMAIL")
+        NSUserDefaults.standardUserDefaults().removeObjectForKey("GENDER")
+        NSUserDefaults.standardUserDefaults().removeObjectForKey("PROFILE_PIC")
+        NSUserDefaults.standardUserDefaults().removeObjectForKey("USER_EMAIL")
+        NSUserDefaults.standardUserDefaults().synchronize()
+        
+        // for FB signout
+        FBSDKLoginManager().logOut()
+        
+        // for Google signout
+        GIDSignIn.sharedInstance().signOut()
+        GIDSignIn.sharedInstance().disconnect()
+        
+        self.navigationController?.popToRootViewControllerAnimated(true)
+    
     }
-    */
-
+    
+    
+    func showAlertView(message:String, status:Int) {
+    let alert = UIAlertController(title: "Silly Monks", message: message, preferredStyle: UIAlertControllerStyle.Alert)
+    //alert.addAction(UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default, handler: nil))
+    let okAction = UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default) {
+    UIAlertAction in
+    if status == 1 {
+    //self.navigationController?.popViewControllerAnimated(true)
+    }
+    }
+    alert.addAction(okAction)
+    //self.presentViewController(alert, animated: true, completion: nil)
+    }
 }

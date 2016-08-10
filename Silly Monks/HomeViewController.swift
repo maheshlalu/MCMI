@@ -154,25 +154,22 @@ class HomeViewController: UIViewController  ,UITableViewDelegate,UITableViewData
         
         //self.aboutUsBtn = self.createButton(CGRectMake(10, self.signInBtn.frame.size.height+self.signInBtn.frame.origin.y+5, self.sidePanelView.frame.size.width-20, 50), title: "About Sillymonks", tag: 1, bgColor: UIColor.clearColor())
         
+//        if NSUserDefaults.standardUserDefaults().valueForKey("PROFILE_PIC") != nil {
+//            self.profileBtn.setTitle("MY PROFILE", forState: .Normal)
+//            self.profileBtn.addTarget(self, action: #selector(HomeViewController.signInAction), forControlEvents: UIControlEvents.TouchUpInside)
+//        }else{
         self.profileBtn = self.createButton(CGRectMake(10, signFrame.size.height+signFrame.origin.y+25, self.sidePanelView.frame.size.width-60, 50), title: "SIGN IN", tag: 1, bgColor: UIColor.clearColor())
         self.profileBtn.addTarget(self, action: #selector(HomeViewController.signInAction), forControlEvents: UIControlEvents.TouchUpInside)
-        
-        
-        if NSUserDefaults.standardUserDefaults().valueForKey("PROFILE_PIC") != nil {
-            self.profileBtn.setTitle("MY PROFILE", forState: .Normal)
-            self.profileBtn.addTarget(self, action: #selector(HomeViewController.signInAction), forControlEvents: UIControlEvents.TouchUpInside)
-        }
+      //  }
         self.sidePanelView.addSubview(self.profileBtn)
         
         
-        
-        
+    
         self.profileDPImageView = UIImageView.init(frame: CGRectMake(self.profileBtn.frame.size.width-15,signFrame.size.height+signFrame.origin.y+25,60,60))
         self.profileDPImageView .image = UIImage(named: "profile_placeholder.png")
         self.profileDPImageView .layer.cornerRadius = self.profileDPImageView.frame.size.width / 2
         self.profileDPImageView .clipsToBounds = true
         self.sidePanelView.addSubview(self.profileDPImageView )
-        
         
         self.aboutUsBtn = self.createButton(CGRectMake(10, self.profileBtn.frame.size.height+self.profileBtn.frame.origin.y+5, self.sidePanelView.frame.size.width-20, 50), title: "About Sillymonks", tag: 1, bgColor: UIColor.clearColor())
         self.aboutUsBtn.addTarget(self, action: #selector(HomeViewController.aboutUsAction), forControlEvents: UIControlEvents.TouchUpInside)
@@ -242,19 +239,25 @@ class HomeViewController: UIViewController  ,UITableViewDelegate,UITableViewData
             if NSUserDefaults.standardUserDefaults().valueForKey("PROFILE_PIC") != nil {
                 self.profileBtn.setTitle("MY PROFILE", forState: .Normal)
                 self.profileBtn.addTarget(self, action: #selector(HomeViewController.signInAction), forControlEvents: UIControlEvents.TouchUpInside)
+            }else{
+                self.profileDPImageView .image = UIImage(named: "profile_placeholder.png")
+                
+                self.profileBtn.setTitle("SIGN IN", forState: .Normal)
+                self.profileBtn.addTarget(self, action: #selector(HomeViewController.signInAction), forControlEvents: UIControlEvents.TouchUpInside)
+                
             }
         }
     }
     
     func signInAction() {
+       // NSUserDefaults.standardUserDefaults().setBool(false, forKey: "FIRST_TIME_LOGIN")
         self.panelBtnAction()
         if NSUserDefaults.standardUserDefaults().valueForKey("USER_ID") != nil {
             NSLog("it has an userid")
             let profile = CXProfilePageView.init()
             self.navigationController?.pushViewController(profile, animated: true)
-//            self.showAlertView("COMING SOON!!!", status: 0)
         } else {
-           self.navigationController?.pushViewController(signInView, animated: true)
+            self.navigationController?.pushViewController(signInView, animated: true)
         }
     }
     
@@ -272,22 +275,13 @@ class HomeViewController: UIViewController  ,UITableViewDelegate,UITableViewData
                     }
             })
         } else {
-            NSLog("User is signout")
+            
         }
-        
-        
-        
-        
-        
+    
         //use this one later to escape the warning!!!!
         //dataTaskWithRequest(request: NSURLRequest, completionHandler: (NSData?, NSURLResponse?, NSError?) -> Void) -> NSURLSessionDataTask
     }
-    
-    func profileUpdateAtLogoutNotif(){
-        
-    }
-    
-    
+
     
     func showAlertView(message:String, status:Int) {
         let alert = UIAlertController(title: "Silly Monks", message: message, preferredStyle: UIAlertControllerStyle.Alert)
@@ -501,7 +495,7 @@ class HomeViewController: UIViewController  ,UITableViewDelegate,UITableViewData
     
     func updateMenuItems() {
         let menuView =  self.sideMenuController()?.sideMenu?.menuViewController as? SMMenuViewController
-        menuView!.updateItems()
+        menuView?.updateItems()
     }
     
     func getStoreWithMall(mallId:String) {
@@ -543,15 +537,20 @@ class HomeViewController: UIViewController  ,UITableViewDelegate,UITableViewData
         button.addTarget(self, action: #selector(HomeViewController.panelBtnAction), forControlEvents: UIControlEvents.TouchUpInside)
         button.setImage(lImage, forState: .Normal)
         self.navigationItem.leftBarButtonItem = UIBarButtonItem.init(customView: button)
+    
+        let profileImage = UIImageView.init(frame: CGRectMake(0, 0, 50, 30))
+        profileImage.image = UIImage(named:"sm_navigation_logo")
+        profileImage.backgroundColor = UIColor.clearColor()
+        self.navigationItem.titleView = profileImage
         
-        let tLabel : UILabel = UILabel()
-        tLabel.frame = CGRectMake(0, 0, 120, 40);
-        tLabel.backgroundColor = UIColor.clearColor()
-        tLabel.font = UIFont.init(name: "Roboto-Bold", size: 18)
-        tLabel.text = "Sislly Monks"
-        tLabel.textAlignment = NSTextAlignment.Center
-        tLabel.textColor = UIColor.whiteColor()
-        self.navigationItem.titleView = tLabel
+//        let tLabel : UILabel = UILabel()
+//        tLabel.frame = CGRectMake(0, 0, 120, 40);
+//        tLabel.backgroundColor = UIColor.clearColor()
+//        tLabel.font = UIFont.init(name: "Roboto-Bold", size: 18)
+//        tLabel.text = "Silly Monks"
+//        tLabel.textAlignment = NSTextAlignment.Center
+//        tLabel.textColor = UIColor.whiteColor()
+//        self.navigationItem.titleView = tLabel
     }
     
     override func didReceiveMemoryWarning() {

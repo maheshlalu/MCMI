@@ -37,10 +37,10 @@
                             </constraints>
                             <variation key="default">
                                 <mask key="constraints">
-                                    <exclude reference="nzu-ry-zyb"/>
-                                    <exclude reference="xDE-DC-7co"/>
                                     <exclude reference="4bw-OD-uFd"/>
                                     <exclude reference="OJ0-Ad-Hap"/>
+                                    <exclude reference="nzu-ry-zyb"/>
+                                    <exclude reference="xDE-DC-7co"/>
                                 </mask>
                             </variation>
                         </imageView>
@@ -70,10 +70,10 @@
                             </constraints>
                             <variation key="default">
                                 <mask key="constraints">
-                                    <exclude reference="ECS-e3-jh4"/>
-                                    <exclude reference="Z0c-VT-QEa"/>
-                                    <exclude reference="WdP-Fq-j3m"/>
                                     <exclude reference="58F-Io-NuA"/>
+                                    <exclude reference="ECS-e3-jh4"/>
+                                    <exclude reference="WdP-Fq-j3m"/>
+                                    <exclude reference="Z0c-VT-QEa"/>
                                     <exclude reference="c7B-QD-z7p"/>
                                 </mask>
                             </variation>
@@ -124,11 +124,11 @@
                         <mask key="constraints">
                             <exclude reference="f9G-YV-OGC"/>
                             <exclude reference="GFy-Pp-ka4"/>
-                            <exclude reference="bqE-kh-BYe"/>
                             <exclude reference="IiU-Uq-tRu"/>
+                            <exclude reference="bqE-kh-BYe"/>
                             <exclude reference="kwu-ru-8rl"/>
-                            <exclude reference="rER-2X-d1e"/>
                             <exclude reference="FFi-GV-oDl"/>
+                            <exclude reference="rER-2X-d1e"/>
                         </mask>
                     </variation>
                 </view>
@@ -177,8 +177,8 @@
             <variation key="default">
                 <mask key="constraints">
                     <exclude reference="9YP-Qp-T00"/>
-                    <exclude reference="HeN-in-NGk"/>
                     <exclude reference="EQT-wM-6jz"/>
+                    <exclude reference="HeN-in-NGk"/>
                 </mask>
             </variation>
             <connections>

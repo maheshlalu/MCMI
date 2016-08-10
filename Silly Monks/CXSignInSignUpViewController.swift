@@ -20,6 +20,8 @@ class CXSignInSignUpViewController: UIViewController,UITextFieldDelegate,FBSDKLo
     var passwordField: UITextField!
     var signInBtn:UIButton!
     var signUpBtn:UIButton!
+    var skipBtn:UIButton!
+    var backButton:UIButton!
     var forgotPwdBtn:UIButton!
     
     var cScrollView:UIScrollView!
@@ -59,15 +61,16 @@ class CXSignInSignUpViewController: UIViewController,UITextFieldDelegate,FBSDKLo
         self.navigationController?.navigationBar.barTintColor = UIColor.navBarColor()
         
         let lImage = UIImage(named: "left_aarow.png") as UIImage?
-        let button = UIButton (type: UIButtonType.Custom) as UIButton
-        button.frame = CGRectMake(0, 0, 40, 40)
-        button.setImage(lImage, forState: .Normal)
-        button.backgroundColor = UIColor.clearColor()
-        button.addTarget(self, action: #selector(CXSignInSignUpViewController.backAction), forControlEvents: .TouchUpInside)
+        //self.backButton.hidden = false
+        self.backButton = UIButton (type: UIButtonType.Custom) as UIButton
+        self.backButton.frame = CGRectMake(0, 0, 40, 40)
+        self.backButton.setImage(lImage, forState: .Normal)
+        self.backButton.backgroundColor = UIColor.clearColor()
+        self.backButton.addTarget(self, action: #selector(CXSignInSignUpViewController.backAction), forControlEvents: .TouchUpInside)
         
         let navSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem:UIBarButtonSystemItem.FixedSpace,target: nil, action: nil)
         navSpacer.width = -16;
-        self.navigationItem.leftBarButtonItems = [navSpacer,UIBarButtonItem.init(customView: button)]
+        self.navigationItem.leftBarButtonItems = [navSpacer,UIBarButtonItem.init(customView: self.backButton)]
         
         
         let tLabel : UILabel = UILabel()
@@ -91,6 +94,14 @@ class CXSignInSignUpViewController: UIViewController,UITextFieldDelegate,FBSDKLo
         let logo: UIImageView = UIImageView.init(frame: CGRectMake((self.view.frame.size.width - 50)/2, 5, 50, 50))
         logo.image = UIImage(named: "smlogo.png")
         self.cScrollView.addSubview(logo)
+        
+        if !NSUserDefaults.standardUserDefaults().boolForKey("FIRST_TIME_LOGIN"){
+            self.backButton.hidden = true
+            self.skipBtn = self.createButton(CGRectMake(self.view.frame.size.width - 100, 15, 60 ,30), title: "SKIP", tag: 1000, bgColor: UIColor.navBarColor())
+            self.skipBtn.addTarget(self, action: #selector(CXSignInSignUpViewController.skipAction), forControlEvents: .TouchUpInside)
+            NSUserDefaults.standardUserDefaults().setBool(true, forKey: "FIRST_TIME_LOGIN")
+            self.cScrollView.addSubview(self.skipBtn)
+        }
         
         let hLabel : UILabel = UILabel()
         hLabel.frame = CGRectMake(20, logo.frame.size.height+logo.frame.origin.y+5, self.view.frame.size.width-40, 35);
@@ -273,6 +284,12 @@ class CXSignInSignUpViewController: UIViewController,UITextFieldDelegate,FBSDKLo
         let signUpView = CXSignUpViewController.init()
         signUpView.orgID = self.orgID
         self.navigationController?.pushViewController(signUpView, animated: true)
+    }
+    
+    func skipAction() {
+        print ("Skip action")
+        let homeView = HomeViewController.init()
+        self.navigationController?.pushViewController(homeView, animated: true)
     }
     
     func forgotPasswordAction() {

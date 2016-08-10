@@ -54,7 +54,7 @@ class TableViewCell: UITableViewCell {
         cellTitlelbl.text = "Tollywood News"
         cellTitlelbl.font = UIFont.boldSystemFontOfSize(15)
         cellTitlelbl.textAlignment = NSTextAlignment.Center;
-        cellTitlelbl.textColor = UIColor.grayColor()
+        cellTitlelbl.textColor = UIColor.navBarColor()
         backGrooundView.addSubview(cellTitlelbl)
         
         //CeolectionView

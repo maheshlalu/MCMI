@@ -31,14 +31,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate{
         
         self.setUpMagicalDB()
         self.setupMopupbs()
-        
+
         let wFrame = CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, UIScreen.mainScreen().bounds.size.height)
         self.window = UIWindow.init(frame: wFrame)
+        if !NSUserDefaults.standardUserDefaults().boolForKey("FIRST_TIME_LOGIN"){
+            let signUpView = CXSignInSignUpViewController.init()
+            let  navController: UINavigationController = UINavigationController(rootViewController: signUpView)
+            self.window?.rootViewController = navController
+            self.window?.makeKeyAndVisible()
+        }else{
         let homeView = HomeViewController.init()
         let sideMenu = SMMenuViewController.init()
-        let navController: SMNavigationController = SMNavigationController(menuViewController: sideMenu,contentViewController: homeView)
+        let  navController: SMNavigationController = SMNavigationController(menuViewController: sideMenu,contentViewController: homeView)
         self.window?.rootViewController = navController
         self.window?.makeKeyAndVisible()
+        }
+        
         
         
        // dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
@@ -110,33 +118,134 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate{
 //    }
     
     
+    
+    /*
     func signIn(signIn: GIDSignIn!, didSignInForUser user: GIDGoogleUser!,
                 withError error: NSError!) {
         if (error == nil) {
+            GIDSignIn.sharedInstance().shouldFetchBasicProfile = true
+             GIDSignIn.sharedInstance().hasAuthInKeychain()
             // Perform any operations on signed in user here.
             let userId = user.userID                  // For client-side use only!
-            let idToken = user.authentication.idToken // Safe to send to the server
+           // let idToken = user.authentication.idToken // Safe to send to the server
             let fullName = user.profile.name
             let givenName = user.profile.givenName
             let familyName = user.profile.familyName
             let email = user.profile.email
+            let profilePic = user.profile.imageURLWithDimension(150)
+
+           
+            let url = NSURL(string:  "https://www.googleapis.com/oauth2/v3/userinfo?access_token=\(user.authentication.accessToken)")
+            let session = NSURLSession.sharedSession()
+            session.dataTaskWithURL(url!) {(data, response, error) -> Void in
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                do {
+                    let userData = try NSJSONSerialization.JSONObjectWithData(data!, options:[]) as? [String:AnyObject]
+                    /*
+                     Get the account information you want here from the dictionary
+                     Possible values are
+                     "id": "...",
+                     "email": "...",
+                     "verified_email": ...,
+                     "name": "...",
+                     "given_name": "...",
+                     "family_name": "...",
+                     "link": "https://plus.google.com/...",
+                     "picture": "https://lh5.googleuserco...",
+                     "gender": "...",
+                     "locale": "..."
+                     
+                     so in my case:
+                     */
+                    let gender = userData!["gender"] as! String
+                    
+                } catch {
+                    NSLog("Account Information could not be loaded")
+                }
+            }
+
             
            // print("User id \(user.userID) pro name \(user.profile.name)")
             
-            let fullNamesArray:NSArray = fullName.componentsSeparatedByString(" ")
-            let firstName = fullNamesArray.objectAtIndex(0)
-            let lastName = fullNamesArray.objectAtIndex(1)
+//            let fullNamesArray:NSArray = fullName.componentsSeparatedByString(" ")
+//            let firstName = fullNamesArray.objectAtIndex(0)
+//            let lastName = fullNamesArray.objectAtIndex(1)
+//            NSLog("gender: %@", gender)
             
+            /* NSUserDefaults.standardUserDefaults().setObject(userID, forKey: "USER_ID")
+             NSUserDefaults.standardUserDefaults().setObject(email, forKey: "USER_EMAIL")
+             NSUserDefaults.standardUserDefaults().setObject(strFirstName, forKey: "FIRST_NAME")
+             NSUserDefaults.standardUserDefaults().setObject(strLastName, forKey: "LAST_NAME")
+             NSUserDefaults.standardUserDefaults().setObject(gender, forKey: "GENDER")
+             NSUserDefaults.standardUserDefaults().setObject(self.profileImageStr, forKey: "PROFILE_PIC")*/
+            
+           /*
             NSUserDefaults.standardUserDefaults().setObject(userId, forKey: "USER_ID")
             NSUserDefaults.standardUserDefaults().setObject(firstName, forKey: "FIRST_NAME")
             NSUserDefaults.standardUserDefaults().setObject(lastName, forKey: "LAST_NAME")
+            NSUserDefaults.standardUserDefaults().setObject(lastName, forKey: "GENDER")
+            NSUserDefaults.standardUserDefaults().setObject(lastName, forKey: "PROFILE_PIC")
+            NSUserDefaults.standardUserDefaults().setObject(lastName, forKey: "USER_EMAIL")
             NSUserDefaults.standardUserDefaults().synchronize()
-            
+            */
             // ...
         } else {
             print("\(error.localizedDescription)")
         }
     }
+
+ 
+    */
+
+    
+    
+
+    func signIn(signIn: GIDSignIn!, didSignInForUser user: GIDGoogleUser!, withError error: NSError!) {
+        if (error == nil) {
+            var firstName = ""
+            var lastName = ""
+            let userId = user.userID
+            var gender = ""
+            var profilePic = ""
+            var email = ""
+            
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+            let url = NSURL(string:  "https://www.googleapis.com/oauth2/v3/userinfo?access_token=\(user.authentication.accessToken)")
+            let session = NSURLSession.sharedSession()
+            session.dataTaskWithURL(url!) {(data, response, error) -> Void in
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                do {
+                    let userData = try NSJSONSerialization.JSONObjectWithData(data!, options:[]) as? [String:AnyObject]
+
+                    firstName = userData!["given_name"] as! String
+                    lastName = userData!["family_name"] as! String
+                    gender = userData!["gender"] as! String
+                    profilePic = userData!["picture"] as! String
+                    email = userData!["email"] as! String
+   
+                    NSUserDefaults.standardUserDefaults().setObject(userId, forKey: "USER_ID")
+                    NSUserDefaults.standardUserDefaults().setObject(firstName, forKey: "FIRST_NAME")
+                    NSUserDefaults.standardUserDefaults().setObject(lastName, forKey: "LAST_NAME")
+                    NSUserDefaults.standardUserDefaults().setObject(gender, forKey: "GENDER")
+                    NSUserDefaults.standardUserDefaults().setObject(profilePic, forKey: "PROFILE_PIC")
+                    NSUserDefaults.standardUserDefaults().setObject(email, forKey: "USER_EMAIL")
+                    NSUserDefaults.standardUserDefaults().synchronize()
+                    
+                } catch {
+                    NSLog("Account Information could not be loaded")
+                }
+                
+                }.resume()
+        }
+            
+        else {
+            //Login Failed
+            NSLog("login failed")
+            
+        }
+    }
+    
+    
     
     func signIn(signIn: GIDSignIn!, didDisconnectWithUser user:GIDGoogleUser!,
                 withError error: NSError!) {
