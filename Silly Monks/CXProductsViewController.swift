@@ -39,9 +39,10 @@ class CXProductsViewController: UIViewController,UITableViewDelegate,UITableView
         self.setupAdPlacer()
         
         // Data must be pre-populated into table for ads to appear
-        for _ in 1...10 {
+      /*  for _ in 1...10 {
             self.insertNewObject(self)
         }
+        */
 
     }
     
@@ -75,16 +76,22 @@ class CXProductsViewController: UIViewController,UITableViewDelegate,UITableView
         let settings = MPStaticNativeAdRendererSettings()
         // TODO: Create your own UIView subclass that implements MPNativeAdRendering
         settings.renderingViewClass = NativeAdCell.self
+    
         // TODO: Calculate the size of your ad cell given a maximum width
         settings.viewSizeHandler = {(maxWidth: CGFloat) -> CGSize in
-            return CGSizeMake(maxWidth, 300);
+            return CGSizeMake(maxWidth, 250);
         };
         
         let config = MPStaticNativeAdRenderer.rendererConfigurationWithRendererSettings(settings)
         
         // TODO: Create your own UITableViewCell subclass that implements MPNativeAdRendering
-        self.placer = MPTableViewAdPlacer(tableView: self.productsTableView, viewController: self, rendererConfigurations: [config])
+      //  self.placer = MPTableViewAdPlacer(tableView: self.productsTableView, viewController: self, rendererConfigurations: [config])
         
+        let addPostion : MPClientAdPositioning = MPClientAdPositioning()
+        addPostion.addFixedIndexPath(NSIndexPath(forRow: 0, inSection: 0))
+        addPostion.enableRepeatingPositionsWithInterval(6)
+        
+        self.placer = MPTableViewAdPlacer(tableView: self.productsTableView, viewController: self, adPositioning: addPostion, rendererConfigurations: [config])
         
         // We have configured the test ad unit ID to place ads at fixed
         // cell positions 2 and 10 and show an ad every 10 cells after
