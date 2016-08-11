@@ -14,6 +14,7 @@ class CXCommentViewController: UIViewController {
     var ratingBtn:UIButton!
     var headerTitle:String!
     var orgID: String!
+    var jobID : String!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +29,7 @@ class CXCommentViewController: UIViewController {
     func customizeHeaderView() {
         self.navigationController?.navigationBar.translucent = false;
         self.navigationController?.navigationBar.barTintColor = UIColor.navBarColor()
+        self.title = "Reviews"
         
         let lImage = UIImage(named: "left_aarow.png") as UIImage?
         let button = UIButton (type: UIButtonType.Custom) as UIButton
@@ -89,16 +91,17 @@ class CXCommentViewController: UIViewController {
     }
     
     func writeCommentAction() {
-       /* if NSUserDefaults.standardUserDefaults().valueForKey("USER_ID") != nil {
+        if NSUserDefaults.standardUserDefaults().valueForKey("USER_ID") != nil {
             let comRatView = CXCommentRatingViewController.init()
+            comRatView.jobID = self.jobID
             self.navigationController?.pushViewController(comRatView, animated: true)
         } else {
             let signInView = CXSignInSignUpViewController.init()
             signInView.orgID = self.orgID
             self.navigationController?.pushViewController(signInView, animated: true)
-        }*/
+        }
     }
-    
+        
     func overallRatingAction() {
         
     }

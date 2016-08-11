@@ -14,7 +14,8 @@ class CXCommentRatingViewController: UIViewController,FloatRatingViewDelegate,UI
     var floatRatingView: FloatRatingView!
     var commentsView:UITextView!
     var cScrollView:UIScrollView!
-    
+    var jobID : String!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.smBackgroundColor()
@@ -94,6 +95,8 @@ class CXCommentRatingViewController: UIViewController,FloatRatingViewDelegate,UI
         if self.commentsView.text != nil {
             if self.commentsView.text.characters.count < 50 {
                 self.showAlertView("Please enter at least 50 characters.", status: 0)
+            }else{
+               // self.submitTheComments()
             }
         }
     }
@@ -144,6 +147,31 @@ class CXCommentRatingViewController: UIViewController,FloatRatingViewDelegate,UI
     
     func doneNumberPadAction() {
         self.view.endEditing(true)
+    }
+    //MARK: Submit the comment
+    
+        func commentSubiturl(userID:String, jobID:String,comment:String,rating:String,commentId:String) ->String{
+    
+            //let escapedString = productType.stringByAddingPercentEncodingWithAllowedCharacters(.URLHostAllowedCharacterSet())
+            let reqString = "http://sillymonksapp.com:8081/jobs/saveJobCommentJSON?userId="+userID+"&jobId="+jobID+"&comment="+comment+"&rating="+rating+"&commentId="+commentId
+            //http://sillymonksapp.com:8081/jobs/saveJobCommentJSON?/ userId=11&jobId=239&comment=excellent&rating=0.5&commentId=74
+            return reqString
+        }
+
+    func submitTheComments(){
+        /*
+         return getHostUrl(mContext) + "/jobs/saveJobCommentJSON?";
+         / userId=11&jobId=239&comment=excellent&rating=0.5&commentId=74 /
+         
+        
+         */
+        
+        
+        SMSyncService.sharedInstance.startSyncProcessWithUrl(self.commentSubiturl((NSUserDefaults.standardUserDefaults().valueForKey("USER_ID") as?String)!, jobID: self.jobID, comment: self.commentsView.text, rating: self.ratingLabel.text!, commentId: "1")) { (responseDict) in
+            
+            
+        }
+        
     }
     
     func clearNumPadAction() {

@@ -33,6 +33,8 @@ class SMUserDetails: NSObject {
     func destory () {
         _SingletonSharedInstance = nil
     }
+    
+   
 
     
 

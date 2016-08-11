@@ -98,7 +98,7 @@
                 <outlet property="privacyInformationIconImageView" destination="Nfx-lz-QFO" id="Vlz-I3-0fd"/>
                 <outlet property="titleLabel" destination="D4j-qV-Lih" id="kJ4-xP-Qzl"/>
             </connections>
-            <point key="canvasLocation" x="757" y="150"/>
+            <point key="canvasLocation" x="145" y="134"/>
         </view>
     </objects>
 </document>

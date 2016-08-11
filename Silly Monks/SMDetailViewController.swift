@@ -33,7 +33,7 @@ class SMDetailViewController: UIViewController, FloatRatingViewDelegate,UITableV
         self.activity = DTIActivityIndicatorView(frame: CGRect(x:0, y:0, width:60.0, height:60.0))
         self.activity.center = self.view.center
         self.view.addSubview(self.activity)
-        
+         self.relatedArticles = NSMutableArray()
         self.customizeHeaderView()
         self.customizeMainView()
     }
@@ -80,7 +80,7 @@ class SMDetailViewController: UIViewController, FloatRatingViewDelegate,UITableV
         tLabel.frame = CGRectMake(0, 0, 120, 40);
         tLabel.backgroundColor = UIColor.clearColor()
         tLabel.font = UIFont.init(name: "Roboto-Bold", size: 18)
-        tLabel.text = "Silly Monks"
+        tLabel.text = "Premium Content"
         tLabel.textAlignment = NSTextAlignment.Center
         tLabel.textColor = UIColor.whiteColor()
         self.navigationItem.titleView = tLabel
@@ -100,7 +100,7 @@ class SMDetailViewController: UIViewController, FloatRatingViewDelegate,UITableV
     }
     
     func customizeMainView() {
-        self.getRelatedProducts()
+       // self.getRelatedProducts()
         self.getRemainingProducts()
         
         self.contentScrollView = UIScrollView.init(frame: CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height))
@@ -227,7 +227,7 @@ class SMDetailViewController: UIViewController, FloatRatingViewDelegate,UITableV
         
         let comentBtn = self.createButton(CGRectMake(rView.frame.size.width-((numBtns * btnWidth)+((numBtns-1)*space)), self.floatRatingView.frame.origin.y, btnWidth, btnWidth), img: UIImage(named: "comments_108.png")!)
         comentBtn.addTarget(self, action: #selector(SMDetailViewController.commentAction), forControlEvents: UIControlEvents.TouchUpInside)
-        //rView.addSubview(comentBtn)
+        rView.addSubview(comentBtn)
 
         let shareBtn = self.createButton(CGRectMake(comentBtn.frame.size.width+comentBtn.frame.origin.x+space, self.floatRatingView.frame.origin.y, btnWidth, btnWidth), img: UIImage(named: "share_108.png")!)
         shareBtn.addTarget(self, action: #selector(SMDetailViewController.shareAction), forControlEvents: UIControlEvents.TouchUpInside)
@@ -326,19 +326,23 @@ class SMDetailViewController: UIViewController, FloatRatingViewDelegate,UITableV
         comentsView.headerTitle = self.productCategory.name
         comentsView.orgID = self.product.createdByID
         self.navigationController?.pushViewController(comentsView, animated: true)
+         if NSUserDefaults.standardUserDefaults().valueForKey("PROFILE_PIC") != nil
  
  */
         
-
-//        if SMUserDetails.sharedInstance.userID.characters.count > 0 {
-//            let comentsView = CXCommentViewController.init()
-//            comentsView.headerTitle = self.productCategory.name
-//            self.navigationController?.pushViewController(comentsView, animated: true)
-//        } else {
-//            let signInView = CXSignInSignUpViewController.init()
-//            signInView.orgID = self.product.createdByID
-//            self.navigationController?.pushViewController(signInView, animated: true)
-//        }
+        let userID  =  NSUserDefaults.standardUserDefaults().valueForKey("USER_ID")
+        
+        if userID != nil {
+            let comentsView = CXCommentViewController.init()
+            comentsView.headerTitle = "Reviews"
+            comentsView.jobID = self.product.pID
+            
+            self.navigationController?.pushViewController(comentsView, animated: true)
+        } else {
+            let signInView = CXSignInSignUpViewController.init()
+            signInView.orgID = self.product.createdByID
+            self.navigationController?.pushViewController(signInView, animated: true)
+        }
         
     }
     func shareAction() {
@@ -480,6 +484,12 @@ class SMDetailViewController: UIViewController, FloatRatingViewDelegate,UITableV
         
         label.sizeToFit()
         return label.frame.height
+    }
+    
+    //MARK:Medium Adds 
+    
+    func designTheMediumAdd(){
+        
     }
 }
 
