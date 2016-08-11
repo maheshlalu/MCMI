@@ -25,6 +25,8 @@ class SMCategoryViewController: UIViewController,ENSideMenuDelegate,UITableViewD
     var storeInfo: NSMutableArray!
     var storeJSON: NSDictionary!
     var isItemSelected : Bool!
+    var isTransparantView: Bool = true
+    var transparentView: UIView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -253,7 +255,7 @@ class SMCategoryViewController: UIViewController,ENSideMenuDelegate,UITableViewD
 
     func customizeHeader() {
         let leftBtn = UIButton(type: UIButtonType.Custom)
-        leftBtn.frame = CGRectMake(0, 0, 40, 40)
+        leftBtn.frame = CGRectMake(0, 0, 30, 30)
         leftBtn.setImage(UIImage(named: "men_icon.png"), forState:.Normal)
         leftBtn.addTarget(self, action:#selector(SMCategoryViewController.menuAction), forControlEvents: .TouchUpInside)
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: leftBtn)
@@ -267,12 +269,28 @@ class SMCategoryViewController: UIViewController,ENSideMenuDelegate,UITableViewD
         self.titleLabel.textColor = UIColor.whiteColor()
         self.navigationItem.titleView = self.titleLabel
     }
+
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        self.transparentView.hidden = true
+        isTransparantView = true
+        toggleSideMenuView()
+    }
     
-//    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-//        toggleSideMenuView()
-//    }
+    func transparentVIew(){
+    self.transparentView = UIView.init(frame: CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height))
+    self.transparentView.backgroundColor = UIColor.blackColor()
+    self.transparentView.alpha = 0.4
+    self.view.addSubview(self.transparentView)
+    }
     
     func menuAction(){
+        if isTransparantView == true{
+            self.transparentVIew()
+            isTransparantView = false
+        }else{
+            self.transparentView.hidden = true
+            isTransparantView = true
+        }
         toggleSideMenuView()
     }
     
@@ -371,7 +389,7 @@ class SMCategoryViewController: UIViewController,ENSideMenuDelegate,UITableViewD
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-         return CXConstant.tableViewHeigh;
+         return CXConstant.tableViewHeigh - 25;
     }
 }
 
@@ -380,9 +398,18 @@ extension SMCategoryViewController: UICollectionViewDelegate, UICollectionViewDa
     func collectionView(collectionView: UICollectionView,
                         numberOfItemsInSection section: Int) -> Int {
         if collectionView.tag == self.mallProductCategories.count {
-            return self.storeInfo.count
+            if (self.storeInfo.count) <= 4{
+                return self.storeInfo.count
+            }else{
+                return 5
+            }
         }
-         return 4
+        let prodCategory:CX_Product_Category = self.mallProductCategories[collectionView.tag] as! CX_Product_Category
+        if (CXDBSettings.getProductsWithCategory(prodCategory).count) <= 4 {
+            return CXDBSettings.getProductsWithCategory(prodCategory).count
+        }else{
+            return 5
+        }
     }
     
     func collectionView(collectionView: UICollectionView,
@@ -392,6 +419,10 @@ extension SMCategoryViewController: UICollectionViewDelegate, UICollectionViewDa
         if cell == nil {
             collectionView.registerNib(UINib(nibName: "CXDetailCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: identifier)
         }
+        if indexPath.row == 4 {
+            let moreCell = self.customizeMoreCell(collectionView, indexPath: indexPath)
+            return moreCell
+        }
         
         if collectionView.tag == self.mallProductCategories.count {
             let store :NSDictionary = self.storeInfo[indexPath.row] as! NSDictionary
@@ -400,22 +431,27 @@ extension SMCategoryViewController: UICollectionViewDelegate, UICollectionViewDa
             cell.detailImageView.sd_setImageWithURL(NSURL(string:gallImage)!, placeholderImage: UIImage(named: "smlogo.png"), options:SDWebImageOptions.RefreshCached)
             cell.infoLabel.text =  store.valueForKey("albumName") as? String
         } else {
-            if indexPath.row == 3 {
-                let moreCell = self.customizeMoreCell(collectionView, indexPath: indexPath)
-                return moreCell
-            }
             let prodCategory:CX_Product_Category = self.mallProductCategories[collectionView.tag] as! CX_Product_Category
             let product: CX_Products = CXDBSettings.getProductsWithCategory(prodCategory)[indexPath.row] as! CX_Products
             cell.activity.hidden = true
             let prodImage :String = CXDBSettings.getProductImage(product)
             
-             cell.detailImageView.sd_setImageWithURL(NSURL(string:prodImage)!, placeholderImage: UIImage(named: "smlogo.png"), options:SDWebImageOptions.RefreshCached)
-                 cell.infoLabel.text = CXDBSettings.getProductInfo(product)
+            cell.detailImageView.sd_setImageWithURL(NSURL(string:prodImage)!, placeholderImage: UIImage(named: "smlogo.png"), options:SDWebImageOptions.RefreshCached)
+            cell.infoLabel.text = CXDBSettings.getProductInfo(product)
         }
         
         return cell
     }
     
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        // Set cell width to 100%
+        
+        if indexPath.row == 4 {
+            return CGSize(width: CXConstant.DetailCollectionCellSize.width-70, height: CXConstant.DetailCollectionCellSize.height)
+        }
+        return CXConstant.DetailCollectionCellSize
+        
+    }
     
     func customizeMoreCell(collectionView:UICollectionView,indexPath:NSIndexPath) -> UICollectionViewCell{
         let collID = "CollectionCellID"
@@ -450,14 +486,21 @@ extension SMCategoryViewController: UICollectionViewDelegate, UICollectionViewDa
         }
         isItemSelected = true
         if collectionView.tag == self.mallProductCategories.count {
+            if indexPath.row == 4 {
+                let galleryDetails = CXGalleryMoreViewController.init()
+                galleryDetails.stores = self.storeInfo
+                galleryDetails.galleryStoreJSON = self.storeJSON
+                self.navigationController?.pushViewController(galleryDetails, animated: true)
+            }else{
             let store :NSDictionary = self.storeInfo[indexPath.row] as! NSDictionary
             let galleryView =  CXGalleryViewController.init()
             let albumName = store.valueForKey("albumName") as? String
             galleryView.stores = CXDBSettings.getGalleryItems(self.storeJSON, albumName: albumName!)
             self.navigationController?.pushViewController(galleryView, animated: true)
+            }
         } else {
             let prodCategory:CX_Product_Category = self.mallProductCategories[collectionView.tag] as! CX_Product_Category
-            if indexPath.row == 3 {
+            if indexPath.row == 4 {
                 let productsView = CXProductsViewController.init()
                 productsView.productCategory = prodCategory
                 self.navigationController?.pushViewController(productsView, animated: true)
@@ -467,13 +510,13 @@ extension SMCategoryViewController: UICollectionViewDelegate, UICollectionViewDa
                 detailView.product = product
                 detailView.productCategory = prodCategory
                 self.navigationController?.pushViewController(detailView, animated: true)
-
+                
                 
             }
         }
-
+        
     }
-
+    
 }
 
 /* http://stackoverflow.com/questions/24176362/nsurlconnection-using-ios-swift */

@@ -1,22 +1,23 @@
 //
-//  CXGalleryViewController.swift
+//  CXGalleryMoreViewController.swift
 //  Silly Monks
 //
-//  Created by Sarath on 10/04/16.
+//  Created by CX_One on 8/11/16.
 //  Copyright © 2016 Sarath. All rights reserved.
 //
 
 import UIKit
 import SDWebImage
 
-class CXGalleryViewController: UIViewController,UICollectionViewDataSource, UICollectionViewDelegate,CHTCollectionViewDelegateWaterfallLayout {
-    
+class CXGalleryMoreViewController: UIViewController,UICollectionViewDataSource, UICollectionViewDelegate,CHTCollectionViewDelegateWaterfallLayout {
     var galleryCollectionView: UICollectionView!
     var spinner:DTIActivityIndicatorView!// = DTIActivityIndicatorView()
     var activityIndicatorView: DTIActivityIndicatorView!
     let reuseIdentifier = "cell" // also enter this string as the cell identifier in the storyboard
     
     var stores : NSMutableArray!
+    var galleryStoreJSON: NSDictionary!
+    
     var imageItemsDict:NSMutableDictionary = NSMutableDictionary()
     
     var galleryImages: [UIImage] = []
@@ -41,12 +42,12 @@ class CXGalleryViewController: UIViewController,UICollectionViewDataSource, UICo
     }
     
     override func viewWillAppear(animated: Bool) {
-         super.viewWillAppear(animated)
+        super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
     func threadAction() {
-       
+        
         self.customizeMainView()
     }
     
@@ -81,14 +82,14 @@ class CXGalleryViewController: UIViewController,UICollectionViewDataSource, UICo
         
         self.galleryCollectionView.delegate = self
         self.galleryCollectionView.dataSource = self
-    
+        
         self.galleryCollectionView.alwaysBounceVertical = true
         
         self.galleryCollectionView.backgroundColor = UIColor.clearColor()
         self.galleryCollectionView.registerClass(CXGalleryCollectionViewCell.self, forCellWithReuseIdentifier: "GalleryCellIdentifier")
         self.view.addSubview(self.galleryCollectionView)
         
-         self.activityIndicatorView.stopActivity()
+        self.activityIndicatorView.stopActivity()
     }
     
     override func didReceiveMemoryWarning() {
@@ -108,7 +109,7 @@ class CXGalleryViewController: UIViewController,UICollectionViewDataSource, UICo
     func collectionView(collectionView: UICollectionView,
                         numberOfItemsInSection section: Int) -> Int {
         return self.stores.count;
-       // return galleryImages.count
+        // return galleryImages.count
     }
     
     func collectionView(collectionView: UICollectionView,
@@ -120,31 +121,29 @@ class CXGalleryViewController: UIViewController,UICollectionViewDataSource, UICo
         }
         cell.picView.image = nil
         cell.activity.hidden = true
-        let store :NSDictionary = self.stores[indexPath.row] as! NSDictionary
+        let store :NSMutableDictionary = self.stores[indexPath.row] as! NSMutableDictionary
         let gallImage :String = store.valueForKey("URL") as! String
         
         
         cell.picView.sd_setImageWithURL(NSURL(string: gallImage)!,
-                                                 placeholderImage: UIImage(named: "smlogo.png"),
-                                                 options: SDWebImageOptions.RefreshCached,
-                                                 completed: { (image, error, cacheType, imageURL) -> () in
-                                                    print("Downloaded and set! and Image size \(image?.size)")
-                                                    self.imageItemsDict.setValue(image, forKey: String(indexPath.row))
-                                                    //collectionView.reloadItemsAtIndexPaths([indexPath])
+                                        placeholderImage: UIImage(named: "smlogo.png"),
+                                        options: SDWebImageOptions.RefreshCached,
+                                        completed: { (image, error, cacheType, imageURL) -> () in
+                                            print("Downloaded and set! and Image size \(image?.size)")
+                                            self.imageItemsDict.setValue(image, forKey: String(indexPath.row))
+                                            //collectionView.reloadItemsAtIndexPaths([indexPath])
             }
         )
         return cell
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        print("Collection view at row \(collectionView.tag) selected index path \(indexPath) indexPath Row\(indexPath.row)")
-        self.navigationController?.setNavigationBarHidden(true, animated: true)
-        let store :NSDictionary = self.stores[indexPath.row] as! NSDictionary
-        let gallImage :String = store.valueForKey("URL") as! String
 
-        let imageControl = CXImageViewController.init()
-        imageControl.imagePath = gallImage
-        self.navigationController?.pushViewController(imageControl, animated: false)
+        let store :NSDictionary = self.stores[indexPath.row] as! NSDictionary
+        let galleryView =  CXGalleryViewController.init()
+        let albumName = store.valueForKey("albumName") as? String
+        galleryView.stores = CXDBSettings.getGalleryItems(self.galleryStoreJSON, albumName: albumName!)
+        self.navigationController?.pushViewController(galleryView, animated: true)
     }
     
     func collectionView(collectionView: UICollectionView,
@@ -159,7 +158,3 @@ class CXGalleryViewController: UIViewController,UICollectionViewDataSource, UICo
     }
 }
 
-
-
-
-//http://stackoverflow.com/questions/25305945/use-of-undeclared-type-viewcontroller-when-unit-testing-my-own-viewcontroller

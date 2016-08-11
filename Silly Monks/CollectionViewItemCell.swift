@@ -26,13 +26,12 @@ class CollectionViewItemCell: UICollectionViewCell {
         contentView.addSubview(cellBackGroundView)
         
 //        cellBackGroundView.layer.cornerRadius = 1.0
-//        cellBackGroundView.layer.borderColor = CXConstant.collectionCellborderColor.CGColor
+//        cellBackGroundView.layer.borderColor = CXConstant.collectiocategonCellborderColor.CGColor
 //        cellBackGroundView.layer.borderWidth = 2.0
       
-        imageView = UIImageView(frame: CGRect(x: 5, y: 0, width: frame.size.width+50, height: CXConstant.collectiViewCellSize.height-10))
+        imageView = UIImageView(frame: CGRect(x: -50, y:0, width: frame.size.width+110, height: CXConstant.collectiViewCellSize.height-70))//CXConstant.collectiViewCellSize.height-40
         imageView.backgroundColor = UIColor.clearColor()
-        //imageView.contentMode = UIViewContentMode.ScaleAspectFit
-        imageView.contentMode = UIViewContentMode.ScaleToFill
+        imageView.contentMode = UIViewContentMode.ScaleAspectFit
         contentView.addSubview(imageView)
         
          /*

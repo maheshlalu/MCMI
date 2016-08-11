@@ -17,6 +17,7 @@ class CXProfilePageView: UIViewController, EVTabBar  {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.customizeHeaderView()
         setupEVTabBar()
         setupPageView()
         setupConstraints()
