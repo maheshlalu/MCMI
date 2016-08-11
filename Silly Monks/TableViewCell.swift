@@ -37,7 +37,7 @@ class TableViewCell: UITableViewCell {
         
         
            // backGrooundView.frame = CGRectMake(20, 0, UIScreen.mainScreen().bounds.size.width-40,200);
-            backGrooundView.frame = CGRectMake(20, 0, UIScreen.mainScreen().bounds.size.width-40, CXConstant.tableViewHeigh-10);// x-8
+            backGrooundView.frame = CGRectMake(20, 0, UIScreen.mainScreen().bounds.size.width-40, CXConstant.homeScreenTableViewHeight-10);// x-8
         
 //        backgroundView?.layer.cornerRadius = 1.0
 //        backgroundView?.layer.borderWidth = 1.0
@@ -50,9 +50,9 @@ class TableViewCell: UITableViewCell {
         
         //Title Lbl
         
-        cellTitlelbl.frame = CGRectMake(-10,-20, UIScreen.mainScreen().bounds.size.width, 70)
+        cellTitlelbl.frame = CGRectMake(-15,-25, UIScreen.mainScreen().bounds.size.width, 70)
         cellTitlelbl.text = "Tollywood News"
-        cellTitlelbl.font = UIFont.boldSystemFontOfSize(15)
+        cellTitlelbl.font = UIFont.boldSystemFontOfSize(14)
         cellTitlelbl.textAlignment = NSTextAlignment.Center;
         cellTitlelbl.textColor = UIColor.navBarColor()
         backGrooundView.addSubview(cellTitlelbl)

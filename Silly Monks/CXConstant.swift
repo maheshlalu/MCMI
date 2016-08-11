@@ -36,6 +36,7 @@ class CXConstant: NSObject {
     }
     
     
+    static let homeScreenTableViewHeight : CGFloat = 225
     static let tableViewHeigh : CGFloat = 275
     
     static let someString : String = "Some Text" // struct
@@ -43,7 +44,7 @@ class CXConstant: NSObject {
     
     static let collectionViewFrame : CGRect = CGRectMake(8, 30, UIScreen.mainScreen().bounds.size.width-20, tableViewHeigh-50)
     
-    static let HOME_COLLECTION_FRAME : CGRect = CGRectMake(8, 30, UIScreen.mainScreen().bounds.size.width-20, tableViewHeigh-50)
+    static let HOME_COLLECTION_FRAME : CGRect = CGRectMake(10, 20, UIScreen.mainScreen().bounds.size.width-20, tableViewHeigh-50)
     
     static let titleLabelColor : UIColor = UIColor(red: 240.0/255.0, green: 40.0/255.0, blue: 0.0/255.0, alpha: 1.0)
     
@@ -61,7 +62,7 @@ class CXConstant: NSObject {
     
     ///
     
-    static let DetailCollectionViewFrame : CGRect = CGRectMake(4, 30, DetailTableView_Width-8, tableViewHeigh-50)
+    static let DetailCollectionViewFrame : CGRect = CGRectMake(4, 10, DetailTableView_Width-8, tableViewHeigh-50)
     
     
     

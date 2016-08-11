@@ -531,15 +531,16 @@ class HomeViewController: UIViewController  ,UITableViewDelegate,UITableViewData
         self.navigationController?.navigationBar.translucent = false;
         self.navigationController?.navigationBar.barTintColor = UIColor.navBarColor()
         
-        let lImage = UIImage(named: "smlogo.png") as UIImage?
+        let lImage = UIImage(named: "men_icon.png") as UIImage?
         let button = UIButton (type: UIButtonType.Custom) as UIButton
-        button.frame = CGRectMake(0, 0, 50, 50)
+        button.frame = CGRectMake(0, 0, 30, 30)
         button.addTarget(self, action: #selector(HomeViewController.panelBtnAction), forControlEvents: UIControlEvents.TouchUpInside)
         button.setImage(lImage, forState: .Normal)
         self.navigationItem.leftBarButtonItem = UIBarButtonItem.init(customView: button)
     
-        let profileImage = UIImageView.init(frame: CGRectMake(0, 0, 50, 30))
-        profileImage.image = UIImage(named:"sm_navigation_logo")
+        let profileImage = UIImageView.init(frame: CGRectMake(0, 0, 5, 40))
+        profileImage.image = UIImage(named:"TabbarLogo")
+        profileImage.contentMode = UIViewContentMode.ScaleAspectFit
         profileImage.backgroundColor = UIColor.clearColor()
         self.navigationItem.titleView = profileImage
         
@@ -615,7 +616,7 @@ class HomeViewController: UIViewController  ,UITableViewDelegate,UITableViewData
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return CXConstant.tableViewHeigh;
+        return CXConstant.homeScreenTableViewHeight-5;
     }
     
     //MARK: Arrange The Order
@@ -661,7 +662,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             collectionView.registerNib(UINib(nibName: "CollectionViewItemCell", bundle: nil), forCellWithReuseIdentifier: identifier)
         }
         cell.imageView.image = nil
-        cell.imageView.contentMode = UIViewContentMode.ScaleAspectFit
+        //cell.imageView.contentMode = UIViewContentMode.ScaleAspectFit
         cell.activity.hidden = true
         let allMall:CX_AllMalls = self.categoryList[collectionView.tag] as! CX_AllMalls
         if allMall.mid != nil {

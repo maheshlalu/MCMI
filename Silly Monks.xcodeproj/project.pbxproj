@@ -27,6 +27,7 @@
 		43B2125D1D535A83006D49C8 /* NativeAdCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43B2125C1D535A83006D49C8 /* NativeAdCell.swift */; };
 		43B2125F1D535C78006D49C8 /* NativeAdCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 43B2125E1D535C78006D49C8 /* NativeAdCell.xib */; };
 		43B212611D5376F0006D49C8 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43B212601D5376F0006D49C8 /* CoreLocation.framework */; };
+		43F2D8DD1D5C519100179E31 /* CXGalleryMoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F2D8DC1D5C519100179E31 /* CXGalleryMoreViewController.swift */; };
 		69023AD21C9BC6CF003F8245 /* Roboto-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 69023ACC1C9BC4AC003F8245 /* Roboto-Black.ttf */; };
 		69023AD31C9BC6CF003F8245 /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 69023ACD1C9BC4AC003F8245 /* Roboto-Bold.ttf */; };
 		69023AD41C9BC6CF003F8245 /* Roboto-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 69023ACE1C9BC4AC003F8245 /* Roboto-Italic.ttf */; };
@@ -148,6 +149,7 @@
 		43B2125C1D535A83006D49C8 /* NativeAdCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NativeAdCell.swift; sourceTree = "<group>"; };
 		43B2125E1D535C78006D49C8 /* NativeAdCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NativeAdCell.xib; sourceTree = "<group>"; };
 		43B212601D5376F0006D49C8 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		43F2D8DC1D5C519100179E31 /* CXGalleryMoreViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CXGalleryMoreViewController.swift; sourceTree = "<group>"; };
 		5FEF1C9ABFDEED1E328FD320 /* Pods-Silly Monks.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Silly Monks.release.xcconfig"; path = "Pods/Target Support Files/Pods-Silly Monks/Pods-Silly Monks.release.xcconfig"; sourceTree = "<group>"; };
 		69023ACC1C9BC4AC003F8245 /* Roboto-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Roboto-Black.ttf"; path = "Fonts/Roboto-Black.ttf"; sourceTree = "<group>"; };
 		69023ACD1C9BC4AC003F8245 /* Roboto-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Roboto-Bold.ttf"; path = "Fonts/Roboto-Bold.ttf"; sourceTree = "<group>"; };
@@ -507,6 +509,7 @@
 				69C129A51CA4FF1E00C566DC /* CXBannerView.swift */,
 				697858D71CB627E000AC5784 /* SMDetailViewController.swift */,
 				69F03FBF1CBAC18F00A0484D /* CXGalleryViewController.swift */,
+				43F2D8DC1D5C519100179E31 /* CXGalleryMoreViewController.swift */,
 				6947695E1CCBE81100878BF9 /* CXVideoPlayerViewController.swift */,
 				69D1A1211CDB175F0034E7CC /* CX_YoutubeVideoPlayerController.swift */,
 				6905B36C1CE50BD500F902D8 /* CX_ForgotPasswordViewController.swift */,
@@ -882,6 +885,7 @@
 				690477E31CFD4C29009ACFDE /* CXAdvertiseViewController.swift in Sources */,
 				69A8116E1CF08E3C00F71F93 /* SMUserDetails.swift in Sources */,
 				69F89E231C9915150032F68D /* HomeViewController.swift in Sources */,
+				43F2D8DD1D5C519100179E31 /* CXGalleryMoreViewController.swift in Sources */,
 				690A69D61CB9301B001C6903 /* CXDetailTableViewCell.swift in Sources */,
 				69B35BBE1CA8ED0D00E6433F /* CX_AllMalls.swift in Sources */,
 				694E13EC1CEF9220000B4ABD /* YouTubePlayer.swift in Sources */,

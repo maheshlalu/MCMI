@@ -56,7 +56,7 @@ class CXDetailTableViewCell: UITableViewCell {
         //            cellFrame = CGRectMake(5, 5, CXConstant.DetailTableView_Width, viewHeight)
         //        }
         
-        let cellFrame = CGRectMake(10, 0, cellWidth-20, viewHeight)
+        let cellFrame = CGRectMake(10, 0, cellWidth-20, viewHeight-25)
         
         
         self.bgView = UIView.init(frame: cellFrame)//CXConstant.DetailTableView_Width
@@ -75,10 +75,13 @@ class CXDetailTableViewCell: UITableViewCell {
     func customizeDetailCollectionView(){
         let cellWidth = UIScreen.mainScreen().bounds.size.width
         let layout = UICollectionViewFlowLayout()
+        layout.sectionInset = UIEdgeInsets(top: 0, left:2, bottom:0, right: 2)
+        layout.minimumInteritemSpacing = -8
+        layout.minimumLineSpacing = 2.2
         layout.itemSize = CXConstant.DetailCollectionCellSize
         self.detailCollectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: layout)
         self.detailCollectionView.showsHorizontalScrollIndicator = false
-        self.detailCollectionView.frame = CGRectMake(2, 30, cellWidth-4, CXConstant.DetailCollectionViewFrame.size.height)
+        self.detailCollectionView.frame = CGRectMake(2, 30, cellWidth-4, CXConstant.DetailCollectionViewFrame.size.height-35)
         
         // CXConstant.DetailCollectionViewFrame
         layout.scrollDirection = UICollectionViewScrollDirection.Horizontal
