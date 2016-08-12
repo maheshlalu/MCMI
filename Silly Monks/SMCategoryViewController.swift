@@ -26,7 +26,7 @@ class SMCategoryViewController: UIViewController,ENSideMenuDelegate,UITableViewD
     var storeJSON: NSDictionary!
     var isItemSelected : Bool!
     var isTransparantView: Bool = true
-    var transparentView: UIView!
+   // var transparentView: UIView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,10 +48,10 @@ class SMCategoryViewController: UIViewController,ENSideMenuDelegate,UITableViewD
     // MARK:initialSyncOperations
     func initialSyncOperations() {
         if self.getAllProductCategoriesFromDB(self.mall.mid!).count == 0 {
-            if self.spinner == nil {
+            /*if self.spinner == nil {
                 self.spinner = DTIActivityIndicatorView(frame: CGRect(x:(self.view.frame.size.width-60)/2, y:200.0, width:60.0, height:60.0))
                 self.view.addSubview(self.spinner)
-            }
+            }*/
             self.productCategorySync()
         } else {
             //Check the today date
@@ -75,15 +75,17 @@ class SMCategoryViewController: UIViewController,ENSideMenuDelegate,UITableViewD
                         
                     }
                     if(self.productCategories.count != 0){
-                        if self.spinner == nil {
+                       
+                        /*if self.spinner == nil {
                             self.spinner = DTIActivityIndicatorView(frame: CGRect(x:(self.view.frame.size.width-60)/2, y:200.0, width:60.0, height:60.0))
                             self.view.addSubview(self.spinner)
-                        }
+                        }*/
                         self.getProducts()
                     }else{
-                        if self.spinner != nil {
+                        LoadingView.hide()
+                       /* if self.spinner != nil {
                             self.spinner.stopActivity()
-                        }
+                        }*/
                         dispatch_async(dispatch_get_main_queue()) {
                             self.mainViewOperations()
                         }
@@ -91,10 +93,10 @@ class SMCategoryViewController: UIViewController,ENSideMenuDelegate,UITableViewD
                 }
                 return
             }
-            
-            if self.spinner != nil {
-                self.spinner.stopActivity()
-            }
+            LoadingView.hide()
+//            if self.spinner != nil {
+//                self.spinner.stopActivity()
+//            }
             dispatch_async(dispatch_get_main_queue()) {
                 self.mainViewOperations()
             }
@@ -102,7 +104,8 @@ class SMCategoryViewController: UIViewController,ENSideMenuDelegate,UITableViewD
     }
     
     func productCategorySync () {
-        self.spinner.startActivity()
+        LoadingView.show("Loading", animated: true)
+        //self.spinner.startActivity()
         let reqUrl = CXConstant.PRODUCT_CATEGORY_URL + self.mall.mid!
         SMSyncService.sharedInstance.startSyncProcessWithUrl(reqUrl) { (responseDict) -> Void in
             CXDBSettings.sharedInstance.saveProductCategoriesInDB(responseDict.valueForKey("jobs")! as! NSArray, catID: self.mall.mid!)
@@ -138,7 +141,8 @@ class SMCategoryViewController: UIViewController,ENSideMenuDelegate,UITableViewD
             self.getProuctsOfProductCategory(proCat, mallId: self.mall.mid!)
         } else {
             dispatch_async(dispatch_get_main_queue()) {
-                self.spinner.stopActivity()
+                LoadingView.hide()
+               // self.spinner.stopActivity()
                 self.mainViewOperations()
             }
         }
@@ -229,6 +233,9 @@ class SMCategoryViewController: UIViewController,ENSideMenuDelegate,UITableViewD
     }
     
     func customizeMainView() {
+                                                                                                                                                                                                         if self.categoryTableView != nil {
+            self.categoryTableView.removeFromSuperview()
+        }
         let yAxis = self.bannerView.frame.size.height+self.bannerView.frame.origin.y+5
         self.categoryTableView = self.customizeTableView(CGRectMake(0,0, self.view.frame.size.width, self.view.frame.size.height))
         self.categoryTableView.contentInset = UIEdgeInsetsMake(yAxis, 0,65, 0)
@@ -262,7 +269,7 @@ class SMCategoryViewController: UIViewController,ENSideMenuDelegate,UITableViewD
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: leftBtn)
         
         self.titleLabel = UILabel()
-        self.titleLabel.frame = CGRectMake(0, 0, 120, 40);
+        self.titleLabel.frame = CGRectMake(0, 0, 210, 40);
         self.titleLabel.backgroundColor = UIColor.clearColor()
         self.titleLabel.font = UIFont.init(name: "Roboto-Bold", size: 18)
         self.titleLabel.text = self.mall.name
@@ -271,27 +278,10 @@ class SMCategoryViewController: UIViewController,ENSideMenuDelegate,UITableViewD
         self.navigationItem.titleView = self.titleLabel
     }
 
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        self.transparentView.hidden = true
-        isTransparantView = true
-        toggleSideMenuView()
-    }
     
-    func transparentVIew(){
-    self.transparentView = UIView.init(frame: CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height))
-    self.transparentView.backgroundColor = UIColor.blackColor()
-    self.transparentView.alpha = 0.4
-    self.view.addSubview(self.transparentView)
-    }
+   
     
     func menuAction(){
-        if isTransparantView == true{
-            self.transparentVIew()
-            isTransparantView = false
-        }else{
-            self.transparentView.hidden = true
-            isTransparantView = true
-        }
         toggleSideMenuView()
     }
     

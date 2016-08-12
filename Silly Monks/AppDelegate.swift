@@ -31,6 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate{
         
         self.setUpMagicalDB()
         self.setupMopupbs()
+        self.configure()
 
         let wFrame = CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, UIScreen.mainScreen().bounds.size.height)
         self.window = UIWindow.init(frame: wFrame)
@@ -397,6 +398,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate{
             })
         }
     }
+    
+    //MARK: Loader configuration
 
+    func configure (){
+        var config : LoadingView.Config = LoadingView.Config()
+        config.size = 100
+        config.backgroundColor = UIColor.blackColor() //UIColor(red:0.03, green:0.82, blue:0.7, alpha:1)
+        config.spinnerColor = UIColor.whiteColor()//UIColor(red:0.88, green:0.26, blue:0.18, alpha:1)
+        config.titleTextColor = UIColor.whiteColor()//UIColor(red:0.88, green:0.26, blue:0.18, alpha:1)
+        config.spinnerLineWidth = 2.0
+        config.foregroundColor = UIColor.blackColor()
+        config.foregroundAlpha = 0.5
+        LoadingView.setConfig(config)
+    }
 }
 

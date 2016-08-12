@@ -10,6 +10,7 @@
 		12F49DA81CA81F5300B32FC5 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F49DA71CA81F5300B32FC5 /* TableViewCell.swift */; };
 		12F49DAA1CA81F5C00B32FC5 /* CollectionViewItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F49DA91CA81F5C00B32FC5 /* CollectionViewItemCell.swift */; };
 		12F49DAE1CA81F8400B32FC5 /* CXConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F49DAD1CA81F8400B32FC5 /* CXConstant.swift */; };
+		3B312F681D5DF4960076F894 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B312F671D5DF4960076F894 /* LoadingView.swift */; };
 		3B5FCCFE1D4B2AC80068990A /* CXProfilePageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5FCCFD1D4B2AC80068990A /* CXProfilePageView.swift */; };
 		3B5FCD031D4B30970068990A /* SMProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5FCCFF1D4B30970068990A /* SMProfileViewController.swift */; };
 		3B5FCD041D4B30970068990A /* SMProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B5FCD001D4B30970068990A /* SMProfileViewController.xib */; };
@@ -132,6 +133,7 @@
 		12F49DA91CA81F5C00B32FC5 /* CollectionViewItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewItemCell.swift; sourceTree = "<group>"; };
 		12F49DAD1CA81F8400B32FC5 /* CXConstant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CXConstant.swift; sourceTree = "<group>"; };
 		30F7C9EA364A1853E11F23B8 /* Pods_Silly_Monks.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Silly_Monks.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3B312F671D5DF4960076F894 /* LoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		3B5FCCFD1D4B2AC80068990A /* CXProfilePageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CXProfilePageView.swift; sourceTree = "<group>"; };
 		3B5FCCFF1D4B30970068990A /* SMProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SMProfileViewController.swift; sourceTree = "<group>"; };
 		3B5FCD001D4B30970068990A /* SMProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SMProfileViewController.xib; sourceTree = "<group>"; };
@@ -358,6 +360,7 @@
 		690533451CA110CD0094D272 /* Spinners */ = {
 			isa = PBXGroup;
 			children = (
+				3B312F671D5DF4960076F894 /* LoadingView.swift */,
 				690533461CA111990094D272 /* CALayer+DTI.swift */,
 				690533471CA111990094D272 /* DTIActivityIndicator.h */,
 				690533481CA111990094D272 /* DTIActivityIndicatorView.swift */,
@@ -873,6 +876,7 @@
 				12F49DA81CA81F5300B32FC5 /* TableViewCell.swift in Sources */,
 				690533531CA111990094D272 /* CALayer+DTI.swift in Sources */,
 				690A69DA1CB94992001C6903 /* CXDetailCollectionViewCell.swift in Sources */,
+				3B312F681D5DF4960076F894 /* LoadingView.swift in Sources */,
 				6905B36D1CE50BD500F902D8 /* CX_ForgotPasswordViewController.swift in Sources */,
 				6939F3B41CC6049100BA39D7 /* CXImageDetailTableViewCell.swift in Sources */,
 				69714A151C9FB13A00B20EDA /* SMNavigationController.swift in Sources */,
@@ -932,8 +936,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: RAMAKRISHNA K (95Y7Y2H9V8)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: RAMAKRISHNA K (95Y7Y2H9V8)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: RAMAKRISHNA K (8P5BDD85J8)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: RAMAKRISHNA K (8P5BDD85J8)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEFINES_MODULE = YES;
@@ -956,7 +960,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "93412987-5b62-49d0-845a-c274020b2f89";
+				PROVISIONING_PROFILE = "14e0305c-8eb9-4f31-b7bb-09dc349fc701";
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -980,8 +984,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: RAMAKRISHNA K (95Y7Y2H9V8)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: RAMAKRISHNA K (95Y7Y2H9V8)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: RAMAKRISHNA K (8P5BDD85J8)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: RAMAKRISHNA K (8P5BDD85J8)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
@@ -998,7 +1002,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "93412987-5b62-49d0-845a-c274020b2f89";
+				PROVISIONING_PROFILE = "14e0305c-8eb9-4f31-b7bb-09dc349fc701";
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				VALIDATE_PRODUCT = YES;
@@ -1011,8 +1015,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: RAMAKRISHNA K (95Y7Y2H9V8)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: RAMAKRISHNA K (95Y7Y2H9V8)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: RAMAKRISHNA K (8P5BDD85J8)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: RAMAKRISHNA K (8P5BDD85J8)";
 				DEFINES_MODULE = YES;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1024,9 +1028,9 @@
 				INFOPLIST_FILE = "Silly Monks/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.sillymonks;
+				PRODUCT_BUNDLE_IDENTIFIER = com.creativexperts.;
 				PRODUCT_NAME = SillyMonks;
-				PROVISIONING_PROFILE = "93412987-5b62-49d0-845a-c274020b2f89";
+				PROVISIONING_PROFILE = "14e0305c-8eb9-4f31-b7bb-09dc349fc701";
 				SWIFT_OBJC_BRIDGING_HEADER = "Silly Monks/CX-Bridge-Header.h";
 			};
 			name = Debug;
@@ -1037,8 +1041,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: RAMAKRISHNA K (95Y7Y2H9V8)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: RAMAKRISHNA K (95Y7Y2H9V8)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: RAMAKRISHNA K (8P5BDD85J8)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: RAMAKRISHNA K (8P5BDD85J8)";
 				DEFINES_MODULE = YES;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1050,9 +1054,9 @@
 				INFOPLIST_FILE = "Silly Monks/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.sillymonks;
+				PRODUCT_BUNDLE_IDENTIFIER = com.creativexperts.;
 				PRODUCT_NAME = SillyMonks;
-				PROVISIONING_PROFILE = "93412987-5b62-49d0-845a-c274020b2f89";
+				PROVISIONING_PROFILE = "14e0305c-8eb9-4f31-b7bb-09dc349fc701";
 				SWIFT_OBJC_BRIDGING_HEADER = "Silly Monks/CX-Bridge-Header.h";
 			};
 			name = Release;

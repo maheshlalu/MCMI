@@ -403,7 +403,7 @@ class CXDBSettings: NSObject {
                 //print("Parsing \(enProduct.json)")
                 enProduct.name = prod.valueForKey("Name") as? String
                 enProduct.pID = CXConstant.resultString(prod.valueForKey("jobTypeId")!)
-                print(prod)
+               // print(prod)
                 enProduct.storeID = CXConstant.resultString(prod.valueForKey("id")!)
                 //prod.valueForKey("jobTypeId") as? String
                 enProduct.type = prod.valueForKey("jobTypeName") as? String
