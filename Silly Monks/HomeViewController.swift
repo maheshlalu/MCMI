@@ -53,7 +53,7 @@ class HomeViewController: UIViewController  ,UITableViewDelegate,UITableViewData
         CXDBSettings.sharedInstance.delegate = self
         self.arrangeCategoryListOrder()
         NSNotificationCenter.defaultCenter().addObserver(self, selector:Selector(profileUpdateNotif()), name: "UpdateProfilePic", object: nil)
-        
+
     }
     
     //    func setUpSplashAnimation() {
@@ -72,6 +72,7 @@ class HomeViewController: UIViewController  ,UITableViewDelegate,UITableViewData
     //            self.homeViewCustomization()
     //        }
     //    }
+
     
     func homeViewCustomization() {
         self.customizeHeaderView()
@@ -440,7 +441,8 @@ class HomeViewController: UIViewController  ,UITableViewDelegate,UITableViewData
     //MARK:Intial Sync
     
     func initialSync() {
-        self.activityIndicatorView.startActivity()
+        //self.activityIndicatorView.startActivity()
+        LoadingView.show("Loading", animated: true)
         SMSyncService.sharedInstance.startSyncProcessWithUrl(CXConstant.ALL_MALLS_URL) { (responseDict) -> Void in
             CXDBSettings.sharedInstance.saveAllMallsInDB((responseDict.valueForKey("orgs") as? NSArray)!)
         }
@@ -486,7 +488,8 @@ class HomeViewController: UIViewController  ,UITableViewDelegate,UITableViewData
             let mallId : String = self.mallIDs[0] as! String
             self.getStoreWithMall(mallId)
         } else {
-            self.activityIndicatorView.stopActivity()
+            //self.activityIndicatorView.stopActivity()
+            LoadingView.hide()
             dispatch_async(dispatch_get_main_queue()) { [unowned self] in
                 self.catTableView.reloadData()
                 self.updateMenuItems()
