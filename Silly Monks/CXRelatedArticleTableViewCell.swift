@@ -49,7 +49,7 @@ class CXRelatedArticleTableViewCell: UITableViewCell {
         
         let viewWidth:CGFloat = UIScreen.mainScreen().bounds.width-20
 
-        let cellFrame = CGRectMake(5, 5, viewWidth-10, viewHeight)
+        let cellFrame = CGRectMake(5, 5, viewWidth-10, viewHeight-35)
         
 //        if CXConstant.currentDeviceScreen() == IPHONE_5S {
 //            cellFrame = CGRectMake(5, 5, viewWidth-10, viewHeight)
@@ -71,15 +71,20 @@ class CXRelatedArticleTableViewCell: UITableViewCell {
         self.bgView.addSubview(self.headerLbl)
     }
     func customizeDetailCollectionView(){
+        let cellWidth = UIScreen.mainScreen().bounds.size.width
         let layout = UICollectionViewFlowLayout()
+        layout.sectionInset = UIEdgeInsets(top: 0, left:2, bottom:0, right: 2)
+        layout.minimumInteritemSpacing = -8
+        layout.minimumLineSpacing = 2.2
         layout.itemSize = CXConstant.DetailCollectionCellSize
         self.relatedArticleCollectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: layout)
         self.relatedArticleCollectionView.showsHorizontalScrollIndicator = false
-        self.relatedArticleCollectionView.frame = CGRectMake(self.bgView.frame.origin.x, 30, self.bgView.frame.size.width, CXConstant.DetailCollectionViewFrame.size.height)
+        self.relatedArticleCollectionView.frame = CGRectMake(2, 30, cellWidth-4, CXConstant.DetailCollectionViewFrame.size.height-35)
         
         // CXConstant.DetailCollectionViewFrame
         layout.scrollDirection = UICollectionViewScrollDirection.Horizontal
         self.relatedArticleCollectionView.registerClass(CXDetailCollectionViewCell.self, forCellWithReuseIdentifier: "DetailCollectionViewCell")
+        self.relatedArticleCollectionView.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: "CollectionCellID")
         self.relatedArticleCollectionView.backgroundColor = UIColor.clearColor()
         self.addSubview(self.relatedArticleCollectionView)
     }

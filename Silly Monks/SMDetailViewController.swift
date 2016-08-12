@@ -500,12 +500,20 @@ extension SMDetailViewController: UICollectionViewDelegate, UICollectionViewData
                         numberOfItemsInSection section: Int) -> Int {
         if self.relatedArticles.count > 0 {
             if collectionView.tag == 0 {
-                return self.relatedArticles.count
+                if (self.relatedArticles.count) <= 4{
+                    return self.relatedArticles.count
+                }
+                return 5
             }
+            if (self.remainingProducts.count) <= 4{
+                return self.remainingProducts.count
+            }
+            return 5
+        }
+        if (self.remainingProducts.count) <= 4{
             return self.remainingProducts.count
         }
-        
-        return self.remainingProducts.count;
+        return 5
     }
     
     func collectionView(collectionView: UICollectionView,
@@ -514,6 +522,10 @@ extension SMDetailViewController: UICollectionViewDelegate, UICollectionViewData
         let cell: CXDetailCollectionViewCell! = collectionView.dequeueReusableCellWithReuseIdentifier(identifier, forIndexPath: indexPath) as?CXDetailCollectionViewCell
         if cell == nil {
             collectionView.registerNib(UINib(nibName: "CXDetailCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: identifier)
+        }
+        if indexPath.row == 4 {
+            let moreCell = self.customizeMoreCell(collectionView, indexPath: indexPath)
+            return moreCell
         }
         let product: CX_Products
         if self.relatedArticles.count > 0 {
@@ -529,6 +541,40 @@ extension SMDetailViewController: UICollectionViewDelegate, UICollectionViewData
         return cell
     }
     
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        // Set cell width to 100%
+        
+        if indexPath.row == 4 {
+            return CGSize(width: CXConstant.DetailCollectionCellSize.width-70, height: CXConstant.DetailCollectionCellSize.height)
+        }
+        return CXConstant.DetailCollectionCellSize
+        
+    }
+    
+    func customizeMoreCell(collectionView:UICollectionView,indexPath:NSIndexPath) -> UICollectionViewCell{
+        let collID = "CollectionCellID"
+        let cell: UICollectionViewCell! = collectionView.dequeueReusableCellWithReuseIdentifier(collID, forIndexPath: indexPath)
+        if cell == nil {
+            collectionView.registerNib(UINib(nibName: "UICollectionViewCell", bundle: nil), forCellWithReuseIdentifier: collID)
+        }
+        cell.backgroundColor = UIColor.whiteColor()
+        let moreLabel = self.createMoreLable(CGRectMake(0, (cell.frame.size.height - 35)/2, cell.frame.size.width-10, 35), text: "More")
+        cell.addSubview(moreLabel)
+        return cell
+    }
+    
+    func createMoreLable(lFrame:CGRect, text: String) -> UILabel{
+        let cLabel = UILabel.init()
+        cLabel.frame = lFrame
+        cLabel.backgroundColor = UIColor.whiteColor()
+        cLabel.textColor = UIColor.navBarColor()
+        cLabel.font = UIFont(name: "Roboto-Bold", size: 15)
+        cLabel.text = text
+        cLabel.textAlignment = NSTextAlignment.Center
+        cLabel.numberOfLines = 0
+        return cLabel
+    }
+    
     func customizeCollectionCell(cell: CXDetailCollectionViewCell,product:CX_Products) {
         let prodImage :String = CXDBSettings.getProductImage(product)
         cell.activity.hidden = true
@@ -536,6 +582,43 @@ extension SMDetailViewController: UICollectionViewDelegate, UICollectionViewData
         cell.detailImageView.sd_setImageWithURL(NSURL(string:prodImage)!, placeholderImage: UIImage(named: "smlogo.png"), options:SDWebImageOptions.RefreshCached)
         cell.infoLabel.text = CXDBSettings.getProductInfo(product)
     }
+    
+//    func getAllProductCategoriesFromDB(mallID:String) -> NSMutableArray {
+//        let predicate: NSPredicate = NSPredicate(format: "createdById = %@", mallID)
+//        
+//        let fetchRequest = CX_Product_Category.MR_requestAllSortedBy("pid", ascending: false)
+//        fetchRequest.predicate = predicate
+//        //fetchRequest.entity = productEn
+//        // self.productCategories =   CX_Product_Category.MR_executeFetchRequest(fetchRequest)
+//        let productCatList :NSArray = CX_Product_Category.MR_executeFetchRequest(fetchRequest)
+//        
+//        let proKatList : NSMutableArray = NSMutableArray(array: productCatList)
+//        return proKatList
+//    }
+    
+//    func arrangeTheProductOrder() -> NSArray {
+//        //category
+//        let categoryListByorder : NSMutableArray = NSMutableArray()
+//        let list : NSArray =
+//        if self.mall.name == "Silly Monks Tollywood" {
+//            let itemOrderList :  NSArray = ["Premium Content","Tollywood News","Teasers and Trailers","SILLY Punch","Music","Movies","Reviews","Celebrities"]
+//            for orderItem in itemOrderList {
+//                for element in list {
+//                    let allMalls : CX_Product_Category = element as! CX_Product_Category
+//                    //print("all mall Category Name \(allMalls.name)");
+//                    
+//                    if orderItem as! String == allMalls.name! {
+//                        // print("all mall Category Name \(allMalls.name)");
+//                        categoryListByorder.addObject(allMalls)
+//                        break
+//                    }
+//                }
+//            }
+//            
+//            return categoryListByorder;
+//        }
+//        return list
+//    }
     
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {

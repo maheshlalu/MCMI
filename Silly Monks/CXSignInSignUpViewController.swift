@@ -289,7 +289,11 @@ class CXSignInSignUpViewController: UIViewController,UITextFieldDelegate,FBSDKLo
     func skipAction() {
         print ("Skip action")
         let homeView = HomeViewController.init()
-        self.navigationController?.pushViewController(homeView, animated: true)
+        let sideMenu = SMMenuViewController.init()
+        let  navController: SMNavigationController = SMNavigationController(menuViewController: sideMenu,contentViewController: homeView)
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        appDelegate.window!.rootViewController = navController
+        appDelegate.window!.makeKeyAndVisible()
     }
     
     func forgotPasswordAction() {
