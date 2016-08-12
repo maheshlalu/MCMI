@@ -34,12 +34,13 @@ class CXDetailCollectionViewCell: UICollectionViewCell {
         self.bgView.addSubview(self.detailImageView)
         
         self.infoLabel = UILabel.init(frame: CGRectMake(0, self.detailImageView.frame.size.height-40, self.bgView.frame.size.width, 40))
-        self.infoLabel.backgroundColor = UIColor.blackColor();
-        self.infoLabel.alpha = 0.7
-        self.infoLabel.font = UIFont(name:"Roboto-Regular",size:14)
+        self.infoLabel.backgroundColor = UIColor(red: 242.0/255.0, green: 242.0/255.0, blue: 242.0/255.0, alpha: 1)
+        self.infoLabel.font = UIFont(name:"Roboto-Regular",size:13)
         self.infoLabel.numberOfLines = 0
         self.infoLabel.textAlignment = NSTextAlignment.Center
-        self.infoLabel.textColor = UIColor.whiteColor()
+        self.infoLabel.textColor = UIColor.darkGrayColor()
+
+        
         
         self.bgView.addSubview(self.infoLabel)
         

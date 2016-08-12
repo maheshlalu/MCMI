@@ -36,7 +36,7 @@ class CXRelatedArticleTableViewCell: UITableViewCell {
     
     override init(style : UITableViewCellStyle, reuseIdentifier:String?){
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.backgroundColor = UIColor.whiteColor()
+        self.backgroundColor = UIColor.clearColor()
         self.backgroundView?.backgroundColor = UIColor.clearColor()
         self.selectionStyle = UITableViewCellSelectionStyle.None
         self.customizeBgView()
@@ -44,12 +44,13 @@ class CXRelatedArticleTableViewCell: UITableViewCell {
     }
     
     func customizeBgView(){
-        let viewHeight:CGFloat = CXConstant.RELATED_ARTICLES_CELL_HEIGHT-10
+        
+        let viewHeight:CGFloat = CXConstant.RELATED_ARTICLES_CELL_HEIGHT-30
       //  let viewHeight:CGFloat = CXConstant.RELATED_ARTICLES_CELL_HEIGHT
         
         let viewWidth:CGFloat = UIScreen.mainScreen().bounds.width-20
 
-        let cellFrame = CGRectMake(5, 5, viewWidth-10, viewHeight-35)
+        let cellFrame = CGRectMake(5, 5, viewWidth-10, viewHeight-25)
         
 //        if CXConstant.currentDeviceScreen() == IPHONE_5S {
 //            cellFrame = CGRectMake(5, 5, viewWidth-10, viewHeight)
@@ -79,7 +80,7 @@ class CXRelatedArticleTableViewCell: UITableViewCell {
         layout.itemSize = CXConstant.DetailCollectionCellSize
         self.relatedArticleCollectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: layout)
         self.relatedArticleCollectionView.showsHorizontalScrollIndicator = false
-        self.relatedArticleCollectionView.frame = CGRectMake(2, 30, cellWidth-4, CXConstant.DetailCollectionViewFrame.size.height-35)
+        self.relatedArticleCollectionView.frame = CGRectMake(2, 30, cellWidth-5, CXConstant.DetailCollectionViewFrame.size.height-35)
         
         // CXConstant.DetailCollectionViewFrame
         layout.scrollDirection = UICollectionViewScrollDirection.Horizontal

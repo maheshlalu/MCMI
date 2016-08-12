@@ -35,7 +35,7 @@ class CXProcuctTableViewCell: UITableViewCell{
         let screenWidth = UIScreen.mainScreen().bounds.size.width
 //        let screenHeight = UIScreen.mainScreen().bounds.size.heigth
         
-        self.bgView.frame = CGRectMake(2, 5, screenWidth-4,CXConstant.PRODUCT_CELL_HEIGHT-10);// x-8
+        self.bgView.frame = CGRectMake(2, 5, screenWidth-4,CXConstant.PRODUCT_CELL_HEIGHT-8);// x-8
         self.bgView.layer.cornerRadius = 5.0
         self.bgView.layer.borderWidth = 1.0
         self.bgView.layer.borderColor = UIColor.grayColor().CGColor

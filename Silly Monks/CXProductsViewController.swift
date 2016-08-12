@@ -137,7 +137,10 @@ class CXProductsViewController: UIViewController,UITableViewDelegate,UITableView
     }
     
     func backAction() {
-        self.navigationController?.popViewControllerAnimated(true)
+
+        let viewController: UIViewController = self.navigationController!.viewControllers[1]
+        self.navigationController!.popToViewController(viewController, animated: true)
+
     }
     
     func customizeMainView() {
@@ -225,23 +228,4 @@ class CXProductsViewController: UIViewController,UITableViewDelegate,UITableView
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
-
-//extension CXProductsViewController : MPTableViewAdPlacerDelegate{
-//    
-//
-//    
-//    
-//    
-//}

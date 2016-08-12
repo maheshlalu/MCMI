@@ -33,7 +33,7 @@ public class SMMenuViewController: UIViewController, UITableViewDelegate,UITable
 //    }
 
     func customizeView() {
-        let prjTitle = UILabel(frame: CGRectMake(20, 80,140,50))//CGRectMake(20, 80,140,50)
+       /* let prjTitle = UILabel(frame: CGRectMake(20, 80,140,50))//CGRectMake(20, 80,140,50)
         //prjTitle.backgroundColor = UIColor.yellowColor()
         prjTitle.textAlignment = NSTextAlignment.Right
         prjTitle.font = UIFont(name: "RobotoCondensed-Bold", size: 25)
@@ -43,11 +43,17 @@ public class SMMenuViewController: UIViewController, UITableViewDelegate,UITable
         
         let lImageView = UIImageView(frame: CGRectMake(prjTitle.frame.size.width + prjTitle.frame.origin.x, prjTitle.frame.origin.y, 50, 50))
         lImageView.image = UIImage(named: "smlogo.png")
-        self.view.addSubview(lImageView);
+        self.view.addSubview(lImageView);*/
+        
+        let profileImage = UIImageView.init(frame: CGRectMake(20,80,200,40))
+        profileImage.image = UIImage(named:"sm_navigation_logo")
+        profileImage.contentMode = UIViewContentMode.ScaleAspectFit
+        profileImage.backgroundColor = UIColor.clearColor()
+        self.view.addSubview(profileImage)
         
         self.homeBtn = UIButton(type: UIButtonType.Custom)
         self.homeBtn.backgroundColor = UIColor.clearColor()
-        self.homeBtn.frame = CGRectMake(5, prjTitle.frame.size.height+prjTitle.frame.origin.y+10,220, 50)
+        self.homeBtn.frame = CGRectMake(5, profileImage.frame.size.height+profileImage.frame.origin.y+10,220, 50)
         self.homeBtn.setTitle("Home", forState: .Normal)
         self.homeBtn.setTitleColor(UIColor.blackColor(), forState: .Normal)
         self.homeBtn.titleLabel?.font = UIFont(name: "Roboto-Bold", size: 18)

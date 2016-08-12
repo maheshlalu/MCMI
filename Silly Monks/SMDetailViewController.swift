@@ -314,7 +314,8 @@ class SMDetailViewController: UIViewController, FloatRatingViewDelegate,UITableV
     }
 
     func backAction() {
-        self.navigationController?.popViewControllerAnimated(true)
+        let viewController: UIViewController = self.navigationController!.viewControllers[1]
+        self.navigationController!.popToViewController(viewController, animated: true)
     }
     
     func rightBtnAction() {
@@ -583,55 +584,38 @@ extension SMDetailViewController: UICollectionViewDelegate, UICollectionViewData
         cell.infoLabel.text = CXDBSettings.getProductInfo(product)
     }
     
-//    func getAllProductCategoriesFromDB(mallID:String) -> NSMutableArray {
-//        let predicate: NSPredicate = NSPredicate(format: "createdById = %@", mallID)
-//        
-//        let fetchRequest = CX_Product_Category.MR_requestAllSortedBy("pid", ascending: false)
-//        fetchRequest.predicate = predicate
-//        //fetchRequest.entity = productEn
-//        // self.productCategories =   CX_Product_Category.MR_executeFetchRequest(fetchRequest)
-//        let productCatList :NSArray = CX_Product_Category.MR_executeFetchRequest(fetchRequest)
-//        
-//        let proKatList : NSMutableArray = NSMutableArray(array: productCatList)
-//        return proKatList
-//    }
-    
-//    func arrangeTheProductOrder() -> NSArray {
-//        //category
-//        let categoryListByorder : NSMutableArray = NSMutableArray()
-//        let list : NSArray =
-//        if self.mall.name == "Silly Monks Tollywood" {
-//            let itemOrderList :  NSArray = ["Premium Content","Tollywood News","Teasers and Trailers","SILLY Punch","Music","Movies","Reviews","Celebrities"]
-//            for orderItem in itemOrderList {
-//                for element in list {
-//                    let allMalls : CX_Product_Category = element as! CX_Product_Category
-//                    //print("all mall Category Name \(allMalls.name)");
-//                    
-//                    if orderItem as! String == allMalls.name! {
-//                        // print("all mall Category Name \(allMalls.name)");
-//                        categoryListByorder.addObject(allMalls)
-//                        break
-//                    }
-//                }
-//            }
-//            
-//            return categoryListByorder;
-//        }
-//        return list
-//    }
-    
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         if self.relatedArticles.count > 0 {
             if collectionView.tag == 0 {
-                self.product = self.relatedArticles[indexPath.row] as! CX_Products
+                if indexPath.row == 4{
+                    let productsView = CXProductsViewController.init()
+                    productsView.productCategory = productCategory
+                    self.navigationController?.pushViewController(productsView, animated: true)
+                    return
+                }else{
+                    self.product = self.relatedArticles[indexPath.row] as! CX_Products
+                }
             } else {
-                self.product = self.remainingProducts[indexPath.row] as! CX_Products
+                if indexPath.row == 4{
+                    let productsView = CXProductsViewController.init()
+                    productsView.productCategory = productCategory
+                    self.navigationController?.pushViewController(productsView, animated: true)
+                    return
+                }else{
+                    self.product = self.remainingProducts[indexPath.row] as! CX_Products
+                }
             }
         } else {
-            self.product = self.remainingProducts[indexPath.row] as! CX_Products
+            if indexPath.row == 4{
+                let productsView = CXProductsViewController.init()
+                productsView.productCategory = productCategory
+                self.navigationController?.pushViewController(productsView, animated: true)
+                return
+            }else{
+                self.product = self.remainingProducts[indexPath.row] as! CX_Products
+            }
         }
-        
         self.contentScrollView.removeFromSuperview()
         self.contentScrollView = nil
         self.activity.startActivity()
