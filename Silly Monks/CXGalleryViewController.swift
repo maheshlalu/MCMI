@@ -26,7 +26,7 @@ class CXGalleryViewController: UIViewController,UICollectionViewDataSource, UICo
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.smBackgroundColor()
         self.stores.removeObjectAtIndex(0)
-        print("Gallery Stores \(self.stores)")
+       // print("Gallery Stores \(self.stores)")
         
         dispatch_async(dispatch_get_main_queue()) { [unowned self] in
             self.activityIndicatorView = DTIActivityIndicatorView(frame: CGRect(x:(self.view.frame.size.width-60)/2, y:200.0, width:60.0, height:60.0))
@@ -128,7 +128,7 @@ class CXGalleryViewController: UIViewController,UICollectionViewDataSource, UICo
                                                  placeholderImage: UIImage(named: "smlogo.png"),
                                                  options: SDWebImageOptions.RefreshCached,
                                                  completed: { (image, error, cacheType, imageURL) -> () in
-                                                    print("Downloaded and set! and Image size \(image?.size)")
+                                                   // print("Downloaded and set! and Image size \(image?.size)")
                                                     self.imageItemsDict.setValue(image, forKey: String(indexPath.row))
                                                     //collectionView.reloadItemsAtIndexPaths([indexPath])
             }

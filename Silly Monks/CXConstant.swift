@@ -212,7 +212,6 @@ class CXConstant: NSObject {
             let category = menuItem.stringByReplacingOccurrencesOfString("Silly Monks", withString: "")
             menuItemsArray.addObject((category.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())))
         }
-        print(menuItemsArray)
         return menuItemsArray
     }
     

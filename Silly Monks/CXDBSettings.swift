@@ -403,6 +403,8 @@ class CXDBSettings: NSObject {
                 //print("Parsing \(enProduct.json)")
                 enProduct.name = prod.valueForKey("Name") as? String
                 enProduct.pID = CXConstant.resultString(prod.valueForKey("jobTypeId")!)
+                print(prod)
+                enProduct.storeID = CXConstant.resultString(prod.valueForKey("id")!)
                 //prod.valueForKey("jobTypeId") as? String
                 enProduct.type = prod.valueForKey("jobTypeName") as? String
                 enProduct.mallID = createByID
@@ -569,8 +571,8 @@ class CXDBSettings: NSObject {
     static func getProductsWithCategory(proCategory:CX_Product_Category) -> NSMutableArray {
         let predicate: NSPredicate = NSPredicate(format: "type == %@ && mallID == %@",proCategory.name!,proCategory.mallID!)
         //let productCatList :NSArray = CX_Products.MR_findAllWithPredicate(predicate)
-        
-        let fetchRequest = CX_Products.MR_requestAllSortedBy("pID", ascending: false)
+        //print("category predicate \(predicate)")
+        let fetchRequest = CX_Products.MR_requestAllSortedBy("storeID", ascending: false) //NSFetchRequest(entityName: "CX_Products") //
         fetchRequest.predicate = predicate
         let productCatList :NSArray = CX_Products.MR_executeFetchRequest(fetchRequest)
         
@@ -637,8 +639,8 @@ class CXDBSettings: NSObject {
                 $0["isCoverImage"] as! String == "true"
             })
             //print("Required items \(reqItems)")
-            
-            return NSMutableArray(array: reqItems)
+            let storeItems : NSMutableArray = NSMutableArray(array: reqItems)
+            return NSMutableArray(array: storeItems.reverseObjectEnumerator().allObjects)
         }
         return NSMutableArray()
        // let attachments: NSArray = json.valueForKey("Attachments") as! NSArray

@@ -92,6 +92,7 @@ class HomeViewController: UIViewController  ,UITableViewDelegate,UITableViewData
             print("get the lates data ")
             //Remove the data in CX_AllMalls and clear the cache data only for all malls 
             CX_AllMalls.MR_truncateAll()
+            NSManagedObjectContext.MR_contextForCurrentThread().MR_saveToPersistentStoreAndWait()
              self.initialSync()
         }
 
