@@ -8,6 +8,9 @@
 
 import UIKit
 import SDWebImage
+import mopub_ios_sdk
+import CoreLocation
+import LocationManager
 
 class CXGalleryMoreViewController: UIViewController,UICollectionViewDataSource, UICollectionViewDelegate,CHTCollectionViewDelegateWaterfallLayout {
     var galleryCollectionView: UICollectionView!
@@ -22,12 +25,13 @@ class CXGalleryMoreViewController: UIViewController,UICollectionViewDataSource, 
     
     var galleryImages: [UIImage] = []
     var imagesCache: NSCache = NSCache()
-    
+    var placer: MPCollectionViewAdPlacer!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.smBackgroundColor()
         self.stores.removeObjectAtIndex(0)
-        print("Gallery Stores \(self.stores)")
+       // print("Gallery Stores \(self.stores)")
         
         dispatch_async(dispatch_get_main_queue()) { [unowned self] in
             self.activityIndicatorView = DTIActivityIndicatorView(frame: CGRect(x:(self.view.frame.size.width-60)/2, y:200.0, width:60.0, height:60.0))
@@ -90,6 +94,8 @@ class CXGalleryMoreViewController: UIViewController,UICollectionViewDataSource, 
         self.view.addSubview(self.galleryCollectionView)
         
         self.activityIndicatorView.stopActivity()
+        
+        //self.setUpNativeAds()
     }
     
     override func didReceiveMemoryWarning() {
@@ -115,7 +121,7 @@ class CXGalleryMoreViewController: UIViewController,UICollectionViewDataSource, 
     func collectionView(collectionView: UICollectionView,
                         cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let identifier = "GalleryCellIdentifier"
-        let cell: CXGalleryCollectionViewCell! = collectionView.dequeueReusableCellWithReuseIdentifier(identifier, forIndexPath: indexPath) as?CXGalleryCollectionViewCell
+        let cell: CXGalleryCollectionViewCell! = collectionView.mp_dequeueReusableCellWithReuseIdentifier(identifier, forIndexPath: indexPath) as?CXGalleryCollectionViewCell
         if cell == nil {
             collectionView.registerNib(UINib(nibName: "CXGalleryCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: identifier)
         }
@@ -129,7 +135,7 @@ class CXGalleryMoreViewController: UIViewController,UICollectionViewDataSource, 
                                         placeholderImage: UIImage(named: "smlogo.png"),
                                         options: SDWebImageOptions.RefreshCached,
                                         completed: { (image, error, cacheType, imageURL) -> () in
-                                            print("Downloaded and set! and Image size \(image?.size)")
+                                           //print("Downloaded and set! and Image size \(image?.size)")
                                             self.imageItemsDict.setValue(image, forKey: String(indexPath.row))
                                             //collectionView.reloadItemsAtIndexPaths([indexPath])
             }
@@ -156,5 +162,59 @@ class CXGalleryMoreViewController: UIViewController,UICollectionViewDataSource, 
         
         return CGSizeMake(reqImgWidth, reqImgHeight)
     }
+    
+    //MARK: Native adds
+    
+    func setUpNativeAds(){
+        let targeting: MPNativeAdRequestTargeting! = MPNativeAdRequestTargeting()
+        // TODO: Use the device's location
+        targeting.location = CLLocation(latitude: 17.3850, longitude: 78.4867)
+        
+        /* LocationManager.getCurrentLocation().then { location in
+         // targeting.location = CLLocation(latitude: 17.3850, longitude: 78.4867)
+         
+         targeting.location = CLLocation(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+         }.error { error in
+         }*/
+        
+        targeting.desiredAssets = Set([kAdIconImageKey, kAdMainImageKey, kAdCTATextKey, kAdTextKey, kAdTitleKey])
+        
+        let settings = MPStaticNativeAdRendererSettings()
+        // TODO: Create your own UIView subclass that implements MPNativeAdRendering
+        settings.renderingViewClass = NativeAdCell.self
+        
+        // TODO: Calculate the size of your ad cell given a maximum width
+        settings.viewSizeHandler = {(maxWidth: CGFloat) -> CGSize in
+            
+            let reqImgWidth = (maxWidth-30)/2
+            let ratioValue = 480/reqImgWidth
+            let reqImgHeight = 800/ratioValue
+            return CGSizeMake(UIScreen.mainScreen().bounds.width, 300);
+
+            //return CGSizeMake(reqImgWidth, reqImgHeight)
+            //return CGSizeMake(maxWidth, 250);
+        };
+        
+        let config = MPStaticNativeAdRenderer.rendererConfigurationWithRendererSettings(settings)
+        
+        // TODO: Create your own UITableViewCell subclass that implements MPNativeAdRendering
+        //  self.placer = MPTableViewAdPlacer(tableView: self.productsTableView, viewController: self, rendererConfigurations: [config])
+        
+        let addPostion : MPClientAdPositioning = MPClientAdPositioning()
+        addPostion.addFixedIndexPath(NSIndexPath(forRow: 0, inSection: 0))
+        addPostion.enableRepeatingPositionsWithInterval(6)
+        
+        self.placer = MPCollectionViewAdPlacer(collectionView: self.galleryCollectionView, viewController: self, adPositioning: addPostion, rendererConfigurations: [config])
+        
+        // We have configured the test ad unit ID to place ads at fixed
+        // cell positions 2 and 10 and show an ad every 10 cells after
+        // that.
+        //
+        // TODO: Replace this test id with your personal ad unit id
+        self.placer.loadAdsForAdUnitID(CXConstant.NATIVEADD_UNITI_ID, targeting: targeting)
+    }
+    
+   
+    
 }
 

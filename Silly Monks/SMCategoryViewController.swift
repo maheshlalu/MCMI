@@ -197,7 +197,8 @@ class SMCategoryViewController: UIViewController,ENSideMenuDelegate,UITableViewD
     func getAllProductCategoriesFromDB(mallID:String) -> NSMutableArray {
         let predicate: NSPredicate = NSPredicate(format: "createdById = %@", mallID)
         
-        let fetchRequest = CX_Product_Category.MR_requestAllSortedBy("pid", ascending: false)
+        //let fetchRequest = CX_Product_Category.MR_requestAllSortedBy("pid", ascending: true)
+        let fetchRequest = NSFetchRequest(entityName: "CX_Product_Category")
         fetchRequest.predicate = predicate
         //fetchRequest.entity = productEn
        // self.productCategories =   CX_Product_Category.MR_executeFetchRequest(fetchRequest)
