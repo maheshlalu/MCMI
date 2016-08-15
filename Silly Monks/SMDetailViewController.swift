@@ -36,6 +36,25 @@ class SMDetailViewController: UIViewController, FloatRatingViewDelegate,UITableV
          self.relatedArticles = NSMutableArray()
         self.customizeHeaderView()
         self.customizeMainView()
+        //self.addPager()
+    }
+    
+    func addPager(){
+        
+        let options = ViewPagerOptions(inView: self.view)
+        options.isEachTabEvenlyDistributed = true
+        options.isTabViewHighlightAvailable = true
+        
+        let viewPager = ViewPagerController()
+        viewPager.options = options
+        viewPager.dataSource = self
+        viewPager.delegate = self
+        
+        self.addChildViewController(viewPager)
+        self.view.addSubview(viewPager.view)
+        viewPager.didMoveToParentViewController(self)
+        
+        
     }
     
     
@@ -104,7 +123,9 @@ class SMDetailViewController: UIViewController, FloatRatingViewDelegate,UITableV
         self.getRemainingProducts()
         
         self.contentScrollView = UIScrollView.init(frame: CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height))
+       // self.contentScrollView.backgroundColor = UIColor.smBackgroundColor()
         self.contentScrollView.backgroundColor = UIColor.smBackgroundColor()
+
         self.contentScrollView.showsVerticalScrollIndicator = false
         
         let contentImageView: UIImageView = UIImageView.init(frame: CGRectMake(0, 0, self.contentScrollView.frame.size.width, (self.contentScrollView.frame.size.width)/2))//10, 20,190
@@ -691,3 +712,36 @@ extension NSCoder {
 }
 
 
+extension SMDetailViewController: ViewPagerControllerDataSource{
+    
+    func numberOfPages() -> Int
+    {
+        return self.remainingProducts.count
+    }
+    
+    func viewControllerAtPosition(position:Int) -> UIViewController
+    {
+       print(position)
+        return self
+    }
+    
+    func pageTitles() -> [String]
+    {
+        return [""]
+    }
+}
+
+extension SMDetailViewController: ViewPagerControllerDelegate{
+    
+    
+    func willMoveToViewControllerAtIndex(index:Int)
+    {
+        print("Will Move To VC: \(index)")
+    }
+    
+    func didMoveToViewControllerAtIndex(index:Int)
+    {
+        print("Did Move To VC: \(index)")
+    }
+    
+}

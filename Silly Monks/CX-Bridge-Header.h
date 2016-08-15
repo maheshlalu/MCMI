@@ -17,7 +17,7 @@
 
 #import <BrightcovePlayerSDK/BrightcovePlayerSDK.h>
 #import "UIImage+animatedGIF.h"
-
+#import "SHViewPager.h"
 
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
@@ -33,7 +33,6 @@
 
 #import <SDWebImage/NSData+ImageContentType.h>
 #import <SDWebImage/SDImageCache.h>
-
 
 #import <SDWebImage/SDWebImageDecoder.h>
 

@@ -497,11 +497,14 @@ extension SMCategoryViewController: UICollectionViewDelegate, UICollectionViewDa
                 self.navigationController?.pushViewController(productsView, animated: true)
             } else {
                 let product: CX_Products = CXDBSettings.getProductsWithCategory(prodCategory) [indexPath.row] as! CX_Products
-                let detailView = SMDetailViewController.init()
+               // let detailView = SMDetailViewController.init()
+               // detailView.product = product
+                //detailView.productCategory = prodCategory
+                
+                 let detailView = ViewPagerCntl.init()
                 detailView.product = product
                 detailView.productCategory = prodCategory
                 self.navigationController?.pushViewController(detailView, animated: true)
-                
                 
             }
         }

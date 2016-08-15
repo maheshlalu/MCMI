@@ -7,9 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		120335F01D61D415000CBE48 /* SHViewPager.m in Sources */ = {isa = PBXBuildFile; fileRef = 120335ED1D61D415000CBE48 /* SHViewPager.m */; };
+		120335F11D61D415000CBE48 /* SHViewPagerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 120335EF1D61D415000CBE48 /* SHViewPagerController.m */; };
+		120335F41D61D8D7000CBE48 /* ViewPagerCntl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120335F21D61D8D7000CBE48 /* ViewPagerCntl.swift */; };
+		120335F51D61D8D7000CBE48 /* ViewPagerCntl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 120335F31D61D8D7000CBE48 /* ViewPagerCntl.xib */; };
 		12F49DA81CA81F5300B32FC5 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F49DA71CA81F5300B32FC5 /* TableViewCell.swift */; };
 		12F49DAA1CA81F5C00B32FC5 /* CollectionViewItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F49DA91CA81F5C00B32FC5 /* CollectionViewItemCell.swift */; };
 		12F49DAE1CA81F8400B32FC5 /* CXConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F49DAD1CA81F8400B32FC5 /* CXConstant.swift */; };
+		12FA3BFE1D6045910011D43D /* ViewPagerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12FA3BFC1D6045910011D43D /* ViewPagerController.swift */; };
+		12FA3BFF1D6045910011D43D /* ViewPagerOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12FA3BFD1D6045910011D43D /* ViewPagerOptions.swift */; };
 		3B312F681D5DF4960076F894 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B312F671D5DF4960076F894 /* LoadingView.swift */; };
 		3B5FCCFE1D4B2AC80068990A /* CXProfilePageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5FCCFD1D4B2AC80068990A /* CXProfilePageView.swift */; };
 		3B5FCD031D4B30970068990A /* SMProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5FCCFF1D4B30970068990A /* SMProfileViewController.swift */; };
@@ -129,9 +135,17 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		120335EC1D61D415000CBE48 /* SHViewPager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHViewPager.h; sourceTree = "<group>"; };
+		120335ED1D61D415000CBE48 /* SHViewPager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHViewPager.m; sourceTree = "<group>"; };
+		120335EE1D61D415000CBE48 /* SHViewPagerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHViewPagerController.h; sourceTree = "<group>"; };
+		120335EF1D61D415000CBE48 /* SHViewPagerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHViewPagerController.m; sourceTree = "<group>"; };
+		120335F21D61D8D7000CBE48 /* ViewPagerCntl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewPagerCntl.swift; sourceTree = "<group>"; };
+		120335F31D61D8D7000CBE48 /* ViewPagerCntl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ViewPagerCntl.xib; sourceTree = "<group>"; };
 		12F49DA71CA81F5300B32FC5 /* TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		12F49DA91CA81F5C00B32FC5 /* CollectionViewItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewItemCell.swift; sourceTree = "<group>"; };
 		12F49DAD1CA81F8400B32FC5 /* CXConstant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CXConstant.swift; sourceTree = "<group>"; };
+		12FA3BFC1D6045910011D43D /* ViewPagerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewPagerController.swift; sourceTree = "<group>"; };
+		12FA3BFD1D6045910011D43D /* ViewPagerOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewPagerOptions.swift; sourceTree = "<group>"; };
 		30F7C9EA364A1853E11F23B8 /* Pods_Silly_Monks.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Silly_Monks.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B312F671D5DF4960076F894 /* LoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		3B5FCCFD1D4B2AC80068990A /* CXProfilePageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CXProfilePageView.swift; sourceTree = "<group>"; };
@@ -297,6 +311,21 @@
 				69A8116D1CF08E3C00F71F93 /* SMUserDetails.swift */,
 			);
 			name = Constants;
+			sourceTree = "<group>";
+		};
+		12FA3BFB1D60455D0011D43D /* SwipePager */ = {
+			isa = PBXGroup;
+			children = (
+				120335EC1D61D415000CBE48 /* SHViewPager.h */,
+				120335ED1D61D415000CBE48 /* SHViewPager.m */,
+				120335EE1D61D415000CBE48 /* SHViewPagerController.h */,
+				120335EF1D61D415000CBE48 /* SHViewPagerController.m */,
+				12FA3BFC1D6045910011D43D /* ViewPagerController.swift */,
+				12FA3BFD1D6045910011D43D /* ViewPagerOptions.swift */,
+				120335F21D61D8D7000CBE48 /* ViewPagerCntl.swift */,
+				120335F31D61D8D7000CBE48 /* ViewPagerCntl.xib */,
+			);
+			name = SwipePager;
 			sourceTree = "<group>";
 		};
 		3B5FCCFC1D4B2A790068990A /* SMProfile */ = {
@@ -486,6 +515,7 @@
 		69F89E1F1C9915150032F68D /* Silly Monks */ = {
 			isa = PBXGroup;
 			children = (
+				12FA3BFB1D60455D0011D43D /* SwipePager */,
 				43B212551D535275006D49C8 /* Ads */,
 				3B5FCCFC1D4B2A790068990A /* SMProfile */,
 				6909027E1CF9FBED00E19885 /* GIF */,
@@ -669,6 +699,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4354B9151D4F235000A435D2 /* profile_placeholder.png in Resources */,
+				120335F51D61D8D7000CBE48 /* ViewPagerCntl.xib in Resources */,
 				69714A1A1C9FCA7C00B20EDA /* RobotoCondensed-Bold.ttf in Resources */,
 				69714A1B1C9FCA7C00B20EDA /* RobotoCondensed-Light.ttf in Resources */,
 				6908913F1CFCBCEC0063222F /* Facebook.png in Resources */,
@@ -866,6 +897,7 @@
 				6908913B1CFCB7B70063222F /* CXTermsAndConditionsViewController.swift in Sources */,
 				693FB14B1CD874CB00E77CD6 /* CX_SingleMall.swift in Sources */,
 				BA3C65121CF71A9F00FA8B66 /* CXRelatedArticleTableViewCell.swift in Sources */,
+				12FA3BFF1D6045910011D43D /* ViewPagerOptions.swift in Sources */,
 				69578A5D1CF3705D00FF159A /* CXCommentRatingViewController.swift in Sources */,
 				691F4E831CD9CD4900054AA2 /* CX_Stores.swift in Sources */,
 				6905335A1CA111990094D272 /* DTIAnimSpotify.swift in Sources */,
@@ -878,11 +910,13 @@
 				690A69DA1CB94992001C6903 /* CXDetailCollectionViewCell.swift in Sources */,
 				3B312F681D5DF4960076F894 /* LoadingView.swift in Sources */,
 				6905B36D1CE50BD500F902D8 /* CX_ForgotPasswordViewController.swift in Sources */,
+				12FA3BFE1D6045910011D43D /* ViewPagerController.swift in Sources */,
 				6939F3B41CC6049100BA39D7 /* CXImageDetailTableViewCell.swift in Sources */,
 				69714A151C9FB13A00B20EDA /* SMNavigationController.swift in Sources */,
 				69EFC8111CE8C5D000862AF6 /* CHTCollectionViewWaterfallLayout.swift in Sources */,
 				69F9D32E1C9C869D00E2A288 /* SMCategoryViewController.swift in Sources */,
 				12F49DAA1CA81F5C00B32FC5 /* CollectionViewItemCell.swift in Sources */,
+				120335F01D61D415000CBE48 /* SHViewPager.m in Sources */,
 				691F4E821CD9CD4900054AA2 /* CX_Stores+CoreDataProperties.swift in Sources */,
 				690891371CFCB7A50063222F /* CXAboutUsViewController.swift in Sources */,
 				69B35BB91CA8E8D600E6433F /* CXDBSettings.swift in Sources */,
@@ -893,10 +927,12 @@
 				690A69D61CB9301B001C6903 /* CXDetailTableViewCell.swift in Sources */,
 				69B35BBE1CA8ED0D00E6433F /* CX_AllMalls.swift in Sources */,
 				694E13EC1CEF9220000B4ABD /* YouTubePlayer.swift in Sources */,
+				120335F11D61D415000CBE48 /* SHViewPagerController.m in Sources */,
 				692102D51CEE2C38009F32FF /* CXSignUpViewController.swift in Sources */,
 				6905335B1CA111990094D272 /* DTIAnimWanderingCubes.swift in Sources */,
 				690533581CA111990094D272 /* DTIAnimPulse.swift in Sources */,
 				6905335E1CA111990094D272 /* DTIIndicatorStyle.swift in Sources */,
+				120335F41D61D8D7000CBE48 /* ViewPagerCntl.swift in Sources */,
 				3B5FCD031D4B30970068990A /* SMProfileViewController.swift in Sources */,
 				695E40F61C9A7945003466B4 /* ENSideMenuNavigationController.swift in Sources */,
 				69F89E291C9915150032F68D /* Silly_Monks.xcdatamodeld in Sources */,
