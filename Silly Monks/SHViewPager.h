@@ -167,7 +167,7 @@ typedef NS_ENUM(NSInteger, SHViewPagerMenuWidthType) {
  to re-populate the pager (as you do in UITableView or, UIPickerView or, UICollectionView).
  */
 - (void)reloadData;
-
+- (void)moveToTargetIndex:(NSInteger)toIndex;
 /**
  fixes bug for scrollview's content offset reset.
  this is a hacky solution, any better solution is welcome.

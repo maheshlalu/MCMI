@@ -121,6 +121,20 @@
     [self moveToTargetIndex];
 }
 
+- (void)moveToTargetIndex:(NSInteger)inToIndex;{
+    
+    if (inToIndex == 0) {
+        fromIndex =
+        toIndex = 0;
+    }else{
+        fromIndex = inToIndex-1;
+        toIndex = inToIndex;
+    }
+    [self moveToTargetIndex];
+    [self setUpContentViewForTargetIndex:inToIndex];
+    
+    
+}
 #pragma mark - reload data
 
 -(void)reloadData
@@ -175,6 +189,7 @@
 -(void)createPages
 {
    // [self setUpTopTab];
+    
     [self setUpFirstContentView];
 }
 
@@ -263,12 +278,12 @@
     if ([_contentViewControllers objectForKey:key]) return;
     else {
         
+        
         UIViewController *contentVC = [self.dataSource viewPager:self controllerForPageAtIndex:index];
         
         UIView *contentView = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.bounds) * index, 0, CGRectGetWidth(self.bounds), contentScroll.bounds.size.height)];
-        contentVC.view.frame = contentView.bounds;
+       contentVC.view.frame = contentView.bounds;
         contentView.layer.masksToBounds = YES;
-        
         [contentView addSubview:contentVC.view];
         [contentVC didMoveToParentViewController:self.containerViewController];
         [self.containerViewController addChildViewController:contentVC];
@@ -387,9 +402,11 @@
 
 -(void)leftSwipeAction:(UISwipeGestureRecognizer *)swipe
 {
+    NSInteger dataItems = [self.dataSource numberOfPagesInViewPager:self];
+
     if (swipe.direction == UISwipeGestureRecognizerDirectionLeft)
     {
-        if (toIndex < _menuButtons.count - 1)
+        if (toIndex < dataItems - 1)
         {
             fromIndex = toIndex;
             toIndex++;
