@@ -11,15 +11,54 @@ import UIKit
 class ViewPagerCntl: UIViewController {
     var product:CX_Products!
     var productCategory:CX_Product_Category!
+    var products: NSMutableArray!
     @IBOutlet var pager: SHViewPager!
+    var itemIndex : NSInteger!
     override func viewDidLoad() {
         super.viewDidLoad()
-        pager.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)
+        products = CXDBSettings.getProductsWithCategory(productCategory)
+        products.exchangeObjectAtIndex(itemIndex, withObjectAtIndex: 0)
+
+        pager.frame = CGRectMake(0, 0, self.view.frame.size.width, UIScreen.mainScreen().bounds.size.height)
         pager.delegate = self
         pager.dataSource = self
         pager.reloadData()
-        self.view.backgroundColor = UIColor.greenColor()
+        
+        self.customizeHeaderView()
+        //self.view.backgroundColor = UIColor.greenColor()
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        CXConstant.restrictRotation(true)
+        UIDevice.currentDevice().setValue(UIInterfaceOrientation.Portrait.rawValue, forKey: "orientation")
+    }
+    
+    func customizeHeaderView() {
+        self.navigationController?.navigationBar.translucent = false;
+        self.navigationController?.navigationBar.barTintColor = UIColor.navBarColor()
+        
+        let lImage = UIImage(named: "left_aarow.png") as UIImage?
+        let button = UIButton (type: UIButtonType.Custom) as UIButton
+        button.frame = CGRectMake(0, 0, 40, 40)
+        button.setImage(lImage, forState: .Normal)
+        button.addTarget(self, action: #selector(ViewPagerCntl.backAction), forControlEvents: .TouchUpInside)
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem.init(customView: button)
+        
+        let tLabel : UILabel = UILabel()
+        tLabel.frame = CGRectMake(0, 0, 120, 40);
+        tLabel.backgroundColor = UIColor.clearColor()
+        tLabel.font = UIFont.init(name: "Roboto-Bold", size: 18)
+        tLabel.text = "Premium Content"
+        tLabel.textAlignment = NSTextAlignment.Center
+        tLabel.textColor = UIColor.whiteColor()
+        self.navigationItem.titleView = tLabel
+    }
+    
+    func backAction() {
+        let viewController: UIViewController = self.navigationController!.viewControllers[1]
+        self.navigationController!.popToViewController(viewController, animated: true)
     }
 
     override func didReceiveMemoryWarning() {
@@ -29,7 +68,9 @@ class ViewPagerCntl: UIViewController {
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        pager.pagerWillLayoutSubviews()
+      pager.pagerWillLayoutSubviews()
+//        pager.moveToTargetIndex(itemIndex)
+
     }
     /*
     // MARK: - Navigation
@@ -56,7 +97,7 @@ extension ViewPagerCntl : SHViewPagerDataSource{
     
     func viewPager(viewPager: SHViewPager!, controllerForPageAtIndex index: Int) -> UIViewController! {
         
-         let product: CX_Products = CXDBSettings.getProductsWithCategory(productCategory) [index] as! CX_Products
+         let product: CX_Products = products [index] as! CX_Products
         let vc : SMDetailViewController = SMDetailViewController()
          vc.product = product
         vc.productCategory = productCategory

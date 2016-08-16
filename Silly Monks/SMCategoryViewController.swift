@@ -471,7 +471,7 @@ extension SMCategoryViewController: UICollectionViewDelegate, UICollectionViewDa
     
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        print("did select item clicked")
+       // print("did select item clicked")
         if (isItemSelected == true) {
             return
         }
@@ -503,6 +503,7 @@ extension SMCategoryViewController: UICollectionViewDelegate, UICollectionViewDa
                 
                  let detailView = ViewPagerCntl.init()
                 detailView.product = product
+                detailView.itemIndex = indexPath.row
                 detailView.productCategory = prodCategory
                 self.navigationController?.pushViewController(detailView, animated: true)
                 

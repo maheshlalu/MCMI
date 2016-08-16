@@ -121,8 +121,8 @@ class SMDetailViewController: UIViewController, FloatRatingViewDelegate,UITableV
     func customizeMainView() {
        // self.getRelatedProducts()
         self.getRemainingProducts()
-        
-        self.contentScrollView = UIScrollView.init(frame: CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height))
+       
+        self.contentScrollView = UIScrollView.init(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, UIScreen.mainScreen().bounds.size.height))
        // self.contentScrollView.backgroundColor = UIColor.smBackgroundColor()
         self.contentScrollView.backgroundColor = UIColor.smBackgroundColor()
 
@@ -198,6 +198,7 @@ class SMDetailViewController: UIViewController, FloatRatingViewDelegate,UITableV
         
         let contentHeight = 190+heightView+10+30+60+self.detailTableView.frame.size.height+100
         self.contentScrollView.contentSize = CGSize.init(width: self.view.frame.size.width, height:contentHeight)
+        
     }
     
     func playBtnAction() {

@@ -186,6 +186,10 @@ class CXProductsViewController: UIViewController,UITableViewDelegate,UITableView
         return cell;
     }
     
+     func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
+        if tableView.editing {return .Delete}
+        return .None
+    }
     
     /*
      
@@ -197,10 +201,16 @@ class CXProductsViewController: UIViewController,UITableViewDelegate,UITableView
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let product: CX_Products = self.products[indexPath.row] as! CX_Products
-        let detailView = SMDetailViewController.init()
+       // let detailView = SMDetailViewController.init()
+       // detailView.product = product
+       // detailView.productCategory = self.productCategory
+        
+        let detailView = ViewPagerCntl.init()
         detailView.product = product
+        detailView.itemIndex = indexPath.row
         detailView.productCategory = self.productCategory
         self.navigationController?.pushViewController(detailView, animated: true)
+
 
     }
     
