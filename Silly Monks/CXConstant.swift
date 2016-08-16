@@ -108,7 +108,7 @@ class CXConstant: NSObject {
     
     
     // Sevices URLs
-    
+    static let MALL_ID = "3"
     static let ALL_MALLS_URL = "http://52.74.102.199:8081/services/getmasters?type=allMalls"
     static let SINGLE_MALL_URL = "http://m.sillymonks.com:8081/Services/getMasters?type=singleMall&mallId=" //3
     static let STORE_URL = "http://52.74.102.199:8081/services/getmasters?type=stores&mallId="

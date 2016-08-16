@@ -242,11 +242,14 @@ class HomeViewController: UIViewController  ,UITableViewDelegate,UITableViewData
                 self.profileBtn.setTitle("MY PROFILE", forState: .Normal)
                 self.profileBtn.addTarget(self, action: #selector(HomeViewController.signInAction), forControlEvents: UIControlEvents.TouchUpInside)
             }else{
-                self.profileDPImageView .image = UIImage(named: "profile_placeholder.png")
-                
-                self.profileBtn.setTitle("SIGN IN", forState: .Normal)
-                self.profileBtn.addTarget(self, action: #selector(HomeViewController.signInAction), forControlEvents: UIControlEvents.TouchUpInside)
-                
+                if NSUserDefaults.standardUserDefaults().valueForKey("USER_ID") != nil{
+                    self.profileBtn.setTitle("MY PROFILE", forState: .Normal)
+                    self.profileBtn.addTarget(self, action: #selector(HomeViewController.signInAction), forControlEvents: UIControlEvents.TouchUpInside)
+                }else{
+                    self.profileDPImageView .image = UIImage(named: "profile_placeholder.png")
+                    self.profileBtn.setTitle("SIGN IN", forState: .Normal)
+                    self.profileBtn.addTarget(self, action: #selector(HomeViewController.signInAction), forControlEvents: UIControlEvents.TouchUpInside)
+                }
             }
         }
     }

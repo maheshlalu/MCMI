@@ -29,7 +29,7 @@ class CXSignInSignUpViewController: UIViewController,UITextFieldDelegate,FBSDKLo
     
     var googleBtn:GIDSignInButton!
     
-    var orgID:String!
+    var orgID:String! = CXConstant.MALL_ID
     var profileImageStr:String!
     var profileImagePic:UIImageView!
     var delegate:CXSingInDelegate?
@@ -46,7 +46,7 @@ class CXSignInSignUpViewController: UIViewController,UITextFieldDelegate,FBSDKLo
         self.customizeHeaderView()
         self.customizeMainView()
         
-        // NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateNotificationSentLabel", name: "UpdateProfilePic", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(CXSignInSignUpViewController.googleSignUp(_:)), name: "GoogleSignUp", object: nil)
         
     }
     
@@ -56,6 +56,9 @@ class CXSignInSignUpViewController: UIViewController,UITextFieldDelegate,FBSDKLo
         // Dispose of any resources that can be recreated.
     }
     
+    override func viewWillDisappear(animated: Bool) {
+        NSNotificationCenter.defaultCenter().removeObserver("GoogleSignUp")
+    }
     func customizeHeaderView() {
         self.navigationController?.navigationBar.translucent = false;
         self.navigationController?.navigationBar.barTintColor = UIColor.navBarColor()
@@ -228,39 +231,49 @@ class CXSignInSignUpViewController: UIViewController,UITextFieldDelegate,FBSDKLo
         
     }
     
+    func googleSignUp(notification: NSNotification){
+          self.showAlertView("Login successfully", status: 1)
+        //Take Action on Notification
+    }
+    
+    
     func showAlertView(message:String, status:Int) {
-        let alert = UIAlertController(title: "Silly Monks", message: message, preferredStyle: UIAlertControllerStyle.Alert)
-        let okAction = UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default) {
-            UIAlertAction in
-            if status == 1 {
-                self.navigationController?.popViewControllerAnimated(true)
+        dispatch_async(dispatch_get_main_queue(), {
+            let alert = UIAlertController(title: "Silly Monks", message: message, preferredStyle: UIAlertControllerStyle.Alert)
+            let okAction = UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default) {
+                UIAlertAction in
+                if status == 1 {
+                    if self.backButton.hidden {
+                        self.skipAction()
+                    }else{
+                        self.navigationController?.popViewControllerAnimated(true)
+                    }
+                }
             }
-        }
-        alert.addAction(okAction)
-        self.presentViewController(alert, animated: true, completion: nil)
+            alert.addAction(okAction)
+            self.presentViewController(alert, animated: true, completion: nil)
+        })
     }
     
     func sendSignDetails() {
-        let signInUrl = "http://sillymonksapp.com:8081/MobileAPIs/loginConsumerForOrg?orgId="+self.orgID+"&email="+self.emailAddressField.text!+"&dt=DEVICES&password="+self.passwordField.text!
+        let signInUrl = "http://sillymonksapp.com:8081/MobileAPIs/loginConsumerForOrg?orgId="+orgID+"&email="+self.emailAddressField.text!+"&dt=DEVICES&password="+self.passwordField.text!
         SMSyncService.sharedInstance.startSyncProcessWithUrl(signInUrl) { (responseDict) in
             // print("Login response \(responseDict)")
             
             let status: Int = Int(responseDict.valueForKey("status") as! String)!
             
             if status == 1 {
-                let userDetails = SMUserDetails.sharedInstance
-                userDetails.userFirstName = responseDict.valueForKey("firstName") as? String
-                userDetails.userLastName = responseDict.valueForKey("lastName") as? String
-                userDetails.emailAddress = responseDict.valueForKey("emailId") as? String
-                userDetails.orgID = responseDict.valueForKey("orgId") as? String
-                userDetails.macID = responseDict.valueForKey("macId") as? String
-                userDetails.macJobID = responseDict.valueForKey("macIdJobId") as? String
-                userDetails.userID = CXConstant.resultString(responseDict.valueForKey("UserId")!)
-                CXConstant.saveDataInUserDefaults(userDetails)
-                self.showAlertView("Login successfully.", status: status)
+                NSUserDefaults.standardUserDefaults().setObject(responseDict.valueForKey("UserId"), forKey: "USER_ID")
+                NSUserDefaults.standardUserDefaults().setObject(responseDict.valueForKey("emailId"), forKey: "USER_EMAIL")
+                NSUserDefaults.standardUserDefaults().setObject(responseDict.valueForKey("firstName"), forKey: "FIRST_NAME")
+                NSUserDefaults.standardUserDefaults().setObject(responseDict.valueForKey("lastName"), forKey: "LAST_NAME")
+                NSUserDefaults.standardUserDefaults().setObject(responseDict.valueForKey("gender"), forKey: "GENDER")
+                NSUserDefaults.standardUserDefaults().setObject(nil, forKey: "PROFILE_PIC")
+                NSUserDefaults.standardUserDefaults().synchronize()
+                self.showAlertView("Login successfully", status: status)
                 
             } else {
-                self.showAlertView("Please enter valid credentials.", status: status)
+                self.showAlertView("Please enter valid credentials", status: status)
             }
         }
     }
@@ -271,10 +284,10 @@ class CXSignInSignUpViewController: UIViewController,UITextFieldDelegate,FBSDKLo
         if self.isValidEmail(self.emailAddressField.text!) {
             self.sendSignDetails()
         } else {
-            let alert = UIAlertController(title: "Silly Monks", message: "Please enter valid email.", preferredStyle: UIAlertControllerStyle.Alert)
-            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil))
-            self.presentViewController(alert, animated: true, completion: nil)
-            //print("Please enter valid email")
+                let alert = UIAlertController(title: "Silly Monks", message: "Please enter valid email.", preferredStyle: UIAlertControllerStyle.Alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil))
+                self.presentViewController(alert, animated: true, completion: nil)
+                //print("Please enter valid email")
         }
     }
     

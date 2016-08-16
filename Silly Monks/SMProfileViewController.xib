@@ -14,6 +14,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SMProfileViewController" customModule="SillyMonks" customModuleProvider="target">
             <connections>
                 <outlet property="fullNameLbl" destination="FXf-at-f9B" id="hGn-aW-odL"/>
+                <outlet property="genderLbl" destination="dfF-M7-Qwe" id="b4k-AO-2Bu"/>
                 <outlet property="imgView" destination="Rt1-0H-ykG" id="VW0-hT-MQm"/>
                 <outlet property="userEmailLbl" destination="u7o-pV-TT6" id="HoL-A3-X0s"/>
                 <outlet property="userFullName" destination="Xnu-Um-g9q" id="jze-wL-NYX"/>

@@ -17,7 +17,7 @@ enum SignUpMembers {
 }
 
 
-class CXSignUpViewController: UIViewController,UITextFieldDelegate {
+class CXSignUpViewController: UIViewController,UITextFieldDelegate,UIScrollViewDelegate {
     
     var cScrollView:UIScrollView!
     var firstNameField: UITextField!
@@ -138,24 +138,22 @@ class CXSignUpViewController: UIViewController,UITextFieldDelegate {
 //        NSLog("Print values orgid: %@ email: %@ firstname: %@ lastname: %@ psw: %@ ", orgID, self.emailAddressField.text, self.firstNameField.text, self.lastNameField.text, self.passwordField.text)
         let signUpUrl = "http://sillymonksapp.com:8081/MobileAPIs/regAndloyaltyAPI?orgId="+orgID+"&userEmailId="+self.emailAddressField.text!+"&dt=DEVICES&firstName="+self.firstNameField.text!.urlEncoding()+"&lastName="+self.lastNameField.text!.urlEncoding()+"&password="+self.passwordField.text!.urlEncoding()
         SMSyncService.sharedInstance.startSyncProcessWithUrl(signUpUrl) { (responseDict) in
-           // print("Sign up response \(responseDict)")
-            let userDetails = SMUserDetails.sharedInstance
-            userDetails.userFirstName = responseDict.valueForKey("firstName") as? String
-            userDetails.userLastName = responseDict.valueForKey("lastName") as? String
-            userDetails.emailAddress = responseDict.valueForKey("emailId") as? String
-            userDetails.orgID = responseDict.valueForKey("orgId") as? String
-            userDetails.macID = responseDict.valueForKey("macId") as? String
-            userDetails.macJobID = responseDict.valueForKey("macIdJobId") as? String
-            userDetails.userID = responseDict.valueForKey("UserId") as? String
-            CXConstant.saveDataInUserDefaults(userDetails)
-           // userDetails.mobileNumber = responseDict.valueForKey("phone") as? String
+            print("Sign up response \(responseDict)")
             
-            let message = responseDict.valueForKey("msg") as? String
+            NSUserDefaults.standardUserDefaults().setObject(responseDict.valueForKey("UserId"), forKey: "USER_ID")
+            NSUserDefaults.standardUserDefaults().setObject(responseDict.valueForKey("emailId"), forKey: "USER_EMAIL")
+            NSUserDefaults.standardUserDefaults().setObject(responseDict.valueForKey("firstName"), forKey: "FIRST_NAME")
+            NSUserDefaults.standardUserDefaults().setObject(responseDict.valueForKey("lastName"), forKey: "LAST_NAME")
+            NSUserDefaults.standardUserDefaults().setObject(responseDict.valueForKey("gender"), forKey: "GENDER")
+            NSUserDefaults.standardUserDefaults().setObject(nil, forKey: "PROFILE_PIC")
+            NSUserDefaults.standardUserDefaults().synchronize()
+            
+             let message = responseDict.valueForKey("msg") as? String
             
            let alert = UIAlertController(title: "Silly Monks", message: message, preferredStyle: UIAlertControllerStyle.Alert)
             alert.addAction(UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default, handler: { (UIAlertAction) in
-                self.moveBackView()
-                //self.navigationController?.popViewControllerAnimated(true)
+                //self.moveBackView()
+                self.navigationController?.popViewControllerAnimated(true)
             }))
             
             self.presentViewController(alert, animated: true, completion: nil)
@@ -239,6 +237,10 @@ class CXSignUpViewController: UIViewController,UITextFieldDelegate {
         button.layer.masksToBounds = true
         button.backgroundColor = bgColor
         return button
+    }
+    
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        self.cScrollView.endEditing(true)
     }
     
     func isValidEmail(email: String) -> Bool {

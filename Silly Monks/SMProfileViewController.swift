@@ -18,7 +18,9 @@ class SMProfileViewController: UIViewController {
     @IBOutlet var fullNameLbl: UILabel!
     @IBOutlet var userFullName: UILabel!
     
+    @IBOutlet weak var genderLbl: UILabel!
     @IBOutlet var userGender: UILabel!
+    var imgURL: NSURL!
        
 //    @IBAction func favoritesBtnAction(sender: AnyObject) {
 //        
@@ -72,24 +74,40 @@ class SMProfileViewController: UIViewController {
     
     func setDPImage() {
         self.strProfile = NSUserDefaults.standardUserDefaults().valueForKey("PROFILE_PIC") as? String
-        let imgURL: NSURL = NSURL(string: strProfile)!
+        if self.strProfile != nil{
+        self.imgURL = NSURL(string: strProfile)!
         let request: NSURLRequest = NSURLRequest(URL: imgURL)
         NSURLConnection.sendAsynchronousRequest(
             request, queue: NSOperationQueue.mainQueue(),
             completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?) -> Void in
                 if error == nil {
                     self.imgView.image = UIImage(data: data!)
+                }else{
+                    
                 }
         })
-        self.setUserData()
+        }else{
+        
+            self.imgView.image = UIImage(named: "profile_placeholder.png")
+        
+        }
+        
+         self.setUserData()
     }
     
     func setUserData(){
+
+            
+            self.userFullName.text = (NSUserDefaults.standardUserDefaults().valueForKey("FIRST_NAME") as? String)!  + " " + (NSUserDefaults.standardUserDefaults().valueForKey("LAST_NAME") as? String)!
+            self.fullNameLbl.text = self.userFullName.text
+            self.userGender.text = NSUserDefaults.standardUserDefaults().valueForKey("GENDER") as? String
         
-        self.userFullName.text = (NSUserDefaults.standardUserDefaults().valueForKey("FIRST_NAME") as? String)!  + " " + (NSUserDefaults.standardUserDefaults().valueForKey("LAST_NAME") as? String)!
-        self.fullNameLbl.text = self.userFullName.text
-        self.userGender.text = NSUserDefaults.standardUserDefaults().valueForKey("GENDER") as? String
-        self.userEmailLbl.text = NSUserDefaults.standardUserDefaults().valueForKey("USER_EMAIL") as? String
+        let genderStr:NSString = (NSUserDefaults.standardUserDefaults().valueForKey("GENDER") as? NSString)!
+        if genderStr.isEqualToString("0") {
+            self.userGender.hidden = true
+            self.genderLbl.hidden = true
+        }
+         self.userEmailLbl.text = NSUserDefaults.standardUserDefaults().valueForKey("USER_EMAIL") as? String
         
     }
 
@@ -102,7 +120,10 @@ class SMProfileViewController: UIViewController {
         NSUserDefaults.standardUserDefaults().removeObjectForKey("GENDER")
         NSUserDefaults.standardUserDefaults().removeObjectForKey("PROFILE_PIC")
         NSUserDefaults.standardUserDefaults().removeObjectForKey("USER_EMAIL")
+        //SMUserDetails.sharedInstance.destory()
         NSUserDefaults.standardUserDefaults().synchronize()
+        
+        NSNotificationCenter.defaultCenter().removeObserver(self)
         
         // for FB signout
         FBSDKLoginManager().logOut()
