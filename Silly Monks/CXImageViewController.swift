@@ -14,7 +14,7 @@ class CXImageViewController: UIViewController {
     var picView: UIImageView!
     var activity:DTIActivityIndicatorView!
     var picture: UIImage!
-    
+    var pageIndex : NSInteger = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -84,7 +84,10 @@ class CXImageViewController: UIViewController {
     }
     
     func backAction() {
-        self.navigationController?.popViewControllerAnimated(true)
+        self.dismissViewControllerAnimated(true) { 
+            
+        }
+        //self.navigationController?.popViewControllerAnimated(true)
     }
     
     

@@ -12,7 +12,7 @@ import mopub_ios_sdk
 import CoreLocation
 import LocationManager
 
-class CXGalleryMoreViewController: UIViewController,UICollectionViewDataSource, UICollectionViewDelegate,CHTCollectionViewDelegateWaterfallLayout {
+class CXGalleryMoreViewController: UIViewController,UICollectionViewDataSource, UICollectionViewDelegate {
     var galleryCollectionView: UICollectionView!
     var spinner:DTIActivityIndicatorView!// = DTIActivityIndicatorView()
     var activityIndicatorView: DTIActivityIndicatorView!
@@ -77,9 +77,20 @@ class CXGalleryMoreViewController: UIViewController,UICollectionViewDataSource, 
     }
     
     func customizeMainView() {
-        let layout = CHTCollectionViewWaterfallLayout()
-        layout.minimumColumnSpacing = 10.0
-        layout.minimumInteritemSpacing = 10.0
+        //let layout = CHTCollectionViewWaterfallLayout()
+        
+        let layout = UICollectionViewFlowLayout()
+        layout.sectionInset = UIEdgeInsets(top: 20, left: 10, bottom: 50, right: 10)
+        
+                let cWidth = self.view.frame.size.width
+                let reqImgWidth = (cWidth-30)/2
+                let ratioValue = 480/reqImgWidth
+                let reqImgHeight = 800/ratioValue
+        layout.itemSize = CGSize(width: reqImgWidth,height: reqImgHeight)
+
+        //CGSize(width: 135,height: tableViewHeigh-80)
+       // layout.minimumColumnSpacing = 10.0
+        //layout.minimumInteritemSpacing = 10.0
         
         self.galleryCollectionView = UICollectionView.init(frame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height), collectionViewLayout: layout)
         self.galleryCollectionView.autoresizingMask = [UIViewAutoresizing.FlexibleHeight, UIViewAutoresizing.FlexibleWidth]
@@ -95,7 +106,7 @@ class CXGalleryMoreViewController: UIViewController,UICollectionViewDataSource, 
         
         self.activityIndicatorView.stopActivity()
         
-        //self.setUpNativeAds()
+        self.setUpNativeAds()
     }
     
     override func didReceiveMemoryWarning() {
@@ -152,16 +163,16 @@ class CXGalleryMoreViewController: UIViewController,UICollectionViewDataSource, 
         self.navigationController?.pushViewController(galleryView, animated: true)
     }
     
-    func collectionView(collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                               sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        let cWidth = collectionView.frame.size.width;
-        let reqImgWidth = (cWidth-30)/2
-        let ratioValue = 480/reqImgWidth
-        let reqImgHeight = 800/ratioValue
-        
-        return CGSizeMake(reqImgWidth, reqImgHeight)
-    }
+//    func collectionView(collectionView: UICollectionView,
+//                        layout collectionViewLayout: UICollectionViewLayout,
+//                               sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+//        let cWidth = collectionView.frame.size.width;
+//        let reqImgWidth = (cWidth-30)/2
+//        let ratioValue = 480/reqImgWidth
+//        let reqImgHeight = 800/ratioValue
+//        
+//        return CGSizeMake(reqImgWidth, reqImgHeight)
+//    }
     
     //MARK: Native adds
     
@@ -189,7 +200,7 @@ class CXGalleryMoreViewController: UIViewController,UICollectionViewDataSource, 
             let reqImgWidth = (maxWidth-30)/2
             let ratioValue = 480/reqImgWidth
             let reqImgHeight = 800/ratioValue
-            return CGSizeMake(UIScreen.mainScreen().bounds.width, 300);
+            return CGSizeMake(UIScreen.mainScreen().bounds.width, 200);
 
             //return CGSizeMake(reqImgWidth, reqImgHeight)
             //return CGSizeMake(maxWidth, 250);
@@ -202,7 +213,7 @@ class CXGalleryMoreViewController: UIViewController,UICollectionViewDataSource, 
         
         let addPostion : MPClientAdPositioning = MPClientAdPositioning()
         addPostion.addFixedIndexPath(NSIndexPath(forRow: 0, inSection: 0))
-        addPostion.enableRepeatingPositionsWithInterval(6)
+        addPostion.enableRepeatingPositionsWithInterval(7)
         
         self.placer = MPCollectionViewAdPlacer(collectionView: self.galleryCollectionView, viewController: self, adPositioning: addPostion, rendererConfigurations: [config])
         

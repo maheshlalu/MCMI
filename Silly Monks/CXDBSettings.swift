@@ -56,8 +56,8 @@ class CXDBSettings: NSObject {
             return false
         }
         let calendar = NSCalendar.currentCalendar()
-        let isYesterday :Bool = calendar.isDateInYesterday(syncDate!)
-        return !isYesterday
+        let isToday :Bool = calendar.isDateInToday(syncDate!)
+        return isToday
     }
     
     func saveAllMallsInDB(allMallsResponseArray:NSArray) {

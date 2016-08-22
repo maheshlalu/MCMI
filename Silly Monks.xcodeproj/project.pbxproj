@@ -22,6 +22,8 @@
 		3B5FCD041D4B30970068990A /* SMProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B5FCD001D4B30970068990A /* SMProfileViewController.xib */; };
 		3B5FCD051D4B30970068990A /* SMUserFavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5FCD011D4B30970068990A /* SMUserFavoritesViewController.swift */; };
 		3B5FCD061D4B30970068990A /* SMUserFavoritesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B5FCD021D4B30970068990A /* SMUserFavoritesViewController.xib */; };
+		3B61E3521D6AC12D00B09F8E /* CXPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B61E3501D6AC12D00B09F8E /* CXPageViewController.swift */; };
+		3B61E3531D6AC12D00B09F8E /* CXPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B61E3511D6AC12D00B09F8E /* CXPageViewController.xib */; };
 		434C3D531D4B702400752805 /* SMFavoritesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434C3D511D4B702400752805 /* SMFavoritesCell.swift */; };
 		434C3D541D4B702400752805 /* SMFavoritesCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 434C3D521D4B702400752805 /* SMFavoritesCell.xib */; };
 		434C3D591D4B7B9C00752805 /* eega.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 434C3D571D4B7B9C00752805 /* eega.jpg */; };
@@ -153,6 +155,8 @@
 		3B5FCD001D4B30970068990A /* SMProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SMProfileViewController.xib; sourceTree = "<group>"; };
 		3B5FCD011D4B30970068990A /* SMUserFavoritesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SMUserFavoritesViewController.swift; sourceTree = "<group>"; };
 		3B5FCD021D4B30970068990A /* SMUserFavoritesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SMUserFavoritesViewController.xib; sourceTree = "<group>"; };
+		3B61E3501D6AC12D00B09F8E /* CXPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CXPageViewController.swift; sourceTree = "<group>"; };
+		3B61E3511D6AC12D00B09F8E /* CXPageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CXPageViewController.xib; sourceTree = "<group>"; };
 		434C3D511D4B702400752805 /* SMFavoritesCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SMFavoritesCell.swift; sourceTree = "<group>"; };
 		434C3D521D4B702400752805 /* SMFavoritesCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SMFavoritesCell.xib; sourceTree = "<group>"; };
 		434C3D571D4B7B9C00752805 /* eega.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = eega.jpg; sourceTree = "<group>"; };
@@ -316,6 +320,7 @@
 		12FA3BFB1D60455D0011D43D /* SwipePager */ = {
 			isa = PBXGroup;
 			children = (
+				3B61E34F1D6AC11D00B09F8E /* CXPager */,
 				120335EC1D61D415000CBE48 /* SHViewPager.h */,
 				120335ED1D61D415000CBE48 /* SHViewPager.m */,
 				120335EE1D61D415000CBE48 /* SHViewPagerController.h */,
@@ -341,6 +346,15 @@
 				434C3D521D4B702400752805 /* SMFavoritesCell.xib */,
 			);
 			name = SMProfile;
+			sourceTree = "<group>";
+		};
+		3B61E34F1D6AC11D00B09F8E /* CXPager */ = {
+			isa = PBXGroup;
+			children = (
+				3B61E3501D6AC12D00B09F8E /* CXPageViewController.swift */,
+				3B61E3511D6AC12D00B09F8E /* CXPageViewController.xib */,
+			);
+			name = CXPager;
 			sourceTree = "<group>";
 		};
 		434C3D551D4B7B7B00752805 /* images */ = {
@@ -720,6 +734,7 @@
 				69F9D3301C9C88D100E2A288 /* men_icon.png in Resources */,
 				434C3D5D1D4B7BE500752805 /* paatshala.jpeg in Resources */,
 				434C3D541D4B702400752805 /* SMFavoritesCell.xib in Resources */,
+				3B61E3531D6AC12D00B09F8E /* CXPageViewController.xib in Resources */,
 				69023AD51C9BC6CF003F8245 /* Roboto-Light.ttf in Resources */,
 				434C3D611D4B878D00752805 /* Oohalu Gusagusalade.jpg in Resources */,
 				69023AD61C9BC6CF003F8245 /* Roboto-Medium.ttf in Resources */,
@@ -890,6 +905,7 @@
 				690902811CF9FC0400E19885 /* UIImage+animatedGIF.m in Sources */,
 				690533591CA111990094D272 /* DTIAnimRotatingPlane.swift in Sources */,
 				6972CB2F1D031D5A009A2746 /* CXProductsViewController.swift in Sources */,
+				3B61E3521D6AC12D00B09F8E /* CXPageViewController.swift in Sources */,
 				692102D71CEE40BC009F32FF /* CXCommentViewController.swift in Sources */,
 				3B5FCD051D4B30970068990A /* SMUserFavoritesViewController.swift in Sources */,
 				69F5FF2C1CBE148C0018E739 /* CX_Product_Category+CoreDataProperties.swift in Sources */,
@@ -972,8 +988,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: RAMAKRISHNA K (8P5BDD85J8)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: RAMAKRISHNA K (8P5BDD85J8)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: RAMAKRISHNA K (95Y7Y2H9V8)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: RAMAKRISHNA K (95Y7Y2H9V8)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEFINES_MODULE = YES;
@@ -996,7 +1012,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "14e0305c-8eb9-4f31-b7bb-09dc349fc701";
+				PROVISIONING_PROFILE = "93412987-5b62-49d0-845a-c274020b2f89";
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1020,8 +1036,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: RAMAKRISHNA K (8P5BDD85J8)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: RAMAKRISHNA K (8P5BDD85J8)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: RAMAKRISHNA K (95Y7Y2H9V8)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: RAMAKRISHNA K (95Y7Y2H9V8)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
@@ -1038,7 +1054,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "14e0305c-8eb9-4f31-b7bb-09dc349fc701";
+				PROVISIONING_PROFILE = "93412987-5b62-49d0-845a-c274020b2f89";
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				VALIDATE_PRODUCT = YES;
@@ -1051,8 +1067,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: RAMAKRISHNA K (8P5BDD85J8)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: RAMAKRISHNA K (8P5BDD85J8)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: RAMAKRISHNA K (95Y7Y2H9V8)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: RAMAKRISHNA K (95Y7Y2H9V8)";
 				DEFINES_MODULE = YES;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1064,9 +1080,9 @@
 				INFOPLIST_FILE = "Silly Monks/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.creativexperts.;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sillymonks;
 				PRODUCT_NAME = SillyMonks;
-				PROVISIONING_PROFILE = "14e0305c-8eb9-4f31-b7bb-09dc349fc701";
+				PROVISIONING_PROFILE = "93412987-5b62-49d0-845a-c274020b2f89";
 				SWIFT_OBJC_BRIDGING_HEADER = "Silly Monks/CX-Bridge-Header.h";
 			};
 			name = Debug;
@@ -1077,8 +1093,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: RAMAKRISHNA K (8P5BDD85J8)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: RAMAKRISHNA K (8P5BDD85J8)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: RAMAKRISHNA K (95Y7Y2H9V8)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: RAMAKRISHNA K (95Y7Y2H9V8)";
 				DEFINES_MODULE = YES;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1090,9 +1106,9 @@
 				INFOPLIST_FILE = "Silly Monks/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.creativexperts.;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sillymonks;
 				PRODUCT_NAME = SillyMonks;
-				PROVISIONING_PROFILE = "14e0305c-8eb9-4f31-b7bb-09dc349fc701";
+				PROVISIONING_PROFILE = "93412987-5b62-49d0-845a-c274020b2f89";
 				SWIFT_OBJC_BRIDGING_HEADER = "Silly Monks/CX-Bridge-Header.h";
 			};
 			name = Release;

@@ -184,7 +184,7 @@ class CXSignUpViewController: UIViewController,UITextFieldDelegate,UIScrollViewD
                 let alert = UIAlertController(title: "Silly Monks", message: "Please enter valid Phone number.", preferredStyle: UIAlertControllerStyle.Alert)
                 let okAction = UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default) {
                     UIAlertAction in
-                    self.navigationController?.popViewControllerAnimated(true)
+                   // self.navigationController?.popViewControllerAnimated(true)
                     
                 }
                 alert.addAction(okAction)

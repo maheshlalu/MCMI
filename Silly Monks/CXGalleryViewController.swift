@@ -17,6 +17,7 @@ class CXGalleryViewController: UIViewController,UICollectionViewDataSource, UICo
     let reuseIdentifier = "cell" // also enter this string as the cell identifier in the storyboard
     
     var stores : NSMutableArray!
+    var viewControllers : NSMutableArray!
     var imageItemsDict:NSMutableDictionary = NSMutableDictionary()
     
     var galleryImages: [UIImage] = []
@@ -138,13 +139,41 @@ class CXGalleryViewController: UIViewController,UICollectionViewDataSource, UICo
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         print("Collection view at row \(collectionView.tag) selected index path \(indexPath) indexPath Row\(indexPath.row)")
-        self.navigationController?.setNavigationBarHidden(true, animated: true)
+        
+
+
+      //  NSNumber(int: UIPageViewControllerSpineLocation.Mid)
+        
+        let o = UIPageViewControllerSpineLocation.Mid.rawValue //toRaw makes it conform to AnyObject
+        let k = UIPageViewControllerOptionSpineLocationKey
+        let options = NSDictionary(object: o, forKey: k)
+        
+        let pageCntl : CXPageViewController = CXPageViewController(transitionStyle: .Scroll, navigationOrientation: .Horizontal, options: options as! [String : AnyObject])
+        self.viewControllers = NSMutableArray()
+        for var i = 0; i <= self.stores.count-1; i++ {
+            let store :NSDictionary = self.stores[i] as! NSDictionary
+            let gallImage :String = store.valueForKey("URL") as! String
+            let imageControl = CXImageViewController.init()
+            imageControl.imagePath = gallImage
+            imageControl.pageIndex = i
+            self.viewControllers.addObject(imageControl)
+        }
+        pageCntl.setViewControllers([viewControllers[indexPath.item] as! UIViewController], direction: .Forward, animated: true) { (animated) in
+            
+        }
+        pageCntl.doubleSided = false
+        pageCntl.dataSource = self
+        
+        self.presentViewController(pageCntl, animated: true) { 
+            
+        }
+       /*self.navigationController?.setNavigationBarHidden(true, animated: true)
         let store :NSDictionary = self.stores[indexPath.row] as! NSDictionary
         let gallImage :String = store.valueForKey("URL") as! String
 
         let imageControl = CXImageViewController.init()
         imageControl.imagePath = gallImage
-        self.navigationController?.pushViewController(imageControl, animated: false)
+        self.navigationController?.pushViewController(imageControl, animated: false)*/
     }
     
     func collectionView(collectionView: UICollectionView,
@@ -159,7 +188,29 @@ class CXGalleryViewController: UIViewController,UICollectionViewDataSource, UICo
     }
 }
 
-
+extension CXGalleryViewController : UIPageViewControllerDataSource {
+    
+    
+    func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController? {
+        
+        let imageControl : CXImageViewController = (viewController as? CXImageViewController)!
+        if(imageControl.pageIndex == 0){
+        return nil
+        }
+        return self.viewControllers![imageControl.pageIndex - 1] as! UIViewController
+        
+    }
+    
+    func pageViewController(pageViewController: UIPageViewController, viewControllerAfterViewController viewController: UIViewController) -> UIViewController? {
+     
+        let imageControl : CXImageViewController = (viewController as? CXImageViewController)!
+        if(imageControl.pageIndex < (self.viewControllers?.count)!-1){
+            return self.viewControllers![imageControl.pageIndex + 1] as! UIViewController
+        }
+        return nil
+        
+    }
+}
 
 
 //http://stackoverflow.com/questions/25305945/use-of-undeclared-type-viewcontroller-when-unit-testing-my-own-viewcontroller
