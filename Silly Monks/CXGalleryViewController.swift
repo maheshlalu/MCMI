@@ -17,6 +17,7 @@ class CXGalleryViewController: UIViewController,UICollectionViewDataSource, UICo
     let reuseIdentifier = "cell" // also enter this string as the cell identifier in the storyboard
     
     var stores : NSMutableArray!
+    var headerStr : String!
     var viewControllers : NSMutableArray!
     var imageItemsDict:NSMutableDictionary = NSMutableDictionary()
     
@@ -27,7 +28,7 @@ class CXGalleryViewController: UIViewController,UICollectionViewDataSource, UICo
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.smBackgroundColor()
         self.stores.removeObjectAtIndex(0)
-       // print("Gallery Stores \(self.stores)")
+        print("Gallery Stores \(self.stores)")
         
         dispatch_async(dispatch_get_main_queue()) { [unowned self] in
             self.activityIndicatorView = DTIActivityIndicatorView(frame: CGRect(x:(self.view.frame.size.width-60)/2, y:200.0, width:60.0, height:60.0))
@@ -55,9 +56,9 @@ class CXGalleryViewController: UIViewController,UICollectionViewDataSource, UICo
         self.navigationController?.navigationBar.translucent = false;
         self.navigationController?.navigationBar.barTintColor = UIColor.navBarColor()
         
-        let lImage = UIImage(named: "smlogo.png") as UIImage?
+        let lImage = UIImage(named: "left_aarow.png") as UIImage?
         let button = UIButton (type: UIButtonType.Custom) as UIButton
-        button.frame = CGRectMake(0, 0, 50, 50)
+        button.frame = CGRectMake(0, 0, 40, 40)
         button.setImage(lImage, forState: .Normal)
         button.addTarget(self, action: #selector(CXGalleryViewController.backAction), forControlEvents: .TouchUpInside)
         self.navigationItem.leftBarButtonItem = UIBarButtonItem.init(customView: button)
@@ -66,7 +67,7 @@ class CXGalleryViewController: UIViewController,UICollectionViewDataSource, UICo
         tLabel.frame = CGRectMake(0, 0, 120, 40);
         tLabel.backgroundColor = UIColor.clearColor()
         tLabel.font = UIFont.init(name: "Roboto-Bold", size: 18)
-        tLabel.text = "Silly Monks"
+        tLabel.text = "Gallery - \(headerStr)"
         tLabel.textAlignment = NSTextAlignment.Center
         tLabel.textColor = UIColor.whiteColor()
         self.navigationItem.titleView = tLabel

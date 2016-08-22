@@ -158,7 +158,7 @@ class SMCategoryViewController: UIViewController,ENSideMenuDelegate,UITableViewD
         let categoryListByorder : NSMutableArray = NSMutableArray()
         let list : NSArray = self.getAllProductCategoriesFromDB(self.mall.mid!)
         if self.mall.name == "Silly Monks Tollywood" {
-        let itemOrderList :  NSArray = ["Premium Content","Tollywood News","Teasers and Trailers","SILLY Punch","Music","Movies","Reviews","Celebrities"]
+        let itemOrderList :  NSArray = ["Premium Content","Tollywood News","Teasers and Trailers","Music","Movies","Reviews","Celebrities"]
         for orderItem in itemOrderList {
             for element in list {
                 let allMalls : CX_Product_Category = element as! CX_Product_Category
@@ -486,6 +486,7 @@ extension SMCategoryViewController: UICollectionViewDelegate, UICollectionViewDa
             let store :NSDictionary = self.storeInfo[indexPath.row] as! NSDictionary
             let galleryView =  CXGalleryViewController.init()
             let albumName = store.valueForKey("albumName") as? String
+                galleryView.headerStr = albumName
             galleryView.stores = CXDBSettings.getGalleryItems(self.storeJSON, albumName: albumName!)
             self.navigationController?.pushViewController(galleryView, animated: true)
             }

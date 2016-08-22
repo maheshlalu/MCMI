@@ -1,4 +1,4 @@
-//
+ //
 //  ViewController.swift
 //  Silly Monks
 //
@@ -154,15 +154,8 @@ class HomeViewController: UIViewController  ,UITableViewDelegate,UITableViewData
         self.sidePanelView.addSubview(profileImage)
         
         
-        //self.aboutUsBtn = self.createButton(CGRectMake(10, self.signInBtn.frame.size.height+self.signInBtn.frame.origin.y+5, self.sidePanelView.frame.size.width-20, 50), title: "About Sillymonks", tag: 1, bgColor: UIColor.clearColor())
-        
-//        if NSUserDefaults.standardUserDefaults().valueForKey("PROFILE_PIC") != nil {
-//            self.profileBtn.setTitle("MY PROFILE", forState: .Normal)
-//            self.profileBtn.addTarget(self, action: #selector(HomeViewController.signInAction), forControlEvents: UIControlEvents.TouchUpInside)
-//        }else{
         self.profileBtn = self.createButton(CGRectMake(10, signFrame.size.height+signFrame.origin.y+25, self.sidePanelView.frame.size.width-60, 50), title: "SIGN IN", tag: 1, bgColor: UIColor.clearColor())
         self.profileBtn.addTarget(self, action: #selector(HomeViewController.signInAction), forControlEvents: UIControlEvents.TouchUpInside)
-      //  }
         self.sidePanelView.addSubview(self.profileBtn)
         
         
@@ -171,6 +164,9 @@ class HomeViewController: UIViewController  ,UITableViewDelegate,UITableViewData
         self.profileDPImageView .image = UIImage(named: "profile_placeholder.png")
         self.profileDPImageView .layer.cornerRadius = self.profileDPImageView.frame.size.width / 2
         self.profileDPImageView .clipsToBounds = true
+        self.profileDPImageView.userInteractionEnabled = true
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(HomeViewController.signInAction))
+        self.profileDPImageView.addGestureRecognizer(tapRecognizer)
         self.sidePanelView.addSubview(self.profileDPImageView )
         
         self.aboutUsBtn = self.createButton(CGRectMake(10, self.profileBtn.frame.size.height+self.profileBtn.frame.origin.y+5, self.sidePanelView.frame.size.width-20, 50), title: "About Sillymonks", tag: 1, bgColor: UIColor.clearColor())
@@ -335,7 +331,7 @@ class HomeViewController: UIViewController  ,UITableViewDelegate,UITableViewData
     }
     
     func shareAppAction() {
-        let infoText = "https://www.sillymonks.com/"
+        let infoText = CXConstant.appStoreUrl
         
         let shareItems:Array = [infoText]
         let activityViewController:UIActivityViewController = UIActivityViewController(activityItems: shareItems, applicationActivities: nil)

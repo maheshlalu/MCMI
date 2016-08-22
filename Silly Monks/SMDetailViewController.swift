@@ -99,7 +99,7 @@ class SMDetailViewController: UIViewController, FloatRatingViewDelegate,UITableV
         tLabel.frame = CGRectMake(0, 0, 120, 40);
         tLabel.backgroundColor = UIColor.clearColor()
         tLabel.font = UIFont.init(name: "Roboto-Bold", size: 18)
-        tLabel.text = "Premium Content"
+        tLabel.text = self.productCategory.name
         tLabel.textAlignment = NSTextAlignment.Center
         tLabel.textColor = UIColor.whiteColor()
         self.navigationItem.titleView = tLabel
@@ -371,18 +371,21 @@ class SMDetailViewController: UIViewController, FloatRatingViewDelegate,UITableV
     func shareAction() {
         let img: UIImage!
         
-        let attachements : NSArray = CXDBSettings.getProductAttachments(self.product)
-        if attachements.count > 0 {
+        let publicUrl : NSString = CXDBSettings.getPublicUrlForArticleSharing(self.product)
+     /*   if attachements.count > 0 {
             let attachment:NSDictionary = attachements.objectAtIndex(0) as! NSDictionary
             let prodImage: String = attachment.valueForKey("URL") as! String
             img = CXConstant.getImageFromUrlString(prodImage)
         } else {
             img = UIImage(named: "smlogo.png")
         }
+        */
         
-        let infoText = self.parseProductDescription(self.getProductInfo(product, input: "Description"))
+
+        img = UIImage(named: "smlogo.png")
+//        let infoText = self.parseProductDescription(self.getProductInfo(product, input: "Description"))
         
-        let shareItems:Array = [infoText, img]
+        let shareItems:Array = [publicUrl, img]
         let activityViewController:UIActivityViewController = UIActivityViewController(activityItems: shareItems, applicationActivities: nil)
         activityViewController.excludedActivityTypes = [UIActivityTypePrint, UIActivityTypePostToWeibo, UIActivityTypeCopyToPasteboard, UIActivityTypeAddToReadingList, UIActivityTypePostToVimeo]
         self.presentViewController(activityViewController, animated: true, completion: nil)

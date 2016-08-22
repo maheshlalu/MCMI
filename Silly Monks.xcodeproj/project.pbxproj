@@ -33,6 +33,7 @@
 		4354B9151D4F235000A435D2 /* profile_placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 4354B9141D4F235000A435D2 /* profile_placeholder.png */; };
 		4354B9171D4F235500A435D2 /* sm_navigation_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 4354B9161D4F235500A435D2 /* sm_navigation_logo.png */; };
 		4354B9191D4F235A00A435D2 /* storeongo_gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 4354B9181D4F235A00A435D2 /* storeongo_gray.png */; };
+		435A13201D6B0155002E9D3B /* CXGalleryMoreCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435A131F1D6B0155002E9D3B /* CXGalleryMoreCollectionViewCell.swift */; };
 		43B2125D1D535A83006D49C8 /* NativeAdCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43B2125C1D535A83006D49C8 /* NativeAdCell.swift */; };
 		43B2125F1D535C78006D49C8 /* NativeAdCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 43B2125E1D535C78006D49C8 /* NativeAdCell.xib */; };
 		43B212611D5376F0006D49C8 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43B212601D5376F0006D49C8 /* CoreLocation.framework */; };
@@ -166,6 +167,7 @@
 		4354B9141D4F235000A435D2 /* profile_placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = profile_placeholder.png; sourceTree = "<group>"; };
 		4354B9161D4F235500A435D2 /* sm_navigation_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sm_navigation_logo.png; sourceTree = "<group>"; };
 		4354B9181D4F235A00A435D2 /* storeongo_gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = storeongo_gray.png; sourceTree = "<group>"; };
+		435A131F1D6B0155002E9D3B /* CXGalleryMoreCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CXGalleryMoreCollectionViewCell.swift; sourceTree = "<group>"; };
 		43B2125C1D535A83006D49C8 /* NativeAdCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NativeAdCell.swift; sourceTree = "<group>"; };
 		43B2125E1D535C78006D49C8 /* NativeAdCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NativeAdCell.xib; sourceTree = "<group>"; };
 		43B212601D5376F0006D49C8 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -555,6 +557,7 @@
 				69714A161C9FB2D800B20EDA /* SMMenuViewController.swift */,
 				69C129A51CA4FF1E00C566DC /* CXBannerView.swift */,
 				697858D71CB627E000AC5784 /* SMDetailViewController.swift */,
+				435A131F1D6B0155002E9D3B /* CXGalleryMoreCollectionViewCell.swift */,
 				69F03FBF1CBAC18F00A0484D /* CXGalleryViewController.swift */,
 				43F2D8DC1D5C519100179E31 /* CXGalleryMoreViewController.swift */,
 				6947695E1CCBE81100878BF9 /* CXVideoPlayerViewController.swift */,
@@ -955,6 +958,7 @@
 				69FD29CB1CA2509C005DB4BA /* UIColor+SMColor.swift in Sources */,
 				693556F61D05FE6300873A88 /* CXProcuctTableViewCell.swift in Sources */,
 				6947695F1CCBE81100878BF9 /* CXVideoPlayerViewController.swift in Sources */,
+				435A13201D6B0155002E9D3B /* CXGalleryMoreCollectionViewCell.swift in Sources */,
 				3B5FCCFE1D4B2AC80068990A /* CXProfilePageView.swift in Sources */,
 				69F5FF2D1CBE148C0018E739 /* CX_Product_Category.swift in Sources */,
 				691998C81CED93A200B08423 /* CX_Products+CoreDataProperties.swift in Sources */,
@@ -1012,7 +1016,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "93412987-5b62-49d0-845a-c274020b2f89";
+				PROVISIONING_PROFILE = "4b6b858d-7d98-4ac5-ab79-a6070d074e7c";
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1054,7 +1058,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "93412987-5b62-49d0-845a-c274020b2f89";
+				PROVISIONING_PROFILE = "4b6b858d-7d98-4ac5-ab79-a6070d074e7c";
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				VALIDATE_PRODUCT = YES;
@@ -1082,7 +1086,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sillymonks;
 				PRODUCT_NAME = SillyMonks;
-				PROVISIONING_PROFILE = "93412987-5b62-49d0-845a-c274020b2f89";
+				PROVISIONING_PROFILE = "4b6b858d-7d98-4ac5-ab79-a6070d074e7c";
 				SWIFT_OBJC_BRIDGING_HEADER = "Silly Monks/CX-Bridge-Header.h";
 			};
 			name = Debug;
@@ -1108,7 +1112,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sillymonks;
 				PRODUCT_NAME = SillyMonks;
-				PROVISIONING_PROFILE = "93412987-5b62-49d0-845a-c274020b2f89";
+				PROVISIONING_PROFILE = "4b6b858d-7d98-4ac5-ab79-a6070d074e7c";
 				SWIFT_OBJC_BRIDGING_HEADER = "Silly Monks/CX-Bridge-Header.h";
 			};
 			name = Release;

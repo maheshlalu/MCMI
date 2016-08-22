@@ -50,7 +50,7 @@ class ViewPagerCntl: UIViewController {
         tLabel.frame = CGRectMake(0, 0, 120, 40);
         tLabel.backgroundColor = UIColor.clearColor()
         tLabel.font = UIFont.init(name: "Roboto-Bold", size: 18)
-        tLabel.text = "Premium Content"
+        tLabel.text = self.productCategory.name
         tLabel.textAlignment = NSTextAlignment.Center
         tLabel.textColor = UIColor.whiteColor()
         self.navigationItem.titleView = tLabel

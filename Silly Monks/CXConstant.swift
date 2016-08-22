@@ -105,6 +105,10 @@ class CXConstant: NSObject {
     
     //let kViewControllerVideoID = "3987127390001"
     
+    //Url for Appstore
+    
+    static let appStoreUrl = "https://itunes.apple.com/in/app/sillymonks/id1125296777?mt=8"
+    
     
     
     // Sevices URLs

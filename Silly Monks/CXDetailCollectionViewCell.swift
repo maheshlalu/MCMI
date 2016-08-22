@@ -39,9 +39,6 @@ class CXDetailCollectionViewCell: UICollectionViewCell {
         self.infoLabel.numberOfLines = 0
         self.infoLabel.textAlignment = NSTextAlignment.Center
         self.infoLabel.textColor = UIColor.darkGrayColor()
-
-        
-        
         self.bgView.addSubview(self.infoLabel)
         
         self.activity = DTIActivityIndicatorView(frame: CGRect(x:(self.bgView.frame.size.width - 60)/2, y:(self.bgView.frame.size.height - 60)/2, width:60.0, height:60.0))

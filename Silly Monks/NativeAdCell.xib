@@ -21,7 +21,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tTQ-e8-R48">
-                    <rect key="frame" x="243" y="51" width="75" height="32"/>
+                    <rect key="frame" x="243" y="42" width="75" height="32"/>
                     <color key="backgroundColor" red="0.067593977352286547" green="0.71596858642774874" blue="0.39271444433136238" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="75" id="a6g-Jv-3Lh"/>
@@ -46,10 +46,10 @@
                     </constraints>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Main text lbl" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8fP-se-8w0">
-                    <rect key="frame" x="8" y="43" width="232" height="58"/>
+                    <rect key="frame" x="8" y="43" width="232" height="66"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="232" id="FOu-hh-iqW"/>
-                        <constraint firstAttribute="height" constant="58" id="Fzo-0b-cq3"/>
+                        <constraint firstAttribute="height" constant="66" id="Fzo-0b-cq3"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="12"/>
                     <color key="textColor" red="0.33334015052356025" green="0.33334015052356025" blue="0.33334015052356025" alpha="1" colorSpace="calibratedRGB"/>
@@ -85,8 +85,7 @@
                 <constraint firstItem="aMR-kO-eqb" firstAttribute="trailing" secondItem="tTQ-e8-R48" secondAttribute="trailing" id="q1A-RO-4gc"/>
                 <constraint firstItem="AdC-Up-8X0" firstAttribute="leading" secondItem="Bti-Mo-WKu" secondAttribute="leading" id="v9L-ZM-9Rr"/>
                 <constraint firstItem="Nfx-lz-QFO" firstAttribute="top" secondItem="D4j-qV-Lih" secondAttribute="top" id="wZ3-HS-ioe"/>
-                <constraint firstItem="tTQ-e8-R48" firstAttribute="top" secondItem="Nfx-lz-QFO" secondAttribute="bottom" constant="14" id="yeK-Ii-V4J"/>
-                <constraint firstItem="aMR-kO-eqb" firstAttribute="top" secondItem="tTQ-e8-R48" secondAttribute="bottom" constant="34" id="za1-O3-bWF"/>
+                <constraint firstItem="tTQ-e8-R48" firstAttribute="top" secondItem="Nfx-lz-QFO" secondAttribute="bottom" constant="5" id="yeK-Ii-V4J"/>
                 <constraint firstItem="Nfx-lz-QFO" firstAttribute="leading" secondItem="D4j-qV-Lih" secondAttribute="trailing" constant="8" id="zp9-s7-4Rd"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

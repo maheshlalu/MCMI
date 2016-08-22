@@ -613,6 +613,13 @@ class CXDBSettings: NSObject {
         return attachements
     }
 
+    static func getPublicUrlForArticleSharing(produkt:CX_Products) -> NSString{
+    let json :NSDictionary = (CXConstant.sharedInstance.convertStringToDictionary(produkt.json!))
+        let publicUrl: NSString = json.valueForKey("publicURL") as! NSString
+        print("publicUrl:\(publicUrl)")
+        return publicUrl
+        
+    }
     // Stores
     
     static func getStoreJSON(mallID: String) -> NSDictionary {

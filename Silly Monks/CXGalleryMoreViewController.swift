@@ -13,6 +13,7 @@ import CoreLocation
 import LocationManager
 
 class CXGalleryMoreViewController: UIViewController,UICollectionViewDataSource, UICollectionViewDelegate {
+    
     var galleryCollectionView: UICollectionView!
     var spinner:DTIActivityIndicatorView!// = DTIActivityIndicatorView()
     var activityIndicatorView: DTIActivityIndicatorView!
@@ -59,9 +60,9 @@ class CXGalleryMoreViewController: UIViewController,UICollectionViewDataSource, 
         self.navigationController?.navigationBar.translucent = false;
         self.navigationController?.navigationBar.barTintColor = UIColor.navBarColor()
         
-        let lImage = UIImage(named: "smlogo.png") as UIImage?
+        let lImage = UIImage(named: "left_aarow.png") as UIImage?
         let button = UIButton (type: UIButtonType.Custom) as UIButton
-        button.frame = CGRectMake(0, 0, 50, 50)
+        button.frame = CGRectMake(0, 0, 40, 40)
         button.setImage(lImage, forState: .Normal)
         button.addTarget(self, action: #selector(CXGalleryViewController.backAction), forControlEvents: .TouchUpInside)
         self.navigationItem.leftBarButtonItem = UIBarButtonItem.init(customView: button)
@@ -70,7 +71,7 @@ class CXGalleryMoreViewController: UIViewController,UICollectionViewDataSource, 
         tLabel.frame = CGRectMake(0, 0, 120, 40);
         tLabel.backgroundColor = UIColor.clearColor()
         tLabel.font = UIFont.init(name: "Roboto-Bold", size: 18)
-        tLabel.text = "Silly Monks"
+        tLabel.text = "Gallery"
         tLabel.textAlignment = NSTextAlignment.Center
         tLabel.textColor = UIColor.whiteColor()
         self.navigationItem.titleView = tLabel
@@ -101,7 +102,7 @@ class CXGalleryMoreViewController: UIViewController,UICollectionViewDataSource, 
         self.galleryCollectionView.alwaysBounceVertical = true
         
         self.galleryCollectionView.backgroundColor = UIColor.clearColor()
-        self.galleryCollectionView.registerClass(CXGalleryCollectionViewCell.self, forCellWithReuseIdentifier: "GalleryCellIdentifier")
+        self.galleryCollectionView.registerClass(CXGalleryMoreCollectionViewCell.self, forCellWithReuseIdentifier: "GalleryCellIdentifier")
         self.view.addSubview(self.galleryCollectionView)
         
         self.activityIndicatorView.stopActivity()
@@ -132,9 +133,9 @@ class CXGalleryMoreViewController: UIViewController,UICollectionViewDataSource, 
     func collectionView(collectionView: UICollectionView,
                         cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let identifier = "GalleryCellIdentifier"
-        let cell: CXGalleryCollectionViewCell! = collectionView.mp_dequeueReusableCellWithReuseIdentifier(identifier, forIndexPath: indexPath) as?CXGalleryCollectionViewCell
+        let cell: CXGalleryMoreCollectionViewCell! = collectionView.mp_dequeueReusableCellWithReuseIdentifier(identifier, forIndexPath: indexPath) as? CXGalleryMoreCollectionViewCell
         if cell == nil {
-            collectionView.registerNib(UINib(nibName: "CXGalleryCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: identifier)
+            collectionView.registerNib(UINib(nibName: "CXGalleryMoreCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: identifier)
         }
         cell.picView.image = nil
         cell.activity.hidden = true
@@ -146,11 +147,13 @@ class CXGalleryMoreViewController: UIViewController,UICollectionViewDataSource, 
                                         placeholderImage: UIImage(named: "smlogo.png"),
                                         options: SDWebImageOptions.RefreshCached,
                                         completed: { (image, error, cacheType, imageURL) -> () in
-                                           //print("Downloaded and set! and Image size \(image?.size)")
+                                            //print("Downloaded and set! and Image size \(image?.size)")
                                             self.imageItemsDict.setValue(image, forKey: String(indexPath.row))
                                             //collectionView.reloadItemsAtIndexPaths([indexPath])
             }
         )
+        let albumName = store.valueForKey("albumName") as? String
+        cell.infoLabel.text = albumName
         return cell
     }
     
@@ -159,6 +162,7 @@ class CXGalleryMoreViewController: UIViewController,UICollectionViewDataSource, 
         let store :NSDictionary = self.stores[indexPath.row] as! NSDictionary
         let galleryView =  CXGalleryViewController.init()
         let albumName = store.valueForKey("albumName") as? String
+        galleryView.headerStr = albumName
         galleryView.stores = CXDBSettings.getGalleryItems(self.galleryStoreJSON, albumName: albumName!)
         self.navigationController?.pushViewController(galleryView, animated: true)
     }
