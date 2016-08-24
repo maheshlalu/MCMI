@@ -139,7 +139,8 @@ class CXSignUpViewController: UIViewController,UITextFieldDelegate,UIScrollViewD
         let signUpUrl = "http://sillymonksapp.com:8081/MobileAPIs/regAndloyaltyAPI?orgId="+orgID+"&userEmailId="+self.emailAddressField.text!+"&dt=DEVICES&firstName="+self.firstNameField.text!.urlEncoding()+"&lastName="+self.lastNameField.text!.urlEncoding()+"&password="+self.passwordField.text!.urlEncoding()
         SMSyncService.sharedInstance.startSyncProcessWithUrl(signUpUrl) { (responseDict) in
             print("Sign up response \(responseDict)")
-            
+            CXDBSettings.sharedInstance.removeTheFavaourites((responseDict.valueForKey("UserId"))as! String!)
+            dispatch_async(dispatch_get_main_queue(), {
             NSUserDefaults.standardUserDefaults().setObject(responseDict.valueForKey("UserId"), forKey: "USER_ID")
             NSUserDefaults.standardUserDefaults().setObject(responseDict.valueForKey("emailId"), forKey: "USER_EMAIL")
             NSUserDefaults.standardUserDefaults().setObject(responseDict.valueForKey("firstName"), forKey: "FIRST_NAME")
@@ -147,7 +148,7 @@ class CXSignUpViewController: UIViewController,UITextFieldDelegate,UIScrollViewD
             NSUserDefaults.standardUserDefaults().setObject(responseDict.valueForKey("gender"), forKey: "GENDER")
             NSUserDefaults.standardUserDefaults().setObject(nil, forKey: "PROFILE_PIC")
             NSUserDefaults.standardUserDefaults().synchronize()
-            
+            })
              let message = responseDict.valueForKey("msg") as? String
             
            let alert = UIAlertController(title: "Silly Monks", message: message, preferredStyle: UIAlertControllerStyle.Alert)
@@ -155,7 +156,7 @@ class CXSignUpViewController: UIViewController,UITextFieldDelegate,UIScrollViewD
                 //self.moveBackView()
                 self.navigationController?.popViewControllerAnimated(true)
             }))
-            
+                
             self.presentViewController(alert, animated: true, completion: nil)
         }
     }

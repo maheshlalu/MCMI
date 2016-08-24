@@ -65,10 +65,8 @@ class SMDetailViewController: UIViewController, FloatRatingViewDelegate,UITableV
         self.addChildViewController(viewPager)
         self.view.addSubview(viewPager.view)
         viewPager.didMoveToParentViewController(self)
-        
-        
+
     }
-    
     func getRelatedProducts() {
         if (self.product.tagValue != nil){
             self.relatedArticles = CXDBSettings.getRelatedProductsWithCategory(self.product.tagValue!, mallID: self.productCategory.mallID!)
@@ -588,14 +586,14 @@ class SMDetailViewController: UIViewController, FloatRatingViewDelegate,UITableV
         
         let alertController = UIAlertController(title: "SillyMonks \n\n\n", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
 
-        self.updateRatingView = self.customizeRatingView(CGRectMake(25,50,(self.view.bounds.size.width)-(alertController.view.bounds.size.width)+30,50))
+        self.updateRatingView = self.customizeRatingView(CGRectMake(5,50,270-5,50))
         self.updateRatingView.editable = true
         self.updateRatingView.tag = 200
         self.updateRatingView.backgroundColor = UIColor.clearColor()
         
         
         rateCountLbl = UILabel.init()
-        rateCountLbl.frame = CGRectMake(25,self.updateRatingView.frame.size.height+40,(self.view.bounds.size.width)-(alertController.view.bounds.size.width)+30,40)
+        rateCountLbl.frame = CGRectMake(10,self.updateRatingView.frame.size.height+40,270-10,40)
         //rateCountLbl.backgroundColor = UIColor.redColor()
         rateCountLbl.textAlignment = .Center
         rateCountLbl.text = self.updateRatingValue
@@ -609,17 +607,17 @@ class SMDetailViewController: UIViewController, FloatRatingViewDelegate,UITableV
             let likeURL = "http://sillymonksapp.com:8081/jobs/saveJobCommentJSON?userId="+userId+"&jobId="+jobId+"&comment=excellent&rating="+self.updateRatingValue+"&commentId="+pId
             SMSyncService.sharedInstance.startSyncProcessWithUrl(likeURL, completion: { (responseDict) in
                 print("\(responseDict)")
+                dispatch_async(dispatch_get_main_queue(), {
                 self.presentWindow?.makeToast(message: "Review Submitted")
+                })
             })
         })
         let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: {(alert: UIAlertAction!) in
-            self.updateRatingValue    = nil
+            self.updateRatingValue = nil
             
         })
-        
         alertController.addAction(submitAction)
         alertController.addAction(cancelAction)
-        
         self.presentViewController(alertController, animated: true, completion:{})
     }
     
@@ -635,26 +633,23 @@ class SMDetailViewController: UIViewController, FloatRatingViewDelegate,UITableV
    
     }
     func floatRatingView(ratingView: FloatRatingView, didUpdate rating: Float) {
-
+        
         if ratingView.tag == 200 {
+            self.updateRatingValue = NSString(format: "%.1f", self.updateRatingView.rating) as String
+            print ("Rating is \(self.updateRatingValue)")
+            self.rateCountLbl.text = self.updateRatingValue
+            
+        }else{
             if NSUserDefaults.standardUserDefaults().valueForKey("USER_ID") == nil{
-                //
-                ratingView.rating = 0
                 let signInView = CXSignInSignUpViewController.init()
                 signInView.orgID = self.product.createdByID
                 self.navigationController?.pushViewController(signInView, animated: true)
             }else{
-                self.updateRatingValue = NSString(format: "%.1f", self.updateRatingView.rating) as String
-                print ("Rating is \(self.updateRatingValue)")
-                self.rateCountLbl.text = self.updateRatingValue
+                submitRating()
+                
             }
-            
-        }else{
-            submitRating()
-            
-            
         }
-  
+        
     }
     
 

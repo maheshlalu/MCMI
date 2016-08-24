@@ -112,29 +112,6 @@ class SMProfileViewController: UIViewController {
     }
 
     @IBAction func logoutAction(sender: AnyObject) {
-        let str:AnyObject! = NSUserDefaults.standardUserDefaults().valueForKey("USER_ID")
-        NSUserDefaults.standardUserDefaults().setObject(str, forKey: "LAST_LOGIN_ID")
-        
-        NSUserDefaults.standardUserDefaults().removeObjectForKey("USER_ID")
-        NSUserDefaults.standardUserDefaults().removeObjectForKey("FIRST_NAME")
-        NSUserDefaults.standardUserDefaults().removeObjectForKey("LAST_NAME")
-        NSUserDefaults.standardUserDefaults().removeObjectForKey("EMAIL")
-        NSUserDefaults.standardUserDefaults().removeObjectForKey("GENDER")
-        NSUserDefaults.standardUserDefaults().removeObjectForKey("PROFILE_PIC")
-        NSUserDefaults.standardUserDefaults().removeObjectForKey("USER_EMAIL")
-        
-        NSUserDefaults.standardUserDefaults().synchronize()
-        
-        
-        
-        // for FB signout
-        FBSDKLoginManager().logOut()
-        
-        // for Google signout
-        GIDSignIn.sharedInstance().signOut()
-        GIDSignIn.sharedInstance().disconnect()
-        
- 
         showAlertView("Are You Sure??", status: 1)
         //self.navigationController?.popToRootViewControllerAnimated(true)
     
@@ -147,6 +124,28 @@ class SMProfileViewController: UIViewController {
         let okAction = UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default) {
             UIAlertAction in
             if status == 1 {
+                let str:AnyObject! = NSUserDefaults.standardUserDefaults().valueForKey("USER_ID")
+                NSUserDefaults.standardUserDefaults().setObject(str, forKey: "LAST_LOGIN_ID")
+                
+                NSUserDefaults.standardUserDefaults().removeObjectForKey("USER_ID")
+                NSUserDefaults.standardUserDefaults().removeObjectForKey("FIRST_NAME")
+                NSUserDefaults.standardUserDefaults().removeObjectForKey("LAST_NAME")
+                NSUserDefaults.standardUserDefaults().removeObjectForKey("EMAIL")
+                NSUserDefaults.standardUserDefaults().removeObjectForKey("GENDER")
+                NSUserDefaults.standardUserDefaults().removeObjectForKey("PROFILE_PIC")
+                NSUserDefaults.standardUserDefaults().removeObjectForKey("USER_EMAIL")
+                
+                NSUserDefaults.standardUserDefaults().synchronize()
+                
+                
+                
+                // for FB signout
+                FBSDKLoginManager().logOut()
+                
+                // for Google signout
+                GIDSignIn.sharedInstance().signOut()
+                GIDSignIn.sharedInstance().disconnect()
+                
                 self.navigationController?.popViewControllerAnimated(true)
             }
         }

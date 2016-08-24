@@ -168,7 +168,7 @@ class CXSignInSignUpViewController: UIViewController,UITextFieldDelegate,FBSDKLo
     func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!) {
         print("Response \(result)")
         FBSDKGraphRequest.init(graphPath: "me", parameters: ["fields":"first_name,email,last_name,gender,picture.type(large),id"]).startWithCompletionHandler { (connection, result, error) -> Void in
-            print ("FB Result is \(result)")
+            //print ("FB Result is \(result)")
             if result != nil {
                 
                 let strFirstName: String = (result.objectForKey("first_name") as? String)!
@@ -204,7 +204,7 @@ class CXSignInSignUpViewController: UIViewController,UITextFieldDelegate,FBSDKLo
         print("Url Encoded string is \(urlString)")
         
         SMSyncService.sharedInstance.startSyncProcessWithUrl(urlString.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!) { (responseDict) in
-            print("Login response \(responseDict)")
+           // print("Login response \(responseDict)")
             let userIdStr:String = (String)(responseDict.valueForKey("UserId"))
             CXDBSettings.sharedInstance.removeTheFavaourites(userIdStr)
             let status: Int = Int(responseDict.valueForKey("status") as! String)!
@@ -299,7 +299,8 @@ class CXSignInSignUpViewController: UIViewController,UITextFieldDelegate,FBSDKLo
         let signInUrl = "http://sillymonksapp.com:8081/MobileAPIs/loginConsumerForOrg?orgId="+orgID+"&email="+self.emailAddressField.text!+"&dt=DEVICES&password="+self.passwordField.text!
         SMSyncService.sharedInstance.startSyncProcessWithUrl(signInUrl) { (responseDict) in
             // print("Login response \(responseDict)")
-            CXDBSettings.sharedInstance.removeTheFavaourites((responseDict.valueForKey("UserId"))as! String!)
+            let userIdStr:String = (String)(responseDict.valueForKey("UserId"))
+            CXDBSettings.sharedInstance.removeTheFavaourites(userIdStr)
             let status: Int = Int(responseDict.valueForKey("status") as! String)!
             
             if status == 1 {
