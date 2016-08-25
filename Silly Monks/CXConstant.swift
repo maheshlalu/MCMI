@@ -117,8 +117,12 @@ class CXConstant: NSObject {
     static let SINGLE_MALL_URL = "http://m.sillymonks.com:8081/Services/getMasters?type=singleMall&mallId=" //3
     static let STORE_URL = "http://52.74.102.199:8081/services/getmasters?type=stores&mallId="
     static let NATIVEADD_UNITI_ID = "4af8f892da924673aa0d9db92b49cc10"
-    
-    
+    static let mopub_interstitial_ad_id = "5d84bf5a4e5c415a923b042dee24bafa"
+    static let mopub_banner_ad_id = "b51640c1ff19442184e783f55e0428c3"
+    static let mopub_medium_ad_id = "6a6b023340914879a2cd52f8169fc98c"
+
+
+    //b51640c1ff19442184e783f55e0428c3
     static let PRODUCT_CATEGORY_URL = "http://52.74.102.199:8081/services/getmasters?type=ProductCategories&mallId="
     
     

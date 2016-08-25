@@ -7,18 +7,30 @@
 //
 
 import UIKit
+import mopub_ios_sdk
 
+import CoreLocation
 class CXImageViewController: UIViewController {
     
     var imagePath: String!
     var picView: UIImageView!
     var activity:DTIActivityIndicatorView!
+    var interstitialAdController:MPInterstitialAdController!
+
     var picture: UIImage!
     var pageIndex : NSInteger = 0
+    var swipeCount : NSInteger = 0
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.smBackgroundColor()
+        print("swipe count \(swipeCount)")
+        if swipeCount == 0{
+           // self.addTheInterstitialCustomAds()
+        }else if swipeCount % 10 == 0 {
+            //self.addTheInterstitialCustomAds()
+        }
         
         self.picView = UIImageView.init(frame: CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height))
         self.picView.userInteractionEnabled = true
@@ -27,7 +39,7 @@ class CXImageViewController: UIViewController {
         
         dispatch_async(dispatch_get_main_queue(), {
             self.activity = DTIActivityIndicatorView.init(frame: CGRectMake(0, 0, 60, 60))
-            self.activity.center = self.picView.center
+            self.activity.center = self.picView.center                                                                               
             self.picView.addSubview(self.activity)
             self.activity.startActivity()
         })
@@ -60,19 +72,19 @@ class CXImageViewController: UIViewController {
     }
     
     func shareAndDownloadBtnChages() {
-        let shareBtn = UIButton.init(frame: CGRectMake(self.view.frame.size.width-80, 10, 30, 30))
+        let shareBtn = UIButton.init(frame: CGRectMake(self.view.frame.size.width-120, 10, 45, 45))
         shareBtn.setImage(UIImage(named:"share_108.png"), forState: UIControlState.Normal)
         shareBtn.addTarget(self, action:#selector(CXImageViewController.shareBtnAction), forControlEvents: UIControlEvents.TouchUpInside)
         //shareBtn.imageView?.contentMode = UIViewContentMode.ScaleAspectFit
         self.picView.addSubview(shareBtn)
         
-        let downlodBtn = UIButton.init(frame: CGRectMake(shareBtn.frame.size.width+shareBtn.frame.origin.x+10, 10, 30, 30))
+        let downlodBtn = UIButton.init(frame: CGRectMake(shareBtn.frame.size.width+shareBtn.frame.origin.x+10, 10, 45, 45))
         downlodBtn.setImage(UIImage(named: "down_icon.png"), forState: UIControlState.Normal)
         downlodBtn.addTarget(self, action: #selector(CXImageViewController.downloadAction), forControlEvents: UIControlEvents.TouchUpInside)
         //downlodBtn.imageView?.contentMode = UIViewContentMode.ScaleAspectFit
         self.picView.addSubview(downlodBtn)
         
-        let backBtn = UIButton.init(frame:CGRectMake(10, 10, 40, 40))
+        let backBtn = UIButton.init(frame:CGRectMake(10, 10, 50, 50))
         backBtn.setImage(UIImage(named: "left_aarow.png"), forState: UIControlState.Normal)
         backBtn.addTarget(self, action: #selector(CXImageViewController.backAction), forControlEvents: UIControlEvents.TouchUpInside)
         self.picView.addSubview(backBtn)
@@ -135,4 +147,24 @@ class CXImageViewController: UIViewController {
     }
     */
 
+    
+    func addTheInterstitialCustomAds(){
+        self.interstitialAdController = MPSampleAppInstanceProvider.sharedProvider().buildMPInterstitialAdControllerWithAdUnitID(CXConstant.mopub_interstitial_ad_id)
+        self.interstitialAdController.delegate = self
+        self.interstitialAdController.loadAd()
+        self.interstitialAdController.showFromViewController(self)
+    }
+    
+    
+    
+}
+
+extension CXImageViewController: MPInterstitialAdControllerDelegate {
+ 
+    
+    func interstitialDidAppear(interstitial: MPInterstitialAdController!) {
+       self.interstitialAdController.showFromViewController(self)
+    }
+    
+    
 }

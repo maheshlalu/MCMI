@@ -8,12 +8,16 @@
 
 import UIKit
 import SDWebImage
+import mopub_ios_sdk
 
+import CoreLocation
 class CXGalleryViewController: UIViewController,UICollectionViewDataSource, UICollectionViewDelegate,CHTCollectionViewDelegateWaterfallLayout {
     
     var galleryCollectionView: UICollectionView!
     var spinner:DTIActivityIndicatorView!// = DTIActivityIndicatorView()
+   var imageViewCntl: CXImageViewController!
     var activityIndicatorView: DTIActivityIndicatorView!
+      var bottomAd: MPAdView!
     let reuseIdentifier = "cell" // also enter this string as the cell identifier in the storyboard
     
     var stores : NSMutableArray!
@@ -23,7 +27,9 @@ class CXGalleryViewController: UIViewController,UICollectionViewDataSource, UICo
     
     var galleryImages: [UIImage] = []
     var imagesCache: NSCache = NSCache()
-    
+    var leftAndRightCount : NSInteger = 0
+    var interstitialAdController:MPInterstitialAdController!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.smBackgroundColor()
@@ -38,6 +44,7 @@ class CXGalleryViewController: UIViewController,UICollectionViewDataSource, UICo
         }
         
         self.customizeHeaderView()
+       
         self.performSelector(#selector(CXGalleryViewController.threadAction), withObject: self, afterDelay: 1.0, inModes: [NSDefaultRunLoopMode])
         // Do any additional setup after loading the view.
     }
@@ -78,7 +85,7 @@ class CXGalleryViewController: UIViewController,UICollectionViewDataSource, UICo
         layout.minimumColumnSpacing = 10.0
         layout.minimumInteritemSpacing = 10.0
         
-        self.galleryCollectionView = UICollectionView.init(frame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height), collectionViewLayout: layout)
+        self.galleryCollectionView = UICollectionView.init(frame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-50), collectionViewLayout: layout)
         self.galleryCollectionView.autoresizingMask = [UIViewAutoresizing.FlexibleHeight, UIViewAutoresizing.FlexibleWidth]
         
         self.galleryCollectionView.delegate = self
@@ -91,7 +98,19 @@ class CXGalleryViewController: UIViewController,UICollectionViewDataSource, UICo
         self.view.addSubview(self.galleryCollectionView)
         
          self.activityIndicatorView.stopActivity()
+         self.addTheBottomAdd()
     }
+    //MARK:Add The bottom add
+    func addTheBottomAdd(){
+        let bottomAddView : UIView = UIView(frame:CGRectMake(0, self.galleryCollectionView.frame.size.height+5, self.galleryCollectionView.frame.size.width, 49))
+        //bottomAddView.backgroundColor = UIColor.greenColor()
+        self.bottomAd = MPSampleAppInstanceProvider.sharedProvider().buildMPAdViewWithAdUnitID(CXConstant.mopub_banner_ad_id, size: CGSizeMake(self.view.frame.size.width, 49))
+        self.bottomAd.frame =  CGRectMake(70, 0, MOPUB_MEDIUM_RECT_SIZE.width, 50)
+        bottomAddView.addSubview(self.bottomAd)
+        self.bottomAd.loadAd()
+       self.view.addSubview(bottomAddView)
+    }
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -194,7 +213,14 @@ extension CXGalleryViewController : UIPageViewControllerDataSource {
     
     func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController? {
         
+        self.leftAndRightCount += 1
+        if self.leftAndRightCount  == 10 {
+            self.leftAndRightCount = 0
+            self.addTheInterstitialCustomAds()
+        }
         let imageControl : CXImageViewController = (viewController as? CXImageViewController)!
+          self.imageViewCntl =  imageControl
+        //imageControl.swipeCount = self.leftAndRightCount
         if(imageControl.pageIndex == 0){
         return nil
         }
@@ -204,14 +230,49 @@ extension CXGalleryViewController : UIPageViewControllerDataSource {
     
     func pageViewController(pageViewController: UIPageViewController, viewControllerAfterViewController viewController: UIViewController) -> UIViewController? {
      
+        self.leftAndRightCount += 1
+        if self.leftAndRightCount  == 10 {
+            self.leftAndRightCount = 0
+            self.addTheInterstitialCustomAds()
+        }
+        
         let imageControl : CXImageViewController = (viewController as? CXImageViewController)!
+        self.imageViewCntl =  imageControl
+        //imageControl.swipeCount = self.leftAndRightCount
         if(imageControl.pageIndex < (self.viewControllers?.count)!-1){
             return self.viewControllers![imageControl.pageIndex + 1] as! UIViewController
         }
         return nil
         
     }
+    
+    func addTheInterstitialCustomAds(){
+        self.interstitialAdController = MPSampleAppInstanceProvider.sharedProvider().buildMPInterstitialAdControllerWithAdUnitID(CXConstant.mopub_interstitial_ad_id)
+        self.interstitialAdController.delegate = self
+        self.interstitialAdController.loadAd()
+        self.interstitialAdController.showFromViewController(self.imageViewCntl)
+        
+       // if let dataaDelegate = UIApplication.sharedApplication().delegate
+        
+       //delegate.window!!.rootViewController
+        
+    }
 }
+
+
+
+extension CXGalleryViewController: MPInterstitialAdControllerDelegate {
+    
+    
+    func interstitialDidAppear(interstitial: MPInterstitialAdController!) {
+        self.interstitialAdController.showFromViewController(self.imageViewCntl)
+    }
+    
+    //[[[[UIApplication sharedApplication] delegate] window] rootViewController]
+    
+}
+
+
 
 
 //http://stackoverflow.com/questions/25305945/use-of-undeclared-type-viewcontroller-when-unit-testing-my-own-viewcontroller

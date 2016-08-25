@@ -201,10 +201,10 @@ class CXGalleryMoreViewController: UIViewController,UICollectionViewDataSource, 
         // TODO: Calculate the size of your ad cell given a maximum width
         settings.viewSizeHandler = {(maxWidth: CGFloat) -> CGSize in
             
-            let reqImgWidth = (maxWidth-30)/2
-            let ratioValue = 480/reqImgWidth
-            let reqImgHeight = 800/ratioValue
-            return CGSizeMake(UIScreen.mainScreen().bounds.width, 200);
+            //let reqImgWidth = (maxWidth-30)/2
+           // let ratioValue = 480/reqImgWidth
+           // let reqImgHeight = 800/ratioValue
+            return CGSizeMake(UIScreen.mainScreen().bounds.width, 250);
 
             //return CGSizeMake(reqImgWidth, reqImgHeight)
             //return CGSizeMake(maxWidth, 250);
@@ -217,7 +217,7 @@ class CXGalleryMoreViewController: UIViewController,UICollectionViewDataSource, 
         
         let addPostion : MPClientAdPositioning = MPClientAdPositioning()
         addPostion.addFixedIndexPath(NSIndexPath(forRow: 0, inSection: 0))
-        addPostion.enableRepeatingPositionsWithInterval(7)
+        addPostion.enableRepeatingPositionsWithInterval(9)
         
         self.placer = MPCollectionViewAdPlacer(collectionView: self.galleryCollectionView, viewController: self, adPositioning: addPostion, rendererConfigurations: [config])
         
