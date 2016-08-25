@@ -15,23 +15,32 @@ class UserFavoritesViewController: UIViewController,UITableViewDataSource,UITabl
     var imagesArray = ["eega.jpg","Dikkulu_Choodaku_Ramayya.jpg","Oohalu Gusagusalade.jpg","paatshala.jpeg"]
     
     var detailArray = ["fgjyfguyweguyfgefgjdvkjfdhvkdhjhfiji","jwqgiuyEIYETRFGUDUDYFHGIERUTOUUROUT","hjfdurhyfuiehrfijvmnckjhfdhflsdjsl"]
-
+    
     @IBOutlet weak var favoritesTableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
         
         favoritesTableView.delegate = self;
         favoritesTableView.dataSource = self;
-        self.namesArray.removeAll()
-        
-        // Do any additional setup after loading the view.
-    }
+        favoritesTableView.separatorStyle = .None
 
+    }
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
         
+        return 1
+    }
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return namesArray.count
+    }
+    
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat
+    {
+        
+        return 15.0
+        
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell{
@@ -43,47 +52,36 @@ class UserFavoritesViewController: UIViewController,UITableViewDataSource,UITabl
         if cell == nil {
             tableView.registerNib(UINib(nibName: "SMFavoritesCell", bundle: nil), forCellReuseIdentifier: identifier)
             cell = tableView.dequeueReusableCellWithIdentifier(identifier) as? SMFavoritesCell
-            
-            let separatorLineView: UIView = UIView(frame: CGRectMake(0, 0, self.favoritesTableView.frame.size.width, 40))
-            /// change size as you need.
-            separatorLineView.backgroundColor = UIColor.redColor()
-            // you can also put image here
-            cell.contentView.addSubview(separatorLineView)
-            
         }
-        cell.titleLabel.text = self.namesArray[indexPath.row]
-        cell?.imageView?.image = UIImage.init(named: imagesArray[indexPath.row])
+        cell.titleLabel.text = self.namesArray[indexPath.section]
+        cell?.imageView?.image = UIImage.init(named: imagesArray[indexPath.section])
         print(imagesArray.count)
-        
-       // cell.titleLabel.text = UIFont(name: ".SFUIText-Regular", size: 11)!
         
         return cell
         
     }
     
-       func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
     {
-        return 100.0;//Choose your custom row height
+        return 80.0;//Choose your custom row height
     }
 
-
+    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return true
+    }
     
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == UITableViewCellEditingStyle.Delete{
+            //delete functionality
+        
+        }
+    }
     
-
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+    
+    
 }

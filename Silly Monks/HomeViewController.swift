@@ -157,9 +157,7 @@ class HomeViewController: UIViewController  ,UITableViewDelegate,UITableViewData
         self.profileBtn = self.createButton(CGRectMake(10, signFrame.size.height+signFrame.origin.y+25, self.sidePanelView.frame.size.width-60, 50), title: "SIGN IN", tag: 1, bgColor: UIColor.clearColor())
         self.profileBtn.addTarget(self, action: #selector(HomeViewController.signInAction), forControlEvents: UIControlEvents.TouchUpInside)
         self.sidePanelView.addSubview(self.profileBtn)
-        
-        
-    
+
         self.profileDPImageView = UIImageView.init(frame: CGRectMake(self.profileBtn.frame.size.width-15,signFrame.size.height+signFrame.origin.y+25,60,60))
         self.profileDPImageView .image = UIImage(named: "profile_placeholder.png")
         self.profileDPImageView .layer.cornerRadius = self.profileDPImageView.frame.size.width / 2

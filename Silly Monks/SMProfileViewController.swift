@@ -131,22 +131,29 @@ class SMProfileViewController: UIViewController {
         // for Google signout
         GIDSignIn.sharedInstance().signOut()
         GIDSignIn.sharedInstance().disconnect()
-        
-        self.navigationController?.popToRootViewControllerAnimated(true)
+        showAlertView("Are You Sure", status: 1)
+        //self.navigationController?.popToRootViewControllerAnimated(true)
     
     }
     
     
     func showAlertView(message:String, status:Int) {
-    let alert = UIAlertController(title: "Silly Monks", message: message, preferredStyle: UIAlertControllerStyle.Alert)
-    //alert.addAction(UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default, handler: nil))
-    let okAction = UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default) {
-    UIAlertAction in
-    if status == 1 {
-    //self.navigationController?.popViewControllerAnimated(true)
-    }
-    }
-    alert.addAction(okAction)
-    //self.presentViewController(alert, animated: true, completion: nil)
+        let alert = UIAlertController(title: "Silly Monks", message: "Are you sure??", preferredStyle: UIAlertControllerStyle.Alert)
+        //alert.addAction(UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default, handler: nil))
+        let okAction = UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default) {
+            UIAlertAction in
+            if status == 1 {
+                self.navigationController?.popViewControllerAnimated(true)
+            }
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default) {
+            UIAlertAction in
+            if status == 1 {
+                
+            }
+        }
+        alert.addAction(okAction)
+        alert.addAction(cancelAction)
+        self.presentViewController(alert, animated: true, completion: nil)
     }
 }

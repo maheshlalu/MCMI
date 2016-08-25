@@ -170,35 +170,59 @@ class CXSignInSignUpViewController: UIViewController,UITextFieldDelegate,FBSDKLo
         FBSDKGraphRequest.init(graphPath: "me", parameters: ["fields":"first_name,email,last_name,gender,picture.type(large),id"]).startWithCompletionHandler { (connection, result, error) -> Void in
             print ("FB Result is \(result)")
             if result != nil {
+                
                 let strFirstName: String = (result.objectForKey("first_name") as? String)!
                 let strLastName: String = (result.objectForKey("last_name") as? String)!
-                let userID: String = (result.objectForKey("id") as? String)!
                 let gender: String = (result.objectForKey("gender") as? String)!
                 let email: String = (result.objectForKey("email") as? String)!
-
-
                 self.profileImageStr = (result.objectForKey("picture")?.objectForKey("data")?.objectForKey("url") as? String)!
-                print("Welcome, \(strFirstName) \(strLastName) \(userID)")
+                print("Welcome,\(email) \(strFirstName) \(strLastName) \(gender) \(self.profileImageStr)")
                 
-                NSUserDefaults.standardUserDefaults().setObject(userID, forKey: "USER_ID")
-                NSUserDefaults.standardUserDefaults().setObject(email, forKey: "USER_EMAIL")
-                NSUserDefaults.standardUserDefaults().setObject(strFirstName, forKey: "FIRST_NAME")
-                NSUserDefaults.standardUserDefaults().setObject(strLastName, forKey: "LAST_NAME")
-                NSUserDefaults.standardUserDefaults().setObject(gender, forKey: "GENDER")
+                self.registeringWithSillyMonks(email, firstname: strFirstName, lastname: strLastName, gender: gender, profilePic: self.profileImageStr)
                 NSUserDefaults.standardUserDefaults().setObject(self.profileImageStr, forKey: "PROFILE_PIC")
                 NSUserDefaults.standardUserDefaults().synchronize()
+
                 self.showAlertView("Login successfully.", status: 1)
             }
                 NSNotificationCenter.defaultCenter().postNotificationName("UpdateProfilePic", object: nil)
         }
+        
     }
     
+    func registeringWithSillyMonks(email:String, firstname:String, lastname:String, gender:String, profilePic:String){
+        
+        var urlString : String = "http://sillymonksapp.com:8081/MobileAPIs/regAndloyaltyAPI?"
+        urlString = urlString.stringByAppendingString("orgId="+self.orgID)
+        urlString = urlString.stringByAppendingString("&userEmailId="+email)
+        urlString = urlString.stringByAppendingString("&dt=DEVICES ")
+        urlString = urlString.stringByAppendingString("&firstName="+firstname)
+        urlString = urlString.stringByAppendingString("&lastName="+lastname)
+        urlString = urlString.stringByAppendingString("&gender="+gender)
+        urlString = urlString.stringByAppendingString("&filePath="+profilePic)
+        urlString = urlString.stringByAppendingString("&isLoginWithFB=true")
+        
+        print("Url Encoded string is \(urlString)")
+        
+        SMSyncService.sharedInstance.startSyncProcessWithUrl(urlString.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!) { (responseDict) in
+            print("Login response \(responseDict)")
+            let status: Int = Int(responseDict.valueForKey("status") as! String)!
+            if status == 1 {
+                NSUserDefaults.standardUserDefaults().setObject(responseDict.valueForKey("UserId"), forKey: "USER_ID")
+                NSUserDefaults.standardUserDefaults().setObject(responseDict.valueForKey("emailId"), forKey: "USER_EMAIL")
+                NSUserDefaults.standardUserDefaults().setObject(responseDict.valueForKey("firstName"), forKey: "FIRST_NAME")
+                NSUserDefaults.standardUserDefaults().setObject(responseDict.valueForKey("lastName"), forKey: "LAST_NAME")
+                NSUserDefaults.standardUserDefaults().setObject(responseDict.valueForKey("gender"), forKey: "GENDER")
+            } else {
+                self.showAlertView("Please enter valid credentials", status: status)
+            }
+        }
+    }
     
     func loginButtonDidLogOut(loginButton: FBSDKLoginButton!) {
         let loginManager: FBSDKLoginManager = FBSDKLoginManager()
         loginManager.logOut()
     }
-    
+
     
     // Google
     
@@ -232,8 +256,22 @@ class CXSignInSignUpViewController: UIViewController,UITextFieldDelegate,FBSDKLo
     }
     
     func googleSignUp(notification: NSNotification){
-          self.showAlertView("Login successfully", status: 1)
-        //Take Action on Notification
+        
+        let dic = notification.object as! [String:AnyObject]
+        let orgID:String! = CXConstant.MALL_ID
+        let firstName = dic["given_name"] as! String
+        let lastName = dic["family_name"] as! String
+        let gender = dic["gender"] as! String
+        let  profilePic = dic["picture"] as! String
+        let  email = dic["email"] as! String
+        
+        print("\(email)\(firstName)\(lastName)\(gender)\(profilePic)\(orgID)")
+        NSUserDefaults.standardUserDefaults().setObject(profilePic, forKey: "PROFILE_PIC")
+        NSUserDefaults.standardUserDefaults().synchronize()
+
+        self.registeringWithSillyMonks(email,firstname:firstName, lastname: lastName, gender: gender, profilePic:profilePic)
+        self.showAlertView("Login successfully.", status: 1)
+
     }
     
     

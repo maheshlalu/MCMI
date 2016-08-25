@@ -34,6 +34,7 @@ class CXProfilePageView: UIViewController, EVTabBar  {
     func customizeHeaderView() {
         self.navigationController?.navigationBar.translucent = false;
         self.navigationController?.navigationBar.barTintColor = UIColor.navBarColor()
+        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         
         let lImage = UIImage(named: "left_aarow.png") as UIImage?
         let button = UIButton (type: UIButtonType.Custom) as UIButton

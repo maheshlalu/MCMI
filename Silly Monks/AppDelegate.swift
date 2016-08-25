@@ -130,22 +130,39 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate{
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                 do {
                     let userData = try NSJSONSerialization.JSONObjectWithData(data!, options:[]) as? [String:AnyObject]
-
+                    
+                    let orgID:String! = CXConstant.MALL_ID
                     firstName = userData!["given_name"] as! String
                     lastName = userData!["family_name"] as! String
                     gender = userData!["gender"] as! String
                     profilePic = userData!["picture"] as! String
                     email = userData!["email"] as! String
-   
-                    NSUserDefaults.standardUserDefaults().setObject(userId, forKey: "USER_ID")
-                    NSUserDefaults.standardUserDefaults().setObject(firstName, forKey: "FIRST_NAME")
-                    NSUserDefaults.standardUserDefaults().setObject(lastName, forKey: "LAST_NAME")
-                    NSUserDefaults.standardUserDefaults().setObject(gender, forKey: "GENDER")
-                    NSUserDefaults.standardUserDefaults().setObject(profilePic, forKey: "PROFILE_PIC")
-                    NSUserDefaults.standardUserDefaults().setObject(email, forKey: "USER_EMAIL")
-                    NSUserDefaults.standardUserDefaults().synchronize()
                     
-                    NSNotificationCenter.defaultCenter().postNotificationName("GoogleSignUp", object: nil)
+                    print("\(email)\(firstName)\(lastName)\(gender)\(profilePic)\(orgID)")
+                    
+                    
+//                    var urlString : String = "http://sillymonksapp.com:8081/MobileAPIs/regAndloyaltyAPI?"
+//                    urlString = urlString.stringByAppendingString("orgId="+orgID)
+//                    urlString = urlString.stringByAppendingString("&userEmailId="+email)
+//                    urlString = urlString.stringByAppendingString("&dt=DEVICES ")
+//                    urlString = urlString.stringByAppendingString("&firstName="+firstName)
+//                    urlString = urlString.stringByAppendingString("&lastName="+lastName)
+//                    urlString = urlString.stringByAppendingString("&gender="+gender)
+//                    urlString = urlString.stringByAppendingString("&filePath="+profilePic)
+//                    urlString = urlString.stringByAppendingString("&isLoginWithFB=true")
+//                    
+//                    print("Url Encoded string is \(urlString)")
+                    
+                    
+//                    NSUserDefaults.standardUserDefaults().setObject(userId, forKey: "USER_ID")
+//                    NSUserDefaults.standardUserDefaults().setObject(firstName, forKey: "FIRST_NAME")
+//                    NSUserDefaults.standardUserDefaults().setObject(lastName, forKey: "LAST_NAME")
+//                    NSUserDefaults.standardUserDefaults().setObject(gender, forKey: "GENDER")
+//                    NSUserDefaults.standardUserDefaults().setObject(profilePic, forKey: "PROFILE_PIC")
+//                    NSUserDefaults.standardUserDefaults().setObject(email, forKey: "USER_EMAIL")
+//                    NSUserDefaults.standardUserDefaults().synchronize()
+                    
+                    NSNotificationCenter.defaultCenter().postNotificationName("GoogleSignUp", object: userData)
                     
                 } catch {
                     NSLog("Account Information could not be loaded")
@@ -160,7 +177,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate{
             
         }
     }
-    
+    /*if result != nil {
+     let strFirstName: String = (result.objectForKey("first_name") as? String)!
+     let strLastName: String = (result.objectForKey("last_name") as? String)!
+     let gender: String = (result.objectForKey("gender") as? String)!
+     let email: String = (result.objectForKey("email") as? String)!
+     self.profileImageStr = (result.objectForKey("picture")?.objectForKey("data")?.objectForKey("url") as? String)!
+     print("Welcome,\(email) \(strFirstName) \(strLastName) \(gender) \(self.profileImageStr)")
+     
+     var urlString : String = "http://sillymonksapp.com:8081/MobileAPIs/regAndloyaltyAPI?"
+     urlString = urlString.stringByAppendingString("orgId="+self.orgID)
+     urlString = urlString.stringByAppendingString("&userEmailId="+email)
+     urlString = urlString.stringByAppendingString("&dt=DEVICES ")
+     urlString = urlString.stringByAppendingString("&firstName="+strFirstName)
+     urlString = urlString.stringByAppendingString("&lastName="+strLastName)
+     urlString = urlString.stringByAppendingString("&gender="+gender)
+     urlString = urlString.stringByAppendingString("&filePath="+self.profileImageStr)
+     urlString = urlString.stringByAppendingString("&isLoginWithFB=true")
+     
+     print("Url Encoded string is \(urlString)")
+*/
     
     
     func signIn(signIn: GIDSignIn!, didDisconnectWithUser user:GIDGoogleUser!,

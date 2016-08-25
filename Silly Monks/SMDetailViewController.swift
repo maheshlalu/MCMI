@@ -9,6 +9,7 @@
 import UIKit
 import AVFoundation
 import SDWebImage
+import mopub_ios_sdk
 
 
 class SMDetailViewController: UIViewController, FloatRatingViewDelegate,UITableViewDelegate,UITableViewDataSource {
@@ -26,6 +27,11 @@ class SMDetailViewController: UIViewController, FloatRatingViewDelegate,UITableV
     var likeButton: UIButton!
     var ratingValue: String!
     var avgRatingLabel:UILabel!
+    var presentWindow:UIWindow!
+    var likeLbl:UILabel!
+    var likeLblCount:UILabel!
+    var noOfLikes:Int!
+    var mediumAd: MPAdView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,6 +42,22 @@ class SMDetailViewController: UIViewController, FloatRatingViewDelegate,UITableV
          self.relatedArticles = NSMutableArray()
         self.customizeHeaderView()
         self.customizeMainView()
+        self.getLikes()
+        self.likeLblCount.hidden = true
+       /* if (NSUserDefaults.standardUserDefaults().valueForKey("NO_LIKES") != nil){
+            dispatch_async(dispatch_get_main_queue(), {
+                self.likeLbl.frame = CGRectMake(self.avgRatingLabel.frame.size.width+self.avgRatingLabel.frame.origin.x-30, 2, self.avgRatingLabel.frame.size.width, 20)
+                self.likeLbl.text = "Likes:"
+                
+                self.noOfLikes = NSUserDefaults.standardUserDefaults().valueForKey("NO_UN_LIKES") as! Int!
+                print("\(self.noOfLikes)")
+                self.likeLblCount.frame = CGRectMake((self.likeLbl.frame.size.width)-6, 2, self.avgRatingLabel.frame.size.width, 20)
+                self.likeLblCount.text = String(self.noOfLikes)
+                self.likeLblCount.hidden = false
+                
+                self.presentWindow?.makeToast(message: "Added to Favorites")
+            })
+        }*/
         //self.addPager()
     }
     
@@ -56,8 +78,6 @@ class SMDetailViewController: UIViewController, FloatRatingViewDelegate,UITableV
         
         
     }
-    
-    
     
     func getRelatedProducts() {
         if (self.product.tagValue != nil){
@@ -187,8 +207,8 @@ class SMDetailViewController: UIViewController, FloatRatingViewDelegate,UITableV
            // tableHeight = (CGFloat(cellls)*cellHeight)+(2*CXConstant.RELATED_ARTICLES_CELL_HEIGHT)-50
         } else {
             
-            tableHeight = CXConstant.RELATED_ARTICLES_CELL_HEIGHT
-            
+            //tableHeight = CXConstant.RELATED_ARTICLES_CELL_HEIGHT
+            tableHeight = CXConstant.RELATED_ARTICLES_CELL_HEIGHT + MOPUB_MEDIUM_RECT_SIZE.height
             //tableHeight = (CGFloat(cellls)*cellHeight)+CXConstant.RELATED_ARTICLES_CELL_HEIGHT-50
         }
 
@@ -222,25 +242,36 @@ class SMDetailViewController: UIViewController, FloatRatingViewDelegate,UITableV
         let rView: UIView = UIView.init()
         rView.backgroundColor = UIColor.whiteColor()
         rView.frame = vFrame
-        
+        let str = Float(self.parseProductDescription(self.getProductInfo(product, input: "overallRating")))
+        self.ratingValue = String(format: "%.01f", str!)
         self.avgRatingLabel = UILabel.init()
         self.avgRatingLabel.frame = CGRectMake(2, 2, (rView.frame.size.width-4)/2, 20)
         self.avgRatingLabel.font = UIFont(name:"Roboto-Regular", size:13)
-        self.avgRatingLabel.text = "Avg.user ratings:0.0/5"
+        self.avgRatingLabel.text = "Avg.user ratings:\(ratingValue)/5"
         self.avgRatingLabel.textAlignment = NSTextAlignment.Left
         self.avgRatingLabel.textColor = UIColor.grayColor()
         rView.addSubview(self.avgRatingLabel)
         
-        let likeLbl : UILabel = UILabel.init()
+        likeLbl = UILabel.init()
         likeLbl.frame = CGRectMake(self.avgRatingLabel.frame.size.width+self.avgRatingLabel.frame.origin.x, 2, self.avgRatingLabel.frame.size.width, 20)
         likeLbl.font = UIFont(name:"Roboto-Regular", size:13)
         likeLbl.text = "Like"
         likeLbl.textAlignment = NSTextAlignment.Right
         likeLbl.textColor = UIColor.grayColor()
         rView.addSubview(likeLbl)
+        
+        likeLblCount = UILabel.init()
+        likeLblCount.frame = CGRectMake((likeLbl.frame.size.width)-6, 2, self.avgRatingLabel.frame.size.width, 20)
+        likeLblCount.font = UIFont(name:"Roboto-Regular", size:13)
+        //likeLblCount.text = "100"
+        likeLblCount.textAlignment = NSTextAlignment.Right
+        likeLblCount.textColor = UIColor.grayColor()
+        rView.addSubview(likeLblCount)
 
         self.floatRatingView = self.customizeRatingView(CGRectMake(2, self.avgRatingLabel.frame.size.height+self.avgRatingLabel.frame.origin.y, self.avgRatingLabel.frame.size.width, 30))
         self.floatRatingView.backgroundColor = UIColor.whiteColor()
+        self.ratingValue = self.parseProductDescription(self.getProductInfo(product, input: "overallRating"))
+        self.floatRatingView.rating =  Float(self.ratingValue)!
         rView.addSubview(self.floatRatingView)
         
         let btnWidth: CGFloat = 30
@@ -391,20 +422,142 @@ class SMDetailViewController: UIViewController, FloatRatingViewDelegate,UITableV
         self.presentViewController(activityViewController, animated: true, completion: nil)
         
     }
+    
+    func getLikes(){
+       
+    }
+    
+    
+    
     func likeAction(likeBtn:UIButton) {
         likeBtn.selected = !likeBtn.selected
         let jobId = self.getJobID("jobTypeId")
-        if likeBtn.selected {
-            let likeURL = "http://sillymonksapp.com:8081/Services/saveOrUpdateSocialActivity?orgId=3&userId="+""+"&jobId="+jobId+"&noOfLikes="+"1"
+        //let status: Int = Int(responseDict.valueForKey("status") as! String)!
+        let userId = (String)(NSUserDefaults.standardUserDefaults().valueForKey("USER_ID") as! NSNumber!)
+        if userId == "nil"{
+            let orgId:String = CXConstant.MALL_ID
+            let jobId = self.getJobID("jobTypeId")
+            //http://52.74.102.199:8081/Services/saveOrUpdateSocialActivity?orgId=3&userId=3&jobId=1085&noOfLikes=0
+            let likeURL = "http://52.74.102.199:8081/Services/saveOrUpdateSocialActivity?orgId="+orgId+"&userId=3&jobId="+jobId+"&noOfLikes=0"
+            print("\(likeURL)")
             SMSyncService.sharedInstance.startSyncProcessWithUrl(likeURL, completion: { (responseDict) in
+                print("\(responseDict)")
+                NSUserDefaults.standardUserDefaults().setObject(responseDict.valueForKey("noOfLikes"), forKey: "NO_LIKES")
+                NSUserDefaults.standardUserDefaults().synchronize()
+            
+             dispatch_async(dispatch_get_main_queue(), {
+            if likeBtn.selected {
+                self.likeLbl.frame = CGRectMake(self.avgRatingLabel.frame.size.width+self.avgRatingLabel.frame.origin.x-30, 2, self.avgRatingLabel.frame.size.width, 20)
+                self.likeLbl.text = "Likes:"
+                
+                self.noOfLikes = NSUserDefaults.standardUserDefaults().valueForKey("NO_LIKES") as! Int!
+                print("\(self.noOfLikes)")
+                self.likeLblCount.frame = CGRectMake((self.likeLbl.frame.size.width)-6, 2, self.avgRatingLabel.frame.size.width, 20)
+                self.likeLblCount.text = String(self.noOfLikes + 1)
+                self.likeLblCount.hidden = false
+                self.presentWindow?.makeToast(message: "Added to likes")
+                
+            } else {
+                
+                self.likeLbl.frame = CGRectMake(self.avgRatingLabel.frame.size.width+self.avgRatingLabel.frame.origin.x-30, 2, self.avgRatingLabel.frame.size.width, 20)
+                self.likeLbl.text = "Likes:"
+                print("\(self.noOfLikes)")
+                self.likeLblCount.frame = CGRectMake((self.likeLbl.frame.size.width)-6, 2, self.avgRatingLabel.frame.size.width, 20)
+                self.likeLblCount.text = String(self.noOfLikes)
+                self.likeLblCount.hidden = false
+                self.presentWindow?.makeToast(message: "Removed from likes")
+
+            }
+                })
             })
-        } else {
-            let likeURL = "http://sillymonksapp.com:8081/Services/saveOrUpdateSocialActivity?orgId=3&userId="+""+"&jobId="+jobId+"&noOfLikes="+"-1"
-            SMSyncService.sharedInstance.startSyncProcessWithUrl(likeURL, completion: { (responseDict) in
-              //  print(responseDict)
-            })
+        }else{
+            
+            if likeBtn.selected {
+                let likeURL = "http://sillymonksapp.com:8081/Services/saveOrUpdateSocialActivity?orgId=3&userId="+userId+"&jobId="+jobId+"&noOfLikes=1"
+                SMSyncService.sharedInstance.startSyncProcessWithUrl(likeURL, completion: { (responseDict) in
+                    /*
+                     "noOfLikes": 2,
+                     "jobId": "84",
+                     "status": "1",
+                     "noOfDislikes": 0
+                     }*/
+                    NSUserDefaults.standardUserDefaults().setObject(responseDict.valueForKey("noOfLikes"), forKey: "NO_LIKES")
+                    NSUserDefaults.standardUserDefaults().synchronize()
+                    
+                    let status: Int = Int(responseDict.valueForKey("status") as! String)!
+                    if status == 1{
+                         dispatch_async(dispatch_get_main_queue(), {
+                        self.likeLbl.frame = CGRectMake(self.avgRatingLabel.frame.size.width+self.avgRatingLabel.frame.origin.x-30, 2, self.avgRatingLabel.frame.size.width, 20)
+                        self.likeLbl.text = "Likes:"
+                        
+                        self.noOfLikes = NSUserDefaults.standardUserDefaults().valueForKey("NO_LIKES") as! Int!
+                        print("\(self.noOfLikes)")
+                        self.likeLblCount.frame = CGRectMake((self.likeLbl.frame.size.width)-6, 2, self.avgRatingLabel.frame.size.width, 20)
+                        self.likeLblCount.text = String(self.noOfLikes)
+                        self.likeLblCount.hidden = false
+                        
+                        self.presentWindow?.makeToast(message: "Added to Favorites")
+                            self.showInFavorites()
+                        })
+                    }else{
+                        self.showAlertView("User not available!! Please Login", status: 1)
+                    }
+                    
+                })
+                
+            } else {
+                let likeURL = "http://sillymonksapp.com:8081/Services/saveOrUpdateSocialActivity?orgId=3&userId="+userId+"&jobId="+jobId+"&noOfLikes=-1"
+                SMSyncService.sharedInstance.startSyncProcessWithUrl(likeURL, completion: { (responseDict) in
+                    print(responseDict)
+                    NSUserDefaults.standardUserDefaults().setObject(responseDict.valueForKey("noOfLikes"), forKey: "NO_UN_LIKES")
+                    NSUserDefaults.standardUserDefaults().synchronize()
+                    
+                    let status: Int = Int(responseDict.valueForKey("status") as! String)!
+                    if status == 1{
+                         dispatch_async(dispatch_get_main_queue(), {
+                        self.likeLbl.frame = CGRectMake(self.avgRatingLabel.frame.size.width+self.avgRatingLabel.frame.origin.x-30, 2, self.avgRatingLabel.frame.size.width, 20)
+                        self.likeLbl.text = "Likes:"
+                        
+                        self.noOfLikes = NSUserDefaults.standardUserDefaults().valueForKey("NO_UN_LIKES") as! Int!
+                        print("\(self.noOfLikes)")
+                        self.likeLblCount.frame = CGRectMake((self.likeLbl.frame.size.width)-6, 2, self.avgRatingLabel.frame.size.width, 20)
+                        self.likeLblCount.text = String(self.noOfLikes)
+                        self.likeLblCount.hidden = false
+                        
+                        self.presentWindow?.makeToast(message: "Added to Favorites")
+                        })
+                    }else{
+                        self.showAlertView("User not available!! Please Login", status: 1)
+                    }
+
+                })
+            }
         }
     }
+    
+    func showInFavorites(){
+        
+    
+    
+    }
+    
+    func showAlertView(message:String, status:Int) {
+        dispatch_async(dispatch_get_main_queue(), {
+            let alert = UIAlertController(title: "Silly Monks", message: message, preferredStyle: UIAlertControllerStyle.Alert)
+            let okAction = UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default) {
+                UIAlertAction in
+                if status == 1 {
+//                    let profile = CXProfilePageView.init()
+//                    self.navigationController?.pushViewController(profile, animated: true)
+                }else{
+                    
+                }
+            }
+            alert.addAction(okAction)
+            self.presentViewController(alert, animated: true, completion: nil)
+        })
+    }
+    
     func floatRatingView(ratingView: FloatRatingView, isUpdating rating:Float) {
        /* if NSUserDefaults.standardUserDefaults().valueForKey("USER_ID") == nil{
             ratingView.rating = 0
@@ -500,7 +653,28 @@ class SMDetailViewController: UIViewController, FloatRatingViewDelegate,UITableV
         return CXConstant.DETAIL_IMAGE_CELL_HEIGHT*/
     }
     
+    func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let footerView = UIView(frame: CGRectMake(0, 0,  MOPUB_MEDIUM_RECT_SIZE.width, MOPUB_MEDIUM_RECT_SIZE.height))
+        
+        footerView.addSubview(self.designTheMediumAdd())
+        // return self.designTheMediumAdd()
+        return footerView
+    }
     
+    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return MOPUB_MEDIUM_RECT_SIZE.height
+    }
+    
+    
+    //MARK:Medium Adds
+    
+    func designTheMediumAdd() -> MPAdView{
+        //self.detailTableView
+        self.mediumAd = MPSampleAppInstanceProvider.sharedProvider().buildMPAdViewWithAdUnitID(CXConstant.mopub_medium_ad_id, size: CGSizeMake(self.view.frame.size.width, MOPUB_MEDIUM_RECT_SIZE.height))
+        self.mediumAd.frame =  CGRectMake(50, 0, MOPUB_MEDIUM_RECT_SIZE.width, MOPUB_MEDIUM_RECT_SIZE.height)
+        self.mediumAd.loadAd()
+        return self.mediumAd
+    }
     func heightForView(text:String,font:UIFont, width:CGFloat) -> CGFloat{
         let label:UILabel = UILabel(frame: CGRectMake(0, 0, width, CGFloat.max))
         label.numberOfLines = 0
@@ -510,12 +684,6 @@ class SMDetailViewController: UIViewController, FloatRatingViewDelegate,UITableV
         
         label.sizeToFit()
         return label.frame.height
-    }
-    
-    //MARK:Medium Adds 
-    
-    func designTheMediumAdd(){
-        
     }
 }
 

@@ -24,6 +24,9 @@
 		3B5FCD061D4B30970068990A /* SMUserFavoritesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B5FCD021D4B30970068990A /* SMUserFavoritesViewController.xib */; };
 		3B61E3521D6AC12D00B09F8E /* CXPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B61E3501D6AC12D00B09F8E /* CXPageViewController.swift */; };
 		3B61E3531D6AC12D00B09F8E /* CXPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B61E3511D6AC12D00B09F8E /* CXPageViewController.xib */; };
+		433596741D6D8523001477EF /* RatingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 433596721D6D8523001477EF /* RatingViewController.xib */; };
+		433596761D6D970A001477EF /* ShadowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433596751D6D970A001477EF /* ShadowView.swift */; };
+		43414D531D6C17BD00A40E1C /* HRToast+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43414D521D6C17BD00A40E1C /* HRToast+UIView.swift */; };
 		434C3D531D4B702400752805 /* SMFavoritesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434C3D511D4B702400752805 /* SMFavoritesCell.swift */; };
 		434C3D541D4B702400752805 /* SMFavoritesCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 434C3D521D4B702400752805 /* SMFavoritesCell.xib */; };
 		434C3D591D4B7B9C00752805 /* eega.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 434C3D571D4B7B9C00752805 /* eega.jpg */; };
@@ -158,6 +161,9 @@
 		3B5FCD021D4B30970068990A /* SMUserFavoritesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SMUserFavoritesViewController.xib; sourceTree = "<group>"; };
 		3B61E3501D6AC12D00B09F8E /* CXPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CXPageViewController.swift; sourceTree = "<group>"; };
 		3B61E3511D6AC12D00B09F8E /* CXPageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CXPageViewController.xib; sourceTree = "<group>"; };
+		433596721D6D8523001477EF /* RatingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RatingViewController.xib; sourceTree = "<group>"; };
+		433596751D6D970A001477EF /* ShadowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShadowView.swift; sourceTree = "<group>"; };
+		43414D521D6C17BD00A40E1C /* HRToast+UIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HRToast+UIView.swift"; sourceTree = "<group>"; };
 		434C3D511D4B702400752805 /* SMFavoritesCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SMFavoritesCell.swift; sourceTree = "<group>"; };
 		434C3D521D4B702400752805 /* SMFavoritesCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SMFavoritesCell.xib; sourceTree = "<group>"; };
 		434C3D571D4B7B9C00752805 /* eega.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = eega.jpg; sourceTree = "<group>"; };
@@ -550,6 +556,8 @@
 				695E40EE1C9A78F1003466B4 /* Panel_Library */,
 				69F89E371C991F930032F68D /* Resources */,
 				69F89E201C9915150032F68D /* AppDelegate.swift */,
+				433596751D6D970A001477EF /* ShadowView.swift */,
+				43414D521D6C17BD00A40E1C /* HRToast+UIView.swift */,
 				69EFC8101CE8C5D000862AF6 /* CHTCollectionViewWaterfallLayout.swift */,
 				69F89E221C9915150032F68D /* HomeViewController.swift */,
 				69F9D32D1C9C869D00E2A288 /* SMCategoryViewController.swift */,
@@ -557,6 +565,7 @@
 				69714A161C9FB2D800B20EDA /* SMMenuViewController.swift */,
 				69C129A51CA4FF1E00C566DC /* CXBannerView.swift */,
 				697858D71CB627E000AC5784 /* SMDetailViewController.swift */,
+				433596721D6D8523001477EF /* RatingViewController.xib */,
 				435A131F1D6B0155002E9D3B /* CXGalleryMoreCollectionViewCell.swift */,
 				69F03FBF1CBAC18F00A0484D /* CXGalleryViewController.swift */,
 				43F2D8DC1D5C519100179E31 /* CXGalleryMoreViewController.swift */,
@@ -729,6 +738,7 @@
 				697293AD1CC9627400E8BC1D /* favourite_unsel_108.png in Resources */,
 				6909027D1CF9FB3600E19885 /* silly.gif in Resources */,
 				69023AD31C9BC6CF003F8245 /* Roboto-Bold.ttf in Resources */,
+				433596741D6D8523001477EF /* RatingViewController.xib in Resources */,
 				434C3D5F1D4B872F00752805 /* Dikkulu_Choodaku_Ramayya.jpg in Resources */,
 				4354B9171D4F235500A435D2 /* sm_navigation_logo.png in Resources */,
 				69023AD41C9BC6CF003F8245 /* Roboto-Italic.ttf in Resources */,
@@ -924,6 +934,7 @@
 				690533571CA111990094D272 /* DTIAnimProtocol.swift in Sources */,
 				693FB14A1CD874CB00E77CD6 /* CX_SingleMall+CoreDataProperties.swift in Sources */,
 				69714A171C9FB2D800B20EDA /* SMMenuViewController.swift in Sources */,
+				43414D531D6C17BD00A40E1C /* HRToast+UIView.swift in Sources */,
 				12F49DA81CA81F5300B32FC5 /* TableViewCell.swift in Sources */,
 				690533531CA111990094D272 /* CALayer+DTI.swift in Sources */,
 				690A69DA1CB94992001C6903 /* CXDetailCollectionViewCell.swift in Sources */,
@@ -934,6 +945,7 @@
 				69714A151C9FB13A00B20EDA /* SMNavigationController.swift in Sources */,
 				69EFC8111CE8C5D000862AF6 /* CHTCollectionViewWaterfallLayout.swift in Sources */,
 				69F9D32E1C9C869D00E2A288 /* SMCategoryViewController.swift in Sources */,
+				433596761D6D970A001477EF /* ShadowView.swift in Sources */,
 				12F49DAA1CA81F5C00B32FC5 /* CollectionViewItemCell.swift in Sources */,
 				120335F01D61D415000CBE48 /* SHViewPager.m in Sources */,
 				691F4E821CD9CD4900054AA2 /* CX_Stores+CoreDataProperties.swift in Sources */,

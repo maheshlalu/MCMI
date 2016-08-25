@@ -23,6 +23,5 @@ pod 'mopub-ios-sdk'
 pod 'MagicalRecord/Shorthand'
 pod 'EVTopTabBar'
 pod "LocationManager"
-
 end
 

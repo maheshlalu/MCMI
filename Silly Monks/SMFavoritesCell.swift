@@ -13,8 +13,8 @@ class SMFavoritesCell: UITableViewCell {
     @IBOutlet weak var favoritesImageview: UIImageView!
     
     @IBOutlet weak var titleLabel: UILabel!
-    
-    @IBOutlet weak var detailTitleLabel: UILabel!
+
+    @IBOutlet weak var detailTextView: UITextView!
     
     
     override func awakeFromNib() {
