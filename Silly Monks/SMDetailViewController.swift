@@ -670,7 +670,7 @@ class SMDetailViewController: UIViewController, FloatRatingViewDelegate,UITableV
     
     func designTheMediumAdd() -> MPAdView{
         //self.detailTableView
-        self.mediumAd = MPSampleAppInstanceProvider.sharedProvider().buildMPAdViewWithAdUnitID(CXConstant.mopub_medium_ad_id, size: CGSizeMake(self.view.frame.size.width, MOPUB_MEDIUM_RECT_SIZE.height))
+        self.mediumAd = SampleAppInstanceProvider.sharedInstance.buildMPAdViewWithAdUnitID(CXConstant.mopub_medium_ad_id, size: CGSizeMake(self.view.frame.size.width, MOPUB_MEDIUM_RECT_SIZE.height))
         self.mediumAd.frame =  CGRectMake(50, 0, MOPUB_MEDIUM_RECT_SIZE.width, MOPUB_MEDIUM_RECT_SIZE.height)
         self.mediumAd.loadAd()
         return self.mediumAd

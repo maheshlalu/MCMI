@@ -104,7 +104,7 @@ class CXGalleryViewController: UIViewController,UICollectionViewDataSource, UICo
     func addTheBottomAdd(){
         let bottomAddView : UIView = UIView(frame:CGRectMake(0, self.galleryCollectionView.frame.size.height+5, self.galleryCollectionView.frame.size.width, 49))
         //bottomAddView.backgroundColor = UIColor.greenColor()
-        self.bottomAd = MPSampleAppInstanceProvider.sharedProvider().buildMPAdViewWithAdUnitID(CXConstant.mopub_banner_ad_id, size: CGSizeMake(self.view.frame.size.width, 49))
+        self.bottomAd = SampleAppInstanceProvider.sharedInstance.buildMPAdViewWithAdUnitID(CXConstant.mopub_banner_ad_id, size: CGSizeMake(self.view.frame.size.width, 49))
         self.bottomAd.frame =  CGRectMake(70, 0, MOPUB_MEDIUM_RECT_SIZE.width, 50)
         bottomAddView.addSubview(self.bottomAd)
         self.bottomAd.loadAd()
@@ -247,7 +247,7 @@ extension CXGalleryViewController : UIPageViewControllerDataSource {
     }
     
     func addTheInterstitialCustomAds(){
-        self.interstitialAdController = MPSampleAppInstanceProvider.sharedProvider().buildMPInterstitialAdControllerWithAdUnitID(CXConstant.mopub_interstitial_ad_id)
+        self.interstitialAdController = SampleAppInstanceProvider.sharedInstance.buildMPInterstitialAdControllerWithAdUnitID(CXConstant.mopub_interstitial_ad_id)
         self.interstitialAdController.delegate = self
         self.interstitialAdController.loadAd()
         self.interstitialAdController.showFromViewController(self.imageViewCntl)

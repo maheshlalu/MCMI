@@ -149,7 +149,7 @@ class CXImageViewController: UIViewController {
 
     
     func addTheInterstitialCustomAds(){
-        self.interstitialAdController = MPSampleAppInstanceProvider.sharedProvider().buildMPInterstitialAdControllerWithAdUnitID(CXConstant.mopub_interstitial_ad_id)
+        self.interstitialAdController = SampleAppInstanceProvider.sharedInstance.buildMPInterstitialAdControllerWithAdUnitID(CXConstant.mopub_interstitial_ad_id)
         self.interstitialAdController.delegate = self
         self.interstitialAdController.loadAd()
         self.interstitialAdController.showFromViewController(self)
