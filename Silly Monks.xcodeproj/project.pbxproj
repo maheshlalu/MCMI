@@ -24,6 +24,7 @@
 		3B5FCD061D4B30970068990A /* SMUserFavoritesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B5FCD021D4B30970068990A /* SMUserFavoritesViewController.xib */; };
 		3B61E3521D6AC12D00B09F8E /* CXPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B61E3501D6AC12D00B09F8E /* CXPageViewController.swift */; };
 		3B61E3531D6AC12D00B09F8E /* CXPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B61E3511D6AC12D00B09F8E /* CXPageViewController.xib */; };
+		3B7D99C11D6DB6C500D73CAD /* MPSampleAppInstanceProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B7D99C01D6DB6C500D73CAD /* MPSampleAppInstanceProvider.m */; };
 		434C3D531D4B702400752805 /* SMFavoritesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434C3D511D4B702400752805 /* SMFavoritesCell.swift */; };
 		434C3D541D4B702400752805 /* SMFavoritesCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 434C3D521D4B702400752805 /* SMFavoritesCell.xib */; };
 		434C3D591D4B7B9C00752805 /* eega.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 434C3D571D4B7B9C00752805 /* eega.jpg */; };
@@ -158,6 +159,8 @@
 		3B5FCD021D4B30970068990A /* SMUserFavoritesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SMUserFavoritesViewController.xib; sourceTree = "<group>"; };
 		3B61E3501D6AC12D00B09F8E /* CXPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CXPageViewController.swift; sourceTree = "<group>"; };
 		3B61E3511D6AC12D00B09F8E /* CXPageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CXPageViewController.xib; sourceTree = "<group>"; };
+		3B7D99BF1D6DB6C500D73CAD /* MPSampleAppInstanceProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPSampleAppInstanceProvider.h; sourceTree = "<group>"; };
+		3B7D99C01D6DB6C500D73CAD /* MPSampleAppInstanceProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPSampleAppInstanceProvider.m; sourceTree = "<group>"; };
 		434C3D511D4B702400752805 /* SMFavoritesCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SMFavoritesCell.swift; sourceTree = "<group>"; };
 		434C3D521D4B702400752805 /* SMFavoritesCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SMFavoritesCell.xib; sourceTree = "<group>"; };
 		434C3D571D4B7B9C00752805 /* eega.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = eega.jpg; sourceTree = "<group>"; };
@@ -373,6 +376,8 @@
 		43B212551D535275006D49C8 /* Ads */ = {
 			isa = PBXGroup;
 			children = (
+				3B7D99BF1D6DB6C500D73CAD /* MPSampleAppInstanceProvider.h */,
+				3B7D99C01D6DB6C500D73CAD /* MPSampleAppInstanceProvider.m */,
 				43B2125C1D535A83006D49C8 /* NativeAdCell.swift */,
 				43B2125E1D535C78006D49C8 /* NativeAdCell.xib */,
 			);
@@ -960,6 +965,7 @@
 				6947695F1CCBE81100878BF9 /* CXVideoPlayerViewController.swift in Sources */,
 				435A13201D6B0155002E9D3B /* CXGalleryMoreCollectionViewCell.swift in Sources */,
 				3B5FCCFE1D4B2AC80068990A /* CXProfilePageView.swift in Sources */,
+				3B7D99C11D6DB6C500D73CAD /* MPSampleAppInstanceProvider.m in Sources */,
 				69F5FF2D1CBE148C0018E739 /* CX_Product_Category.swift in Sources */,
 				691998C81CED93A200B08423 /* CX_Products+CoreDataProperties.swift in Sources */,
 				69F03FC01CBAC18F00A0484D /* CXGalleryViewController.swift in Sources */,
@@ -1016,7 +1022,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "4b6b858d-7d98-4ac5-ab79-a6070d074e7c";
+				PROVISIONING_PROFILE = "93412987-5b62-49d0-845a-c274020b2f89";
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1058,7 +1064,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "4b6b858d-7d98-4ac5-ab79-a6070d074e7c";
+				PROVISIONING_PROFILE = "93412987-5b62-49d0-845a-c274020b2f89";
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				VALIDATE_PRODUCT = YES;
@@ -1086,7 +1092,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sillymonks;
 				PRODUCT_NAME = SillyMonks;
-				PROVISIONING_PROFILE = "4b6b858d-7d98-4ac5-ab79-a6070d074e7c";
+				PROVISIONING_PROFILE = "93412987-5b62-49d0-845a-c274020b2f89";
 				SWIFT_OBJC_BRIDGING_HEADER = "Silly Monks/CX-Bridge-Header.h";
 			};
 			name = Debug;
@@ -1112,7 +1118,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sillymonks;
 				PRODUCT_NAME = SillyMonks;
-				PROVISIONING_PROFILE = "4b6b858d-7d98-4ac5-ab79-a6070d074e7c";
+				PROVISIONING_PROFILE = "93412987-5b62-49d0-845a-c274020b2f89";
 				SWIFT_OBJC_BRIDGING_HEADER = "Silly Monks/CX-Bridge-Header.h";
 			};
 			name = Release;

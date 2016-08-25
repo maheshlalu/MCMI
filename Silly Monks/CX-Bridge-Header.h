@@ -18,7 +18,7 @@
 #import <BrightcovePlayerSDK/BrightcovePlayerSDK.h>
 #import "UIImage+animatedGIF.h"
 #import "SHViewPager.h"
-
+#import "MPSampleAppInstanceProvider.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 
