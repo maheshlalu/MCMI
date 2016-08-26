@@ -567,6 +567,50 @@ class CXDBSettings: NSObject {
     
     
     // Products
+    func userAddedToFavouriteList(product:CX_Products , isAddedToFavourite: Bool){
+        if isAddedToFavourite {
+            product.favourite = "1"
+        }else{
+            product.favourite = "0"
+        }
+        NSManagedObjectContext.MR_contextForCurrentThread().MR_saveToPersistentStoreAndWait()
+//        let predicate: NSPredicate = NSPredicate(format:"pID == %@",product.pID!)
+//        let fetchRequest = NSFetchRequest(entityName: "CX_Products") //
+//        fetchRequest.predicate = predicate
+//        let productCatList :NSArray = CX_Products.MR_executeFetchRequest(fetchRequest)
+        
+    }
+    
+    func getTheUserFavouritesFromProducts(getFavorites:String) -> NSMutableArray{
+        
+        let predicate: NSPredicate = NSPredicate(format: "favourite == \(getFavorites)")
+        let fetchRequest = NSFetchRequest(entityName: "CX_Products") //
+        fetchRequest.predicate = predicate
+        let productCatList :NSArray = CX_Products.MR_executeFetchRequest(fetchRequest)
+        let proKatList : NSMutableArray = NSMutableArray(array: productCatList)
+        return proKatList
+
+    }
+    
+    func removeTheFavaourites(userID:String){
+        let lastId:String = (String)(NSUserDefaults.standardUserDefaults().valueForKey("LAST_LOGIN_ID"))
+        
+        if (lastId.isEqual(userID)) {
+           
+        }else{
+            //Reove The favourites from Products
+            let predicate: NSPredicate = NSPredicate(format: "favourite == 1")
+            let fetchRequest = NSFetchRequest(entityName: "CX_Products") //
+            fetchRequest.predicate = predicate
+            let productCatList :NSArray = CX_Products.MR_executeFetchRequest(fetchRequest)
+            for  element in productCatList{
+                let product : CX_Products = element as! CX_Products
+                product.favourite = "0"
+                NSManagedObjectContext.MR_contextForCurrentThread().MR_saveToPersistentStoreAndWait()
+            }
+        }
+        
+    }
     
     static func getProductsWithCategory(proCategory:CX_Product_Category) -> NSMutableArray {
         let predicate: NSPredicate = NSPredicate(format: "type == %@ && mallID == %@",proCategory.name!,proCategory.mallID!)
@@ -606,7 +650,6 @@ class CXDBSettings: NSObject {
         let info : String = json.valueForKey("Name") as! String
         return info
     }
-    
     static func getProductAttachments(produkt:CX_Products) -> NSArray {
         let json :NSDictionary = (CXConstant.sharedInstance.convertStringToDictionary(produkt.json!))
         let attachements: NSArray = json.valueForKey("Attachments") as! NSArray

@@ -205,6 +205,8 @@ class CXSignInSignUpViewController: UIViewController,UITextFieldDelegate,FBSDKLo
         
         SMSyncService.sharedInstance.startSyncProcessWithUrl(urlString.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!) { (responseDict) in
             print("Login response \(responseDict)")
+            let userIdStr:String = (String)(responseDict.valueForKey("UserId"))
+            CXDBSettings.sharedInstance.removeTheFavaourites(userIdStr)
             let status: Int = Int(responseDict.valueForKey("status") as! String)!
             if status == 1 {
                 NSUserDefaults.standardUserDefaults().setObject(responseDict.valueForKey("UserId"), forKey: "USER_ID")
@@ -297,7 +299,7 @@ class CXSignInSignUpViewController: UIViewController,UITextFieldDelegate,FBSDKLo
         let signInUrl = "http://sillymonksapp.com:8081/MobileAPIs/loginConsumerForOrg?orgId="+orgID+"&email="+self.emailAddressField.text!+"&dt=DEVICES&password="+self.passwordField.text!
         SMSyncService.sharedInstance.startSyncProcessWithUrl(signInUrl) { (responseDict) in
             // print("Login response \(responseDict)")
-            
+            CXDBSettings.sharedInstance.removeTheFavaourites((responseDict.valueForKey("UserId"))as! String!)
             let status: Int = Int(responseDict.valueForKey("status") as! String)!
             
             if status == 1 {

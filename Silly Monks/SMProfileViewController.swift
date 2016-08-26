@@ -112,6 +112,8 @@ class SMProfileViewController: UIViewController {
     }
 
     @IBAction func logoutAction(sender: AnyObject) {
+        let str:AnyObject! = NSUserDefaults.standardUserDefaults().valueForKey("USER_ID")
+        NSUserDefaults.standardUserDefaults().setObject(str, forKey: "LAST_LOGIN_ID")
         
         NSUserDefaults.standardUserDefaults().removeObjectForKey("USER_ID")
         NSUserDefaults.standardUserDefaults().removeObjectForKey("FIRST_NAME")
@@ -120,10 +122,10 @@ class SMProfileViewController: UIViewController {
         NSUserDefaults.standardUserDefaults().removeObjectForKey("GENDER")
         NSUserDefaults.standardUserDefaults().removeObjectForKey("PROFILE_PIC")
         NSUserDefaults.standardUserDefaults().removeObjectForKey("USER_EMAIL")
-        //SMUserDetails.sharedInstance.destory()
+        
         NSUserDefaults.standardUserDefaults().synchronize()
         
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        
         
         // for FB signout
         FBSDKLoginManager().logOut()
@@ -131,14 +133,16 @@ class SMProfileViewController: UIViewController {
         // for Google signout
         GIDSignIn.sharedInstance().signOut()
         GIDSignIn.sharedInstance().disconnect()
-        showAlertView("Are You Sure", status: 1)
+        
+ 
+        showAlertView("Are You Sure??", status: 1)
         //self.navigationController?.popToRootViewControllerAnimated(true)
     
     }
     
     
     func showAlertView(message:String, status:Int) {
-        let alert = UIAlertController(title: "Silly Monks", message: "Are you sure??", preferredStyle: UIAlertControllerStyle.Alert)
+        let alert = UIAlertController(title: "Silly Monks", message: message, preferredStyle: UIAlertControllerStyle.Alert)
         //alert.addAction(UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default, handler: nil))
         let okAction = UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default) {
             UIAlertAction in

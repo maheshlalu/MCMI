@@ -7,25 +7,35 @@
 //
 
 import UIKit
+import SDWebImage
 
 class UserFavoritesViewController: UIViewController,UITableViewDataSource,UITableViewDelegate{
     
-    var namesArray = ["Eega Full Movie","Dikkulu Choodaku Ramayya Full Movie","Oohalu Gusagusalade Full Movie","Paatshala Full Movie"]
-    
-    var imagesArray = ["eega.jpg","Dikkulu_Choodaku_Ramayya.jpg","Oohalu Gusagusalade.jpg","paatshala.jpeg"]
-    
-    var detailArray = ["fgjyfguyweguyfgefgjdvkjfdhvkdhjhfiji","jwqgiuyEIYETRFGUDUDYFHGIERUTOUUROUT","hjfdurhyfuiehrfijvmnckjhfdhflsdjsl"]
+    var userFavoritesArray = NSMutableArray()
+    var userFavoritesCategories = NSMutableArray()
     
     @IBOutlet weak var favoritesTableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+      
+        self.userFavoritesArray = CXDBSettings.sharedInstance.getTheUserFavouritesFromProducts("1")
         
         favoritesTableView.delegate = self;
         favoritesTableView.dataSource = self;
         favoritesTableView.separatorStyle = .None
 
     }
+    func parseProductDescription(desc:String) -> String {
+        let normalString : String = desc.html2String
+        return normalString
+    }
+    func getProductInfo(produkt:CX_Products, input:String) -> String {
+        let json :NSDictionary = (CXConstant.sharedInstance.convertStringToDictionary(produkt.json!))
+        let info : String = json.valueForKey(input) as! String
+        return info
+    }
+    
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
         
@@ -33,14 +43,12 @@ class UserFavoritesViewController: UIViewController,UITableViewDataSource,UITabl
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return namesArray.count
+        return userFavoritesArray.count
     }
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat
     {
-        
         return 15.0
-        
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell{
@@ -53,9 +61,11 @@ class UserFavoritesViewController: UIViewController,UITableViewDataSource,UITabl
             tableView.registerNib(UINib(nibName: "SMFavoritesCell", bundle: nil), forCellReuseIdentifier: identifier)
             cell = tableView.dequeueReusableCellWithIdentifier(identifier) as? SMFavoritesCell
         }
-        cell.titleLabel.text = self.namesArray[indexPath.section]
-        cell?.imageView?.image = UIImage.init(named: imagesArray[indexPath.section])
-        print(imagesArray.count)
+        let  product: CX_Products = self.userFavoritesArray[indexPath.section] as! CX_Products
+        cell.favouritesTitleLabel.text = product.name
+        let prodImage :String = CXDBSettings.getProductImage(product)
+        cell.favouritesImageview.sd_setImageWithURL(NSURL(string:prodImage)!, placeholderImage: UIImage(named: "smlogo.png"), options:SDWebImageOptions.RefreshCached)
+        cell.favouritesDetailTextView.text = self.parseProductDescription(self.getProductInfo(product, input: "Description"))
         
         return cell
         
@@ -72,8 +82,14 @@ class UserFavoritesViewController: UIViewController,UITableViewDataSource,UITabl
     
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == UITableViewCellEditingStyle.Delete{
-            //delete functionality
-        
+            
+            let  product: CX_Products = self.userFavoritesArray[indexPath.section] as! CX_Products
+            
+            CXDBSettings.sharedInstance.userAddedToFavouriteList(product, isAddedToFavourite: false)
+            self.favoritesTableView.beginUpdates()
+            self.userFavoritesArray.removeObjectAtIndex(indexPath.section) // also remove an array object if exists.
+            self.favoritesTableView.deleteSections(NSIndexSet(index: indexPath.section), withRowAnimation: .Left)
+            self.favoritesTableView.endUpdates()
         }
     }
     
@@ -82,6 +98,36 @@ class UserFavoritesViewController: UIViewController,UITableViewDataSource,UITabl
         // Dispose of any resources that can be recreated.
     }
     
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        //let prodCategory:CX_Product_Category = self.userFavoritesCategories[indexPath.section] as! CX_Product_Category
+//        let product: CX_Products = self.userFavoritesArray[indexPath.section] as! CX_Products
+//        let detailView = ViewPagerCntl.init()
+//        detailView.product = product
+//        detailView.itemIndex = indexPath.section
+//        //detailView.productCategory = prodCategory
+//        self.navigationController?.pushViewController(detailView, animated: true)
+    }
+    
+    func showAlertView(message:String, status:Int) {
+        let alert = UIAlertController(title: "Silly Monks", message:message, preferredStyle: UIAlertControllerStyle.Alert)
+        //alert.addAction(UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default, handler: nil))
+        let okAction = UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default) {
+            UIAlertAction in
+            if status == 1 {
+               
+            }
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default) {
+            UIAlertAction in
+            if status == 1 {
+                
+            }
+        }
+        alert.addAction(okAction)
+        alert.addAction(cancelAction)
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
     
     
 }

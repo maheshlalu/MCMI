@@ -16,6 +16,7 @@ class SMDetailViewController: UIViewController, FloatRatingViewDelegate,UITableV
     var contentImage: UIImage!
     var contentScrollView : UIScrollView!
     var floatRatingView: FloatRatingView!
+    var updateRatingView: FloatRatingView!
     var storedOffsets = [Int: CGFloat]()
     var detailTableView: UITableView!
     var product:CX_Products!
@@ -26,39 +27,28 @@ class SMDetailViewController: UIViewController, FloatRatingViewDelegate,UITableV
     var activity:DTIActivityIndicatorView!
     var likeButton: UIButton!
     var ratingValue: String!
+    var updateRatingValue: String!
     var avgRatingLabel:UILabel!
     var presentWindow:UIWindow!
     var likeLbl:UILabel!
     var likeLblCount:UILabel!
+    var rateCountLbl:UILabel!
     var noOfLikes:Int!
     var mediumAd: MPAdView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        presentWindow = UIApplication.sharedApplication().keyWindow
         self.view.backgroundColor = UIColor.smBackgroundColor()
         self.activity = DTIActivityIndicatorView(frame: CGRect(x:0, y:0, width:60.0, height:60.0))
         self.activity.center = self.view.center
         self.view.addSubview(self.activity)
-         self.relatedArticles = NSMutableArray()
+        self.relatedArticles = NSMutableArray()
         self.customizeHeaderView()
         self.customizeMainView()
         self.getLikes()
         self.likeLblCount.hidden = true
-       /* if (NSUserDefaults.standardUserDefaults().valueForKey("NO_LIKES") != nil){
-            dispatch_async(dispatch_get_main_queue(), {
-                self.likeLbl.frame = CGRectMake(self.avgRatingLabel.frame.size.width+self.avgRatingLabel.frame.origin.x-30, 2, self.avgRatingLabel.frame.size.width, 20)
-                self.likeLbl.text = "Likes:"
-                
-                self.noOfLikes = NSUserDefaults.standardUserDefaults().valueForKey("NO_UN_LIKES") as! Int!
-                print("\(self.noOfLikes)")
-                self.likeLblCount.frame = CGRectMake((self.likeLbl.frame.size.width)-6, 2, self.avgRatingLabel.frame.size.width, 20)
-                self.likeLblCount.text = String(self.noOfLikes)
-                self.likeLblCount.hidden = false
-                
-                self.presentWindow?.makeToast(message: "Added to Favorites")
-            })
-        }*/
-        //self.addPager()
+        self.getLikesWhenUserLoggedIn()
     }
     
     func addPager(){
@@ -96,10 +86,10 @@ class SMDetailViewController: UIViewController, FloatRatingViewDelegate,UITableV
             self.remainingProducts.removeObject(self.product)
         }
     }
-
-
+    
+    
     override func viewWillAppear(animated: Bool) {
-         super.viewWillAppear(animated)
+        super.viewWillAppear(animated)
         CXConstant.restrictRotation(true)
         UIDevice.currentDevice().setValue(UIInterfaceOrientation.Portrait.rawValue, forKey: "orientation")
     }
@@ -135,17 +125,17 @@ class SMDetailViewController: UIViewController, FloatRatingViewDelegate,UITableV
         let json :NSDictionary = (CXConstant.sharedInstance.convertStringToDictionary(self.product.json!))
         let info : String = CXConstant.resultString(json.valueForKey(input)!)
         return info
-
+        
     }
     
     func customizeMainView() {
-       // self.getRelatedProducts()
+        // self.getRelatedProducts()
         self.getRemainingProducts()
-       
+        
         self.contentScrollView = UIScrollView.init(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, UIScreen.mainScreen().bounds.size.height))
-       // self.contentScrollView.backgroundColor = UIColor.smBackgroundColor()
+        // self.contentScrollView.backgroundColor = UIColor.smBackgroundColor()
         self.contentScrollView.backgroundColor = UIColor.smBackgroundColor()
-
+        
         self.contentScrollView.showsVerticalScrollIndicator = false
         
         let contentImageView: UIImageView = UIImageView.init(frame: CGRectMake(0, 0, self.contentScrollView.frame.size.width, (self.contentScrollView.frame.size.width)/2))//10, 20,190
@@ -178,7 +168,7 @@ class SMDetailViewController: UIViewController, FloatRatingViewDelegate,UITableV
         }
         
         self.contentScrollView.addSubview(contentImageView)
-
+        
         
         let infoText = self.parseProductDescription(self.getProductInfo(product, input: "Description"))
         
@@ -204,14 +194,14 @@ class SMDetailViewController: UIViewController, FloatRatingViewDelegate,UITableV
         
         if self.relatedArticles.count > 0 {
             tableHeight = 2*CXConstant.RELATED_ARTICLES_CELL_HEIGHT
-           // tableHeight = (CGFloat(cellls)*cellHeight)+(2*CXConstant.RELATED_ARTICLES_CELL_HEIGHT)-50
+            // tableHeight = (CGFloat(cellls)*cellHeight)+(2*CXConstant.RELATED_ARTICLES_CELL_HEIGHT)-50
         } else {
             
             //tableHeight = CXConstant.RELATED_ARTICLES_CELL_HEIGHT
             tableHeight = CXConstant.RELATED_ARTICLES_CELL_HEIGHT + MOPUB_MEDIUM_RECT_SIZE.height
             //tableHeight = (CGFloat(cellls)*cellHeight)+CXConstant.RELATED_ARTICLES_CELL_HEIGHT-50
         }
-
+        
         self.detailTableView = self.customizeTableView(CGRectMake(10, ratingComentsView.frame.size.height+ratingComentsView.frame.origin.y+12.5, self.contentScrollView.frame.size.width-20,tableHeight))// y= 25+5
         self.contentScrollView.addSubview(self.detailTableView)
         self.view.addSubview(self.contentScrollView)
@@ -267,12 +257,16 @@ class SMDetailViewController: UIViewController, FloatRatingViewDelegate,UITableV
         likeLblCount.textAlignment = NSTextAlignment.Right
         likeLblCount.textColor = UIColor.grayColor()
         rView.addSubview(likeLblCount)
-
+        
         self.floatRatingView = self.customizeRatingView(CGRectMake(2, self.avgRatingLabel.frame.size.height+self.avgRatingLabel.frame.origin.y, self.avgRatingLabel.frame.size.width, 30))
         self.floatRatingView.backgroundColor = UIColor.whiteColor()
         self.ratingValue = self.parseProductDescription(self.getProductInfo(product, input: "overallRating"))
         self.floatRatingView.rating =  Float(self.ratingValue)!
+        self.floatRatingView.editable = false
+        self.floatRatingView.tag = 100
         rView.addSubview(self.floatRatingView)
+        
+        
         
         let btnWidth: CGFloat = 30
         let space: CGFloat = 5
@@ -281,18 +275,18 @@ class SMDetailViewController: UIViewController, FloatRatingViewDelegate,UITableV
         let comentBtn = self.createButton(CGRectMake(rView.frame.size.width-((numBtns * btnWidth)+((numBtns-1)*space)), self.floatRatingView.frame.origin.y, btnWidth, btnWidth), img: UIImage(named: "comments_108.png")!)
         comentBtn.addTarget(self, action: #selector(SMDetailViewController.commentAction), forControlEvents: UIControlEvents.TouchUpInside)
         rView.addSubview(comentBtn)
-
+        
         let shareBtn = self.createButton(CGRectMake(comentBtn.frame.size.width+comentBtn.frame.origin.x+space, self.floatRatingView.frame.origin.y, btnWidth, btnWidth), img: UIImage(named: "share_108.png")!)
         shareBtn.addTarget(self, action: #selector(SMDetailViewController.shareAction), forControlEvents: UIControlEvents.TouchUpInside)
         rView.addSubview(shareBtn)
-
+        
         self.likeButton = self.createButton(CGRectMake(shareBtn.frame.size.width+shareBtn.frame.origin.x+space, self.floatRatingView.frame.origin.y, btnWidth, btnWidth), img: UIImage(named: "favourite_unsel_108.png")!)
         self.likeButton.addTarget(self, action: #selector(SMDetailViewController.likeAction), forControlEvents: UIControlEvents.TouchUpInside)
         self.likeButton.setImage(UIImage(named: "favourite_sel_108.png"), forState: UIControlState.Selected)
         rView.addSubview(self.likeButton)
-
+        
         return rView
-
+        
     }
     /* http://stackoverflow.com/questions/30450434/figure-out-size-of-uilabel-based-on-string-in-swift  */
     
@@ -315,7 +309,7 @@ class SMDetailViewController: UIViewController, FloatRatingViewDelegate,UITableV
         ratView.editable = true
         ratView.halfRatings = true
         ratView.floatRatings = false
-    
+        
         return ratView
     }
     
@@ -365,7 +359,7 @@ class SMDetailViewController: UIViewController, FloatRatingViewDelegate,UITableV
         return btn
         
     }
-
+    
     func backAction() {
         let viewController: UIViewController = self.navigationController!.viewControllers[1]
         self.navigationController!.popToViewController(viewController, animated: true)
@@ -376,13 +370,13 @@ class SMDetailViewController: UIViewController, FloatRatingViewDelegate,UITableV
     }
     
     func commentAction() {/*
-        let comentsView = CXCommentViewController.init()
-        comentsView.headerTitle = self.productCategory.name
-        comentsView.orgID = self.product.createdByID
-        self.navigationController?.pushViewController(comentsView, animated: true)
+         let comentsView = CXCommentViewController.init()
+         comentsView.headerTitle = self.productCategory.name
+         comentsView.orgID = self.product.createdByID
+         self.navigationController?.pushViewController(comentsView, animated: true)
          if NSUserDefaults.standardUserDefaults().valueForKey("PROFILE_PIC") != nil
- 
- */
+         
+         */
         
         let userID  =  NSUserDefaults.standardUserDefaults().valueForKey("USER_ID")
         
@@ -403,18 +397,18 @@ class SMDetailViewController: UIViewController, FloatRatingViewDelegate,UITableV
         let img: UIImage!
         
         let publicUrl : NSString = CXDBSettings.getPublicUrlForArticleSharing(self.product)
-     /*   if attachements.count > 0 {
-            let attachment:NSDictionary = attachements.objectAtIndex(0) as! NSDictionary
-            let prodImage: String = attachment.valueForKey("URL") as! String
-            img = CXConstant.getImageFromUrlString(prodImage)
-        } else {
-            img = UIImage(named: "smlogo.png")
-        }
-        */
+        /*   if attachements.count > 0 {
+         let attachment:NSDictionary = attachements.objectAtIndex(0) as! NSDictionary
+         let prodImage: String = attachment.valueForKey("URL") as! String
+         img = CXConstant.getImageFromUrlString(prodImage)
+         } else {
+         img = UIImage(named: "smlogo.png")
+         }
+         */
         
-
+        
         img = UIImage(named: "smlogo.png")
-//        let infoText = self.parseProductDescription(self.getProductInfo(product, input: "Description"))
+        //        let infoText = self.parseProductDescription(self.getProductInfo(product, input: "Description"))
         
         let shareItems:Array = [publicUrl, img]
         let activityViewController:UIActivityViewController = UIActivityViewController(activityItems: shareItems, applicationActivities: nil)
@@ -424,7 +418,7 @@ class SMDetailViewController: UIViewController, FloatRatingViewDelegate,UITableV
     }
     
     func getLikes(){
-       
+        
     }
     
     
@@ -444,30 +438,29 @@ class SMDetailViewController: UIViewController, FloatRatingViewDelegate,UITableV
                 print("\(responseDict)")
                 NSUserDefaults.standardUserDefaults().setObject(responseDict.valueForKey("noOfLikes"), forKey: "NO_LIKES")
                 NSUserDefaults.standardUserDefaults().synchronize()
-            
-             dispatch_async(dispatch_get_main_queue(), {
-            if likeBtn.selected {
-                self.likeLbl.frame = CGRectMake(self.avgRatingLabel.frame.size.width+self.avgRatingLabel.frame.origin.x-30, 2, self.avgRatingLabel.frame.size.width, 20)
-                self.likeLbl.text = "Likes:"
                 
-                self.noOfLikes = NSUserDefaults.standardUserDefaults().valueForKey("NO_LIKES") as! Int!
-                print("\(self.noOfLikes)")
-                self.likeLblCount.frame = CGRectMake((self.likeLbl.frame.size.width)-6, 2, self.avgRatingLabel.frame.size.width, 20)
-                self.likeLblCount.text = String(self.noOfLikes + 1)
-                self.likeLblCount.hidden = false
-                self.presentWindow?.makeToast(message: "Added to likes")
-                
-            } else {
-                
-                self.likeLbl.frame = CGRectMake(self.avgRatingLabel.frame.size.width+self.avgRatingLabel.frame.origin.x-30, 2, self.avgRatingLabel.frame.size.width, 20)
-                self.likeLbl.text = "Likes:"
-                print("\(self.noOfLikes)")
-                self.likeLblCount.frame = CGRectMake((self.likeLbl.frame.size.width)-6, 2, self.avgRatingLabel.frame.size.width, 20)
-                self.likeLblCount.text = String(self.noOfLikes)
-                self.likeLblCount.hidden = false
-                self.presentWindow?.makeToast(message: "Removed from likes")
-
-            }
+                dispatch_async(dispatch_get_main_queue(), {
+                    if likeBtn.selected {
+                        self.likeLbl.frame = CGRectMake(self.avgRatingLabel.frame.size.width+self.avgRatingLabel.frame.origin.x-30, 2, self.avgRatingLabel.frame.size.width, 20)
+                        self.likeLbl.text = "Likes:"
+                        
+                        self.noOfLikes = NSUserDefaults.standardUserDefaults().valueForKey("NO_LIKES") as! Int!
+                        self.likeLblCount.frame = CGRectMake((self.likeLbl.frame.size.width)-6, 2, self.avgRatingLabel.frame.size.width, 20)
+                        self.likeLblCount.text = String(self.noOfLikes + 1)
+                        self.likeLblCount.hidden = false
+                        self.presentWindow?.makeToast(message: "Added to likes")
+                        
+                    } else {
+                        
+                        self.likeLbl.frame = CGRectMake(self.avgRatingLabel.frame.size.width+self.avgRatingLabel.frame.origin.x-30, 2, self.avgRatingLabel.frame.size.width, 20)
+                        self.likeLbl.text = "Likes:"
+                        print("\(self.noOfLikes)")
+                        self.likeLblCount.frame = CGRectMake((self.likeLbl.frame.size.width)-6, 2, self.avgRatingLabel.frame.size.width, 20)
+                        self.likeLblCount.text = String(self.noOfLikes)
+                        self.likeLblCount.hidden = false
+                        self.presentWindow?.makeToast(message: "Removed from likes")
+                        
+                    }
                 })
             })
         }else{
@@ -475,29 +468,23 @@ class SMDetailViewController: UIViewController, FloatRatingViewDelegate,UITableV
             if likeBtn.selected {
                 let likeURL = "http://sillymonksapp.com:8081/Services/saveOrUpdateSocialActivity?orgId=3&userId="+userId+"&jobId="+jobId+"&noOfLikes=1"
                 SMSyncService.sharedInstance.startSyncProcessWithUrl(likeURL, completion: { (responseDict) in
-                    /*
-                     "noOfLikes": 2,
-                     "jobId": "84",
-                     "status": "1",
-                     "noOfDislikes": 0
-                     }*/
+                    print("\(responseDict)")
                     NSUserDefaults.standardUserDefaults().setObject(responseDict.valueForKey("noOfLikes"), forKey: "NO_LIKES")
                     NSUserDefaults.standardUserDefaults().synchronize()
                     
                     let status: Int = Int(responseDict.valueForKey("status") as! String)!
                     if status == 1{
-                         dispatch_async(dispatch_get_main_queue(), {
-                        self.likeLbl.frame = CGRectMake(self.avgRatingLabel.frame.size.width+self.avgRatingLabel.frame.origin.x-30, 2, self.avgRatingLabel.frame.size.width, 20)
-                        self.likeLbl.text = "Likes:"
-                        
-                        self.noOfLikes = NSUserDefaults.standardUserDefaults().valueForKey("NO_LIKES") as! Int!
-                        print("\(self.noOfLikes)")
-                        self.likeLblCount.frame = CGRectMake((self.likeLbl.frame.size.width)-6, 2, self.avgRatingLabel.frame.size.width, 20)
-                        self.likeLblCount.text = String(self.noOfLikes)
-                        self.likeLblCount.hidden = false
-                        
-                        self.presentWindow?.makeToast(message: "Added to Favorites")
-                            self.showInFavorites()
+                        dispatch_async(dispatch_get_main_queue(), {
+                            self.likeLbl.frame = CGRectMake(self.avgRatingLabel.frame.size.width+self.avgRatingLabel.frame.origin.x-30, 2, self.avgRatingLabel.frame.size.width, 20)
+                            self.likeLbl.text = "Likes:"
+                            
+                            self.noOfLikes = NSUserDefaults.standardUserDefaults().valueForKey("NO_LIKES") as! Int!
+                            self.likeLblCount.frame = CGRectMake((self.likeLbl.frame.size.width)-6, 2, self.avgRatingLabel.frame.size.width, 20)
+                            self.likeLblCount.text = String(self.noOfLikes)
+                            self.likeLblCount.hidden = false
+                            
+                            self.presentWindow?.makeToast(message: "Added to Favorites")
+                            self.showInFavorites(true)
                         })
                     }else{
                         self.showAlertView("User not available!! Please Login", status: 1)
@@ -514,31 +501,65 @@ class SMDetailViewController: UIViewController, FloatRatingViewDelegate,UITableV
                     
                     let status: Int = Int(responseDict.valueForKey("status") as! String)!
                     if status == 1{
-                         dispatch_async(dispatch_get_main_queue(), {
-                        self.likeLbl.frame = CGRectMake(self.avgRatingLabel.frame.size.width+self.avgRatingLabel.frame.origin.x-30, 2, self.avgRatingLabel.frame.size.width, 20)
-                        self.likeLbl.text = "Likes:"
-                        
-                        self.noOfLikes = NSUserDefaults.standardUserDefaults().valueForKey("NO_UN_LIKES") as! Int!
-                        print("\(self.noOfLikes)")
-                        self.likeLblCount.frame = CGRectMake((self.likeLbl.frame.size.width)-6, 2, self.avgRatingLabel.frame.size.width, 20)
-                        self.likeLblCount.text = String(self.noOfLikes)
-                        self.likeLblCount.hidden = false
-                        
-                        self.presentWindow?.makeToast(message: "Added to Favorites")
+                        dispatch_async(dispatch_get_main_queue(), {
+                            self.likeLbl.frame = CGRectMake(self.avgRatingLabel.frame.size.width+self.avgRatingLabel.frame.origin.x-30, 2, self.avgRatingLabel.frame.size.width, 20)
+                            self.likeLbl.text = "Likes:"
+                            
+                            self.noOfLikes = NSUserDefaults.standardUserDefaults().valueForKey("NO_UN_LIKES") as! Int!
+                            print("\(self.noOfLikes)")
+                            self.likeLblCount.frame = CGRectMake((self.likeLbl.frame.size.width)-6, 2, self.avgRatingLabel.frame.size.width, 20)
+                            self.likeLblCount.text = String(self.noOfLikes)
+                            self.likeLblCount.hidden = false
+                            
+                            self.presentWindow?.makeToast(message: "Removed from Favorites")
+                            self.showInFavorites(false)
                         })
                     }else{
                         self.showAlertView("User not available!! Please Login", status: 1)
                     }
-
+                    
                 })
             }
         }
     }
     
-    func showInFavorites(){
+    func getLikesWhenUserLoggedIn(){
+        let jobId = self.getJobID("jobTypeId")
+        //let status: Int = Int(responseDict.valueForKey("status") as! String)!
+        let userId = (String)(NSUserDefaults.standardUserDefaults().valueForKey("USER_ID") as! NSNumber!)
+        if userId != "nil"{
+            let likeURL = "http://sillymonksapp.com:8081/Services/saveOrUpdateSocialActivity?orgId=3&userId="+userId+"&jobId="+jobId+"&noOfLikes=0"
+            SMSyncService.sharedInstance.startSyncProcessWithUrl(likeURL, completion: { (responseDict) in
+                NSUserDefaults.standardUserDefaults().setObject(responseDict.valueForKey("noOfLikes"), forKey: "NO_LIKES")
+                NSUserDefaults.standardUserDefaults().synchronize()
+                print("\(responseDict)")
+                let status: Int = Int(responseDict.valueForKey("status") as! String)!
+                if status == 1{
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.likeLbl.frame = CGRectMake(self.avgRatingLabel.frame.size.width+self.avgRatingLabel.frame.origin.x-30, 2, self.avgRatingLabel.frame.size.width, 20)
+                        self.likeLbl.text = "Likes:"
+                        
+                        self.noOfLikes = NSUserDefaults.standardUserDefaults().valueForKey("NO_LIKES") as! Int!
+                        self.likeLblCount.frame = CGRectMake((self.likeLbl.frame.size.width)-6, 2, self.avgRatingLabel.frame.size.width, 20)
+                        self.likeLblCount.text = String(self.noOfLikes)
+                        self.likeLblCount.hidden = false
+                        if self.product.favourite == "1" {
+                            self.likeButton.selected = true
+                        }
+                    })
+                }else{
+                    self.showAlertView("User not available!! Please Login", status: 1)
+                }
+                
+            })
+        }
+    }
+    
+    
+    func showInFavorites(isLiked:Bool){
         
-    
-    
+        CXDBSettings.sharedInstance.userAddedToFavouriteList(self.product, isAddedToFavourite: isLiked)
+        
     }
     
     func showAlertView(message:String, status:Int) {
@@ -547,8 +568,8 @@ class SMDetailViewController: UIViewController, FloatRatingViewDelegate,UITableV
             let okAction = UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default) {
                 UIAlertAction in
                 if status == 1 {
-//                    let profile = CXProfilePageView.init()
-//                    self.navigationController?.pushViewController(profile, animated: true)
+                    //                    let profile = CXProfilePageView.init()
+                    //                    self.navigationController?.pushViewController(profile, animated: true)
                 }else{
                     
                 }
@@ -558,23 +579,86 @@ class SMDetailViewController: UIViewController, FloatRatingViewDelegate,UITableV
         })
     }
     
-    func floatRatingView(ratingView: FloatRatingView, isUpdating rating:Float) {
-       /* if NSUserDefaults.standardUserDefaults().valueForKey("USER_ID") == nil{
-            ratingView.rating = 0
-            let signInView = CXSignInSignUpViewController.init()
-            signInView.orgID = self.product.createdByID
-            self.navigationController?.pushViewController(signInView, animated: true)
-        }*/
+    func submitRating(){
+        let jobId = self.getJobID("jobTypeId")
+        //let status: Int = Int(responseDict.valueForKey("status") as! String)!
+        let userId = (String)(NSUserDefaults.standardUserDefaults().valueForKey("USER_ID") as! NSNumber!)
+        let pId = product.pID as String!
+        
+        
+        let alertController = UIAlertController(title: "SillyMonks \n\n\n", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
+
+        self.updateRatingView = self.customizeRatingView(CGRectMake(25,50,(self.view.bounds.size.width)-(alertController.view.bounds.size.width)+30,50))
+        self.updateRatingView.editable = true
+        self.updateRatingView.tag = 200
+        self.updateRatingView.backgroundColor = UIColor.clearColor()
+        
+        
+        rateCountLbl = UILabel.init()
+        rateCountLbl.frame = CGRectMake(25,self.updateRatingView.frame.size.height+40,(self.view.bounds.size.width)-(alertController.view.bounds.size.width)+30,40)
+        //rateCountLbl.backgroundColor = UIColor.redColor()
+        rateCountLbl.textAlignment = .Center
+        rateCountLbl.text = self.updateRatingValue
+        
+        
+        alertController.view.addSubview(rateCountLbl)
+        alertController.view.addSubview(self.updateRatingView)
+        
+        let submitAction = UIAlertAction(title: "Submit", style: UIAlertActionStyle.Default, handler: {(alert: UIAlertAction!) in
+            //userId=11&jobId=239&comment=excellent&rating=0.5&commentId=74/
+            let likeURL = "http://sillymonksapp.com:8081/jobs/saveJobCommentJSON?userId="+userId+"&jobId="+jobId+"&comment=excellent&rating="+self.updateRatingValue+"&commentId="+pId
+            SMSyncService.sharedInstance.startSyncProcessWithUrl(likeURL, completion: { (responseDict) in
+                print("\(responseDict)")
+                self.presentWindow?.makeToast(message: "Review Submitted")
+            })
+        })
+        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: {(alert: UIAlertAction!) in
+            self.updateRatingValue    = nil
+            
+        })
+        
+        alertController.addAction(submitAction)
+        alertController.addAction(cancelAction)
+        
+        self.presentViewController(alertController, animated: true, completion:{})
     }
     
-    func floatRatingView(ratingView: FloatRatingView, didUpdate rating: Float) {
-       // ratingView.rating = 0
-        self.ratingValue = NSString(format: "%.1f", self.floatRatingView.rating) as String
-        self.avgRatingLabel.text = "Avg.user ratings:"+self.ratingValue+"/5"
-        //print ("Rating is \(self.ratingValue)")
+    
+    func floatRatingView(ratingView: FloatRatingView, isUpdating rating:Float) {
+       if ratingView.tag == 100 {
+        submitRating()
+        
+        }else{
+        
+        
+        }
+   
     }
+    func floatRatingView(ratingView: FloatRatingView, didUpdate rating: Float) {
 
+        if ratingView.tag == 200 {
+            if NSUserDefaults.standardUserDefaults().valueForKey("USER_ID") == nil{
+                //
+                ratingView.rating = 0
+                let signInView = CXSignInSignUpViewController.init()
+                signInView.orgID = self.product.createdByID
+                self.navigationController?.pushViewController(signInView, animated: true)
+            }else{
+                self.updateRatingValue = NSString(format: "%.1f", self.updateRatingView.rating) as String
+                print ("Rating is \(self.updateRatingValue)")
+                self.rateCountLbl.text = self.updateRatingValue
+            }
+            
+        }else{
+            submitRating()
+            
+            
+        }
+  
+    }
+    
 
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -583,7 +667,7 @@ class SMDetailViewController: UIViewController, FloatRatingViewDelegate,UITableV
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
-
+    
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if self.relatedArticles.count > 0 {
@@ -591,66 +675,66 @@ class SMDetailViewController: UIViewController, FloatRatingViewDelegate,UITableV
         }
         return 1
         
-      /*  if section == 1 {
-            if self.relatedArticles.count > 0 {
-                return 2
-            }
-            return 1//self.detailItems.count
-        }
-        return CXDBSettings.getProductAttachments(self.product).count*/
+        /*  if section == 1 {
+         if self.relatedArticles.count > 0 {
+         return 2
+         }
+         return 1//self.detailItems.count
+         }
+         return CXDBSettings.getProductAttachments(self.product).count*/
         
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-       // if indexPath.section == 1 {
-            let identifier = "DetailCell"
-            
-            var cell: CXRelatedArticleTableViewCell! = tableView.dequeueReusableCellWithIdentifier(identifier) as? CXRelatedArticleTableViewCell
-            if cell == nil {
-                tableView.registerNib(UINib(nibName: "CXRelatedArticleTableViewCell", bundle: nil), forCellReuseIdentifier: identifier)
-                cell = tableView.dequeueReusableCellWithIdentifier(identifier) as? CXRelatedArticleTableViewCell
-            }
-            
-            cell.setCollectionViewDataSourceDelegate(self, forRow: indexPath.row)
-            cell.collectionViewOffset = storedOffsets[indexPath.row] ?? 0
-            if self.relatedArticles.count > 0 {
-                if indexPath.row == 0 {
-                    cell.headerLbl.text = "Related Articles"
-                } else {
-                    cell.headerLbl.text = self.productCategory.name
-                }
+        // if indexPath.section == 1 {
+        let identifier = "DetailCell"
+        
+        var cell: CXRelatedArticleTableViewCell! = tableView.dequeueReusableCellWithIdentifier(identifier) as? CXRelatedArticleTableViewCell
+        if cell == nil {
+            tableView.registerNib(UINib(nibName: "CXRelatedArticleTableViewCell", bundle: nil), forCellReuseIdentifier: identifier)
+            cell = tableView.dequeueReusableCellWithIdentifier(identifier) as? CXRelatedArticleTableViewCell
+        }
+        
+        cell.setCollectionViewDataSourceDelegate(self, forRow: indexPath.row)
+        cell.collectionViewOffset = storedOffsets[indexPath.row] ?? 0
+        if self.relatedArticles.count > 0 {
+            if indexPath.row == 0 {
+                cell.headerLbl.text = "Related Articles"
             } else {
                 cell.headerLbl.text = self.productCategory.name
             }
-            return cell;
-       /* } else {
-            let identifier = "ImageCellID"
-            
-            var cell: CXImageDetailTableViewCell! = tableView.dequeueReusableCellWithIdentifier(identifier) as? CXImageDetailTableViewCell
-            if cell == nil {
-                tableView.registerNib(UINib(nibName: "CXImageDetailTableViewCell", bundle: nil), forCellReuseIdentifier: identifier)
-                cell = tableView.dequeueReusableCellWithIdentifier(identifier) as? CXImageDetailTableViewCell
-            }
-            let attachment:NSDictionary = CXDBSettings.getProductAttachments(self.product).objectAtIndex(indexPath.row) as! NSDictionary
-            cell.detailImageView.image = nil
-            cell.activity.hidden = true
-            let prodImage :String = attachment.valueForKey("URL") as! String
-            
-            cell.detailImageView.sd_setImageWithURL(NSURL(string:prodImage)!, placeholderImage: UIImage(named: "smlogo.png"), options:SDWebImageOptions.RefreshCached)
-            cell.descLabel.text = attachment.valueForKey("Image_Name") as? String
-            return cell;
-        }*/
+        } else {
+            cell.headerLbl.text = self.productCategory.name
+        }
+        return cell;
+        /* } else {
+         let identifier = "ImageCellID"
+         
+         var cell: CXImageDetailTableViewCell! = tableView.dequeueReusableCellWithIdentifier(identifier) as? CXImageDetailTableViewCell
+         if cell == nil {
+         tableView.registerNib(UINib(nibName: "CXImageDetailTableViewCell", bundle: nil), forCellReuseIdentifier: identifier)
+         cell = tableView.dequeueReusableCellWithIdentifier(identifier) as? CXImageDetailTableViewCell
+         }
+         let attachment:NSDictionary = CXDBSettings.getProductAttachments(self.product).objectAtIndex(indexPath.row) as! NSDictionary
+         cell.detailImageView.image = nil
+         cell.activity.hidden = true
+         let prodImage :String = attachment.valueForKey("URL") as! String
+         
+         cell.detailImageView.sd_setImageWithURL(NSURL(string:prodImage)!, placeholderImage: UIImage(named: "smlogo.png"), options:SDWebImageOptions.RefreshCached)
+         cell.descLabel.text = attachment.valueForKey("Image_Name") as? String
+         return cell;
+         }*/
         return UITableViewCell()
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         
         return CXConstant.RELATED_ARTICLES_CELL_HEIGHT;
-
-       /* if indexPath.section == 1 {
-            return CXConstant.RELATED_ARTICLES_CELL_HEIGHT;
-        }
-        return CXConstant.DETAIL_IMAGE_CELL_HEIGHT*/
+        
+        /* if indexPath.section == 1 {
+         return CXConstant.RELATED_ARTICLES_CELL_HEIGHT;
+         }
+         return CXConstant.DETAIL_IMAGE_CELL_HEIGHT*/
     }
     
     func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
@@ -807,12 +891,14 @@ extension SMDetailViewController: UICollectionViewDelegate, UICollectionViewData
                 return
             }else{
                 self.product = self.remainingProducts[indexPath.row] as! CX_Products
+                
             }
         }
         self.contentScrollView.removeFromSuperview()
         self.contentScrollView = nil
         self.activity.startActivity()
         self.customizeMainView()
+        //self.getLikesWhenUserLoggedIn()
         self.activity.stopActivity()
     }
 }

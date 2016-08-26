@@ -1,4 +1,4 @@
-//
+      //
 //  MenuViewController.swift
 //  Silly Monks
 //
@@ -25,7 +25,7 @@ class SMCategoryViewController: UIViewController,ENSideMenuDelegate,UITableViewD
     var storeInfo: NSMutableArray!
     var storeJSON: NSDictionary!
     var isItemSelected : Bool!
-    var isTransparantView: Bool = true
+    var isMenuOpened: Bool = true
    // var transparentView: UIView!
 
     override func viewDidLoad() {
@@ -265,7 +265,7 @@ class SMCategoryViewController: UIViewController,ENSideMenuDelegate,UITableViewD
         let leftBtn = UIButton(type: UIButtonType.Custom)
         leftBtn.frame = CGRectMake(0, 0, 30, 30)
         leftBtn.setImage(UIImage(named: "men_icon.png"), forState:.Normal)
-        leftBtn.addTarget(self, action:#selector(SMCategoryViewController.menuAction), forControlEvents: .TouchUpInside)
+        leftBtn.addTarget(self, action:#selector(SMCategoryViewController.showSideMenuView), forControlEvents: .TouchUpInside)
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: leftBtn)
         
         self.titleLabel = UILabel()
@@ -279,12 +279,22 @@ class SMCategoryViewController: UIViewController,ENSideMenuDelegate,UITableViewD
     }
 
     
-   
-    
-    func menuAction(){
-        toggleSideMenuView()
+    override func showSideMenuView() {
+        
+        if isMenuOpened == true{
+            NSLog("menu is open")
+            self.view.userInteractionEnabled = false
+            sideMenuController()?.sideMenu?.showSideMenu()
+            isMenuOpened = false
+        }else{
+            NSLog("menu is close")
+            self.view.userInteractionEnabled = true
+            sideMenuController()?.sideMenu?.hideSideMenu()
+            isMenuOpened = true
+        }
+        
     }
-    
+
     func sideMenuWillOpen() {
         //print("sideMenuWillOpen")
     }
@@ -295,9 +305,12 @@ class SMCategoryViewController: UIViewController,ENSideMenuDelegate,UITableViewD
     
     func sideMenuDidClose() {
        // print("sideMenuDidClose")
+        self.view.userInteractionEnabled = true
+        self.isMenuOpened = true
         let selIndex = sideMenuController()?.sideMenu?.selectedIndexOfMenuItem()
         print ("Selected index\(selIndex)")
         self.customizeViewWithIndex(selIndex!)
+        
     }
     
     func sideMenuDidOpen() {
@@ -473,6 +486,7 @@ extension SMCategoryViewController: UICollectionViewDelegate, UICollectionViewDa
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
        // print("did select item clicked")
         if (isItemSelected == true) {
+            
             return
         }
         isItemSelected = true
