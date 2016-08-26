@@ -100,13 +100,23 @@ class UserFavoritesViewController: UIViewController,UITableViewDataSource,UITabl
     
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        //let prodCategory:CX_Product_Category = self.userFavoritesCategories[indexPath.section] as! CX_Product_Category
-//        let product: CX_Products = self.userFavoritesArray[indexPath.section] as! CX_Products
-//        let detailView = ViewPagerCntl.init()
-//        detailView.product = product
-//        detailView.itemIndex = indexPath.section
-//        //detailView.productCategory = prodCategory
-//        self.navigationController?.pushViewController(detailView, animated: true)
+        let products:CX_Products = self.userFavoritesArray[indexPath.section] as! CX_Products
+        
+        let predicate: NSPredicate = NSPredicate(format: "name = %@", products.type!)
+        
+        //let fetchRequest = CX_Product_Category.MR_requestAllSortedBy("pid", ascending: true)
+        let fetchRequest = NSFetchRequest(entityName: "CX_Product_Category")
+        fetchRequest.predicate = predicate
+        //fetchRequest.entity = productEn
+        // self.productCategories =   CX_Product_Category.MR_executeFetchRequest(fetchRequest)
+        let productCatList :NSArray = CX_Product_Category.MR_executeFetchRequest(fetchRequest)
+        
+       // let product: CX_Products = self.userFavoritesArray[indexPath.section] as! CX_Products
+        let detailView = ViewPagerCntl.init()
+        detailView.product = products
+        detailView.itemIndex = indexPath.section
+        detailView.productCategory = productCatList.lastObject as? CX_Product_Category
+        self.navigationController?.pushViewController(detailView, animated: true)
     }
     
     func showAlertView(message:String, status:Int) {

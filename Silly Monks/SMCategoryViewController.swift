@@ -214,6 +214,8 @@ class SMCategoryViewController: UIViewController,ENSideMenuDelegate,UITableViewD
     
     
     
+    
+    
     func getProuctsOfProductCategory(productName: String,mallId:String) {
         
         //http://sillymonksapp.com:8081/Services/categoryJobsCount?mallId=3&type=movies
