@@ -35,6 +35,8 @@ class SMDetailViewController: UIViewController, FloatRatingViewDelegate,UITableV
     var rateCountLbl:UILabel!
     var noOfLikes:Int!
     var mediumAd: MPAdView!
+    var rateString:String!
+    var infoStr:String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,6 +51,8 @@ class SMDetailViewController: UIViewController, FloatRatingViewDelegate,UITableV
         self.getLikes()
         self.likeLblCount.hidden = true
         self.getLikesWhenUserLoggedIn()
+
+        
     }
     
     func addPager(){
@@ -207,6 +211,8 @@ class SMDetailViewController: UIViewController, FloatRatingViewDelegate,UITableV
         let contentHeight = 190+heightView+10+30+60+self.detailTableView.frame.size.height+100
         self.contentScrollView.contentSize = CGSize.init(width: self.view.frame.size.width, height:contentHeight)
         
+        updateRateView()
+        
     }
     
     func playBtnAction() {
@@ -230,7 +236,7 @@ class SMDetailViewController: UIViewController, FloatRatingViewDelegate,UITableV
         let rView: UIView = UIView.init()
         rView.backgroundColor = UIColor.whiteColor()
         rView.frame = vFrame
-        let str = Float(self.parseProductDescription(self.getProductInfo(product, input: "overallRating")))
+       let str = Float(self.parseProductDescription(self.getProductInfo(product, input: "overallRating")))
         self.ratingValue = String(format: "%.01f", str!)
         self.avgRatingLabel = UILabel.init()
         self.avgRatingLabel.frame = CGRectMake(2, 2, (rView.frame.size.width-4)/2, 20)
@@ -256,6 +262,7 @@ class SMDetailViewController: UIViewController, FloatRatingViewDelegate,UITableV
         likeLblCount.textColor = UIColor.grayColor()
         rView.addSubview(likeLblCount)
         
+        self.floatRatingView = FloatRatingView.init()
         self.floatRatingView = self.customizeRatingView(CGRectMake(2, self.avgRatingLabel.frame.size.height+self.avgRatingLabel.frame.origin.y, self.avgRatingLabel.frame.size.width, 30))
         self.floatRatingView.backgroundColor = UIColor.whiteColor()
         self.ratingValue = self.parseProductDescription(self.getProductInfo(product, input: "overallRating"))
@@ -392,7 +399,7 @@ class SMDetailViewController: UIViewController, FloatRatingViewDelegate,UITableV
         
     }
     func shareAction() {
-        let img: UIImage!
+        let titleStr: String!
         
         let publicUrl : NSString = CXDBSettings.getPublicUrlForArticleSharing(self.product)
         /*   if attachements.count > 0 {
@@ -405,10 +412,10 @@ class SMDetailViewController: UIViewController, FloatRatingViewDelegate,UITableV
          */
         
         
-        img = UIImage(named: "smlogo.png")
+        titleStr = self.parseProductDescription(self.getProductInfo(product, input: "Name"))
         //        let infoText = self.parseProductDescription(self.getProductInfo(product, input: "Description"))
         
-        let shareItems:Array = [publicUrl, img]
+        let shareItems:Array = [publicUrl, titleStr]
         let activityViewController:UIActivityViewController = UIActivityViewController(activityItems: shareItems, applicationActivities: nil)
         activityViewController.excludedActivityTypes = [UIActivityTypePrint, UIActivityTypePostToWeibo, UIActivityTypeCopyToPasteboard, UIActivityTypeAddToReadingList, UIActivityTypePostToVimeo]
         self.presentViewController(activityViewController, animated: true, completion: nil)
@@ -578,10 +585,10 @@ class SMDetailViewController: UIViewController, FloatRatingViewDelegate,UITableV
     }
     
     func submitRating(){
-        let jobId = self.getJobID("jobTypeId")
+        let jobId = self.getJobID("id")
         //let status: Int = Int(responseDict.valueForKey("status") as! String)!
         let userId = (String)(NSUserDefaults.standardUserDefaults().valueForKey("USER_ID") as! NSNumber!)
-        let pId = product.pID as String!
+        let mallID = self.getJobID("createdById")//createdById
         
         
         let alertController = UIAlertController(title: "SillyMonks \n\n\n", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
@@ -604,10 +611,11 @@ class SMDetailViewController: UIViewController, FloatRatingViewDelegate,UITableV
         
         let submitAction = UIAlertAction(title: "Submit", style: UIAlertActionStyle.Default, handler: {(alert: UIAlertAction!) in
             //userId=11&jobId=239&comment=excellent&rating=0.5&commentId=74/
-            let likeURL = "http://sillymonksapp.com:8081/jobs/saveJobCommentJSON?userId="+userId+"&jobId="+jobId+"&comment=excellent&rating="+self.updateRatingValue+"&commentId="+pId
+            let likeURL = "http://sillymonksapp.com:8081/jobs/saveJobCommentJSON?userId="+userId+"&jobId="+jobId+"&rating="+self.updateRatingValue
             SMSyncService.sharedInstance.startSyncProcessWithUrl(likeURL, completion: { (responseDict) in
                 print("\(responseDict)")
                 dispatch_async(dispatch_get_main_queue(), {
+                    self.updateRateView()
                 self.presentWindow?.makeToast(message: "Review Submitted")
                 })
             })
@@ -652,7 +660,29 @@ class SMDetailViewController: UIViewController, FloatRatingViewDelegate,UITableV
         
     }
     
-
+    func updateRateView() {
+        let jobId = self.getJobID("id")
+        let mallID = self.getJobID("createdById")//createdById
+        //http://sillymonksapp.com:8081/Services/getMasters?mallId=3&jobId=4874
+        let updateRatingURL = "http://sillymonksapp.com:8081/Services/getMasters?mallId="+mallID+"&jobId="+jobId
+        SMSyncService.sharedInstance.startSyncProcessWithUrl(updateRatingURL, completion: { (responseDict) in
+            print("\(responseDict)")
+            
+            let str = responseDict.valueForKeyPath("jobs.overallRating") as! NSArray!
+            print("\(str[0])")
+            let strval:String = str[0] as! String
+            let strfloat:Float = Float(strval)!
+            let ratingValue = String(format: "%.01f", strfloat)
+            print("\(ratingValue)")
+            
+            dispatch_async(dispatch_get_main_queue(), {
+                self.avgRatingLabel.text = "Avg.user ratings:\(ratingValue)/5"
+        
+                self.floatRatingView.rating =  Float(ratingValue)!
+                
+            })
+        })
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -750,7 +780,8 @@ class SMDetailViewController: UIViewController, FloatRatingViewDelegate,UITableV
     func designTheMediumAdd() -> MPAdView{
         //self.detailTableView
         self.mediumAd = SampleAppInstanceProvider.sharedInstance.buildMPAdViewWithAdUnitID(CXConstant.mopub_medium_ad_id, size: CGSizeMake(self.view.frame.size.width, MOPUB_MEDIUM_RECT_SIZE.height))
-        self.mediumAd.frame =  CGRectMake(50, 0, MOPUB_MEDIUM_RECT_SIZE.width, MOPUB_MEDIUM_RECT_SIZE.height)
+        self.mediumAd.frame =  CGRectMake(0, 0, MOPUB_MEDIUM_RECT_SIZE.width, MOPUB_MEDIUM_RECT_SIZE.height)
+        mediumAd.autoresizingMask = [.FlexibleLeftMargin, .FlexibleRightMargin, .FlexibleTopMargin, .FlexibleBottomMargin]
         self.mediumAd.loadAd()
         return self.mediumAd
     }
@@ -764,6 +795,7 @@ class SMDetailViewController: UIViewController, FloatRatingViewDelegate,UITableV
         label.sizeToFit()
         return label.frame.height
     }
+    
 }
 
 

@@ -84,7 +84,7 @@ class CXVideoPlayerViewController: UIViewController, BCOVPlaybackControllerDeleg
     func customizeHeader() {
         let leftBtn = UIButton(type: UIButtonType.Custom)
         leftBtn.frame = CGRectMake(0, 0, 35, 35)
-        leftBtn.setImage(UIImage(named: "smlogo.png"), forState:.Normal)
+        leftBtn.setImage(UIImage(named: "left_aarow.png"), forState:.Normal)
         leftBtn.addTarget(self, action:#selector(CXVideoPlayerViewController.backAction), forControlEvents: .TouchUpInside)
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: leftBtn)
         

@@ -223,7 +223,7 @@ class CXConstant: NSObject {
         return menuItemsArray
     }
     
-    static func currentDeviceScreen() -> NSString {
+    static func currentDeviceScreen() -> String {
         let bounds = UIScreen.mainScreen().bounds
         let height = bounds.size.height
         

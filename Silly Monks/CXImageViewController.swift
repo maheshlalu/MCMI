@@ -72,19 +72,19 @@ class CXImageViewController: UIViewController {
     }
     
     func shareAndDownloadBtnChages() {
-        let shareBtn = UIButton.init(frame: CGRectMake(self.view.frame.size.width-120, 10, 45, 45))
-        shareBtn.setImage(UIImage(named:"share_108.png"), forState: UIControlState.Normal)
-        shareBtn.addTarget(self, action:#selector(CXImageViewController.shareBtnAction), forControlEvents: UIControlEvents.TouchUpInside)
-        //shareBtn.imageView?.contentMode = UIViewContentMode.ScaleAspectFit
-        self.picView.addSubview(shareBtn)
+//        let shareBtn = UIButton.init(frame: CGRectMake(self.view.frame.size.width-120, 10, 45, 45))
+//        shareBtn.setImage(UIImage(named:"share_108.png"), forState: UIControlState.Normal)
+//        shareBtn.addTarget(self, action:#selector(CXImageViewController.shareBtnAction), forControlEvents: UIControlEvents.TouchUpInside)
+//        //shareBtn.imageView?.contentMode = UIViewContentMode.ScaleAspectFit
+//        self.picView.addSubview(shareBtn)
         
-        let downlodBtn = UIButton.init(frame: CGRectMake(shareBtn.frame.size.width+shareBtn.frame.origin.x+10, 10, 45, 45))
-        downlodBtn.setImage(UIImage(named: "down_icon.png"), forState: UIControlState.Normal)
+        let downlodBtn = UIButton.init(frame: CGRectMake(self.view.frame.size.width-40,25, 30, 30))
+        downlodBtn.setImage(UIImage(named: "downloadImg"), forState: UIControlState.Normal)
         downlodBtn.addTarget(self, action: #selector(CXImageViewController.downloadAction), forControlEvents: UIControlEvents.TouchUpInside)
         //downlodBtn.imageView?.contentMode = UIViewContentMode.ScaleAspectFit
         self.picView.addSubview(downlodBtn)
         
-        let backBtn = UIButton.init(frame:CGRectMake(10, 10, 50, 50))
+        let backBtn = UIButton.init(frame:CGRectMake(10, 25, 30, 30))
         backBtn.setImage(UIImage(named: "left_aarow.png"), forState: UIControlState.Normal)
         backBtn.addTarget(self, action: #selector(CXImageViewController.backAction), forControlEvents: UIControlEvents.TouchUpInside)
         self.picView.addSubview(backBtn)

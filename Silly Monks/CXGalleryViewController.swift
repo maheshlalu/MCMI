@@ -105,7 +105,13 @@ class CXGalleryViewController: UIViewController,UICollectionViewDataSource, UICo
         let bottomAddView : UIView = UIView(frame:CGRectMake(0, self.galleryCollectionView.frame.size.height+5, self.galleryCollectionView.frame.size.width, 49))
         //bottomAddView.backgroundColor = UIColor.greenColor()
         self.bottomAd = SampleAppInstanceProvider.sharedInstance.buildMPAdViewWithAdUnitID(CXConstant.mopub_banner_ad_id, size: CGSizeMake(self.view.frame.size.width, 49))
-        self.bottomAd.frame =  CGRectMake(70, 0, MOPUB_MEDIUM_RECT_SIZE.width, 50)
+        self.bottomAd.frame =  CGRectMake(50, 0, self.view.frame.size.width, 50)
+        if CXConstant.currentDeviceScreen() == IPHONE_5S{
+            self.bottomAd = SampleAppInstanceProvider.sharedInstance.buildMPAdViewWithAdUnitID(CXConstant.mopub_banner_ad_id, size: CGSizeMake(self.view.frame.size.width, 40))
+            self.bottomAd.frame =  CGRectMake(0, 0, self.view.frame.size.width, 39)
+        }
+        //self.bottomAd.backgroundColor = UIColor.redColor()
+        self.bottomAd.autoresizingMask =  [.FlexibleLeftMargin, .FlexibleRightMargin, .FlexibleTopMargin, .FlexibleBottomMargin]
         bottomAddView.addSubview(self.bottomAd)
         self.bottomAd.loadAd()
        self.view.addSubview(bottomAddView)
@@ -159,8 +165,6 @@ class CXGalleryViewController: UIViewController,UICollectionViewDataSource, UICo
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         print("Collection view at row \(collectionView.tag) selected index path \(indexPath) indexPath Row\(indexPath.row)")
-        
-
 
       //  NSNumber(int: UIPageViewControllerSpineLocation.Mid)
         
