@@ -10,8 +10,8 @@ import UIKit
 
 @objc protocol ViewPagerControllerDelegate
 {
-    optional func willMoveToViewControllerAtIndex(index:Int)
-    optional func didMoveToViewControllerAtIndex(index:Int)
+    @objc optional func willMoveToViewControllerAtIndex(_ index:Int)
+    @objc optional func didMoveToViewControllerAtIndex(_ index:Int)
 }
 
 @objc protocol ViewPagerControllerDataSource
@@ -20,13 +20,13 @@ import UIKit
     func numberOfPages() -> Int
     
     //View Controller for required page at index
-    func viewControllerAtPosition(position:Int) -> UIViewController
+    func viewControllerAtPosition(_ position:Int) -> UIViewController
     
     //list of page titles
     func pageTitles() -> [String]
     
     //Index of page which is to be displayed at first
-    optional func startViewPagerAtIndex()->Int
+    @objc optional func startViewPagerAtIndex()->Int
     
     
 }
@@ -37,12 +37,12 @@ class ViewPagerController: UIViewController {
     var delegate : ViewPagerControllerDelegate?
     var options: ViewPagerOptions!
     
-    private var pageViewController: UIPageViewController?
-    private var tabView:UIScrollView?
-    private var tabIndicatorView:UIView?
+    fileprivate var pageViewController: UIPageViewController?
+    fileprivate var tabView:UIScrollView?
+    fileprivate var tabIndicatorView:UIView?
     
-    private var titleLabelArr = [UILabel]()
-    private var titleLabelWidthArr = [CGFloat]()
+    fileprivate var titleLabelArr = [UILabel]()
+    fileprivate var titleLabelWidthArr = [CGFloat]()
     
     var currentPageIndex = 0
     
@@ -54,8 +54,8 @@ class ViewPagerController: UIViewController {
         
         tabView = UIScrollView(frame: CGRect(x: 0, y: 0, width: options.tabViewWidth!, height: options.tabViewHeight))
         tabView!.backgroundColor = options.tabViewBackgroundDefaultColor
-        tabView!.scrollEnabled = true
-        tabView!.pagingEnabled = true
+        tabView!.isScrollEnabled = true
+        tabView!.isPagingEnabled = true
         tabView!.showsHorizontalScrollIndicator = false
         tabView!.showsVerticalScrollIndicator = false
         
@@ -71,8 +71,8 @@ class ViewPagerController: UIViewController {
         
         let viewDict:[String:UIView] = ["v0":self.tabView!]
         
-        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[v0]-0-|", options: NSLayoutFormatOptions(), metrics: nil, views: viewDict))
-        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-0-[v0]-0-|", options: NSLayoutFormatOptions(), metrics: nil, views: viewDict))
+        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[v0]-0-|", options: NSLayoutFormatOptions(), metrics: nil, views: viewDict))
+        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-0-[v0]-0-|", options: NSLayoutFormatOptions(), metrics: nil, views: viewDict))
         
         setupPageTitle()
         createPageViewController()
@@ -87,7 +87,7 @@ class ViewPagerController: UIViewController {
      If true, lays out each labels of equal width else lays out each label width left
      and right padding
      */
-    private func setupPageTitle()
+    fileprivate func setupPageTitle()
     {
         let titles = dataSource!.pageTitles()
         let labelHeight = options.tabViewHeight
@@ -104,8 +104,8 @@ class ViewPagerController: UIViewController {
                 let label = UILabel()
                 label.textColor = options.tabViewTextDefaultColor
                 label.text = eachTitle
-                label.textAlignment = .Center
-                label.frame = CGRectMake(totalWidth, 0, eachLabelWidth, labelHeight)
+                label.textAlignment = .center
+                label.frame = CGRect(x: totalWidth, y: 0, width: eachLabelWidth, height: labelHeight!)
                 totalWidth += eachLabelWidth
                 tabView!.addSubview(label)
                 titleLabelWidthArr.append(eachLabelWidth)
@@ -128,13 +128,13 @@ class ViewPagerController: UIViewController {
                 let label = UILabel()
                 label.textColor = options.tabViewTextDefaultColor
                 label.text = eachTitle
-                var labelWidth = label.intrinsicContentSize().width
-                labelWidth += leftPadding + rightPadding
-                label.textAlignment = .Center
+                var labelWidth = label.intrinsicContentSize.width
+                labelWidth += leftPadding! + rightPadding!
+                label.textAlignment = .center
                 
                 if !isEvenlyDistributed
                 {
-                    label.frame = CGRectMake(totalWidth, 0, labelWidth, labelHeight)
+                    label.frame = CGRect(x: totalWidth, y: 0, width: labelWidth, height: labelHeight!)
                     tabView!.addSubview(label)
                     
                 }
@@ -148,19 +148,19 @@ class ViewPagerController: UIViewController {
             //In case tabs are evenly distributed
             if isEvenlyDistributed
             {
-                let labelWidth = titleLabelWidthArr.maxElement()!
+                let labelWidth = titleLabelWidthArr.max()!
                 
                 
                 for i in 0 ..< titleLabelArr.count
                 {
-                    titleLabelArr[i].frame = CGRectMake(CGFloat(i) * labelWidth, 0, labelWidth, labelHeight)
+                    titleLabelArr[i].frame = CGRect(x: CGFloat(i) * labelWidth, y: 0, width: labelWidth, height: labelHeight!)
                     tabView!.addSubview(titleLabelArr[i])
                     
                 }
                 totalWidth = labelWidth * CGFloat(titleLabelArr.count)
             }
             
-            tabView!.contentSize = CGSize(width: totalWidth, height: labelHeight)
+            tabView!.contentSize = CGSize(width: totalWidth, height: labelHeight!)
             
         }
         
@@ -169,13 +169,13 @@ class ViewPagerController: UIViewController {
     
     //MARK: PageViewController Setup
     
-    private func createPageViewController()
+    fileprivate func createPageViewController()
     {
-        pageViewController = UIPageViewController(transitionStyle: options.viewPagerTransitionStyle, navigationOrientation: UIPageViewControllerNavigationOrientation.Horizontal, options: nil)
+        pageViewController = UIPageViewController(transitionStyle: options.viewPagerTransitionStyle, navigationOrientation: UIPageViewControllerNavigationOrientation.horizontal, options: nil)
         pageViewController!.dataSource = self
         pageViewController!.delegate = self
         
-        pageViewController!.view.frame = CGRectMake(0, options.tabViewHeight, options.getViewPagerWidth(), options.getViewPagerHeight())
+        pageViewController!.view.frame = CGRect(x: 0, y: options.tabViewHeight, width: options.getViewPagerWidth(), height: options.getViewPagerHeight())
         
         if dataSource!.numberOfPages() > 0
         {
@@ -186,19 +186,19 @@ class ViewPagerController: UIViewController {
             
             let firstController = getPageItemViewController(currentPageIndex)!
             let startingViewControllers = [firstController]
-            pageViewController!.setViewControllers(startingViewControllers, direction: .Forward, animated: false, completion: nil)
+            pageViewController!.setViewControllers(startingViewControllers, direction: .forward, animated: false, completion: nil)
         }
         
         self.addChildViewController(pageViewController!)
         self.view.addSubview(pageViewController!.view)
-        self.pageViewController!.didMoveToParentViewController(self)
+        self.pageViewController!.didMove(toParentViewController: self)
         
         setupPageIndicator(currentPageIndex, previousIndex: currentPageIndex)
         
     }
     
     
-    private func getPageItemViewController(index: Int) -> UIViewController?
+    fileprivate func getPageItemViewController(_ index: Int) -> UIViewController?
     {
         if index < dataSource!.numberOfPages()
         {
@@ -211,7 +211,7 @@ class ViewPagerController: UIViewController {
     }
     
     
-    private func setupPageIndicator(currentIndex:Int,previousIndex:Int)
+    fileprivate func setupPageIndicator(_ currentIndex:Int,previousIndex:Int)
     {
         
         if previousIndex != currentIndex
@@ -235,7 +235,7 @@ class ViewPagerController: UIViewController {
         //If tabs are evenly distributed
         if options.isEachTabEvenlyDistributed!
         {
-            width = titleLabelWidthArr.maxElement()!
+            width = titleLabelWidthArr.max()!
             
         }
         else
@@ -263,24 +263,24 @@ class ViewPagerController: UIViewController {
         {
             tabIndicatorView = UIView()
             tabIndicatorView?.backgroundColor = options.tabIndicatorViewBackgroundColor
-            tabIndicatorView!.frame = CGRectMake(xPosition, yPosition, width, height)
+            tabIndicatorView!.frame = CGRect(x: xPosition, y: yPosition, width: width, height: height!)
             tabIndicatorView!.backgroundColor = options.tabIndicatorViewBackgroundColor
             tabView!.addSubview(tabIndicatorView!)
         }
         
-        tabView!.scrollRectToVisible(CGRect(x: xPosition, y: yPosition, width: width, height: height), animated: true)
+        tabView!.scrollRectToVisible(CGRect(x: xPosition, y: yPosition, width: width, height: height!), animated: true)
     }
     
     
-    func tabViewTapped(sender: UITapGestureRecognizer)
+    func tabViewTapped(_ sender: UITapGestureRecognizer)
     {
-        let tapLocation = sender.locationInView(self.tabView!)
+        let tapLocation = sender.location(in: self.tabView!)
         
         let labelViews = tabView!.subviews
         
         for i in 0 ..< labelViews.count
         {
-            if CGRectContainsPoint(labelViews[i].frame, tapLocation)
+            if labelViews[i].frame.contains(tapLocation)
             {
                 if i != currentPageIndex
                 {
@@ -293,10 +293,10 @@ class ViewPagerController: UIViewController {
     }
     
     
-    private func displayChoosenViewController(index:Int)
+    fileprivate func displayChoosenViewController(_ index:Int)
     {
         let chosenViewController = getPageItemViewController(index)!
-        pageViewController!.setViewControllers([chosenViewController], direction: UIPageViewControllerNavigationDirection.Forward, animated: true, completion: nil)
+        pageViewController!.setViewControllers([chosenViewController], direction: UIPageViewControllerNavigationDirection.forward, animated: true, completion: nil)
         
     }
     
@@ -307,7 +307,7 @@ class ViewPagerController: UIViewController {
 
 extension ViewPagerController: UIPageViewControllerDelegate
 {
-    func pageViewController(pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
+    func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
         
         if completed
         {
@@ -319,7 +319,7 @@ extension ViewPagerController: UIPageViewControllerDelegate
         return
     }
     
-    func pageViewController(pageViewController: UIPageViewController, willTransitionToViewControllers pendingViewControllers: [UIViewController]) {
+    func pageViewController(_ pageViewController: UIPageViewController, willTransitionTo pendingViewControllers: [UIViewController]) {
         
         let pageIndex = pendingViewControllers.first!.view.tag
         delegate?.willMoveToViewControllerAtIndex?(pageIndex)
@@ -332,7 +332,7 @@ extension ViewPagerController: UIPageViewControllerDelegate
 
 extension ViewPagerController: UIPageViewControllerDataSource
 {
-    func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController?
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController?
     {
         if viewController.view.tag > 0
         {
@@ -342,7 +342,7 @@ extension ViewPagerController: UIPageViewControllerDataSource
         
     }
     
-    func pageViewController(pageViewController: UIPageViewController, viewControllerAfterViewController viewController: UIViewController) -> UIViewController?
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController?
     {
         if viewController.view.tag + 1 < dataSource!.numberOfPages()
         {

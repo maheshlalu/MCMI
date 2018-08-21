@@ -26,7 +26,7 @@ class SMUserDetails: NSObject {
         return _SingletonSharedInstance
     }
     
-    private override init() {
+    fileprivate override init() {
         
     }
     

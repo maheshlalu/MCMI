@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import mopub_ios_sdk
+//import <;MoPubSDK>
 
 private var _sharedInstance:SampleAppInstanceProvider! = SampleAppInstanceProvider()
 
@@ -17,7 +17,7 @@ class SampleAppInstanceProvider: NSObject {
         return _sharedInstance
     }
     
-    private override init() {
+    fileprivate override init() {
         
     }
     
@@ -26,14 +26,14 @@ class SampleAppInstanceProvider: NSObject {
     }
     
     
-    func buildMPAdViewWithAdUnitID(banerID:String,size:CGSize) -> MPAdView {
+    func buildMPAdViewWithAdUnitID(_ banerID:String,size:CGSize) -> MPAdView {
         
         let addView : MPAdView = MPAdView(adUnitId: banerID, size: size)
         return addView
         
     }
     
-    func buildMPInterstitialAdControllerWithAdUnitID(banerID:String) -> MPInterstitialAdController{
+    func buildMPInterstitialAdControllerWithAdUnitID(_ banerID:String) -> MPInterstitialAdController{
         
         let interStitialAdCnt : MPInterstitialAdController = MPInterstitialAdController(forAdUnitId: banerID)
         return interStitialAdCnt

@@ -17,11 +17,10 @@ pod "CHTCollectionViewWaterfallLayout/Swift"
 pod 'Google/SignIn'
 
 pod 'SDWebImage', '~>3.8'
-
 pod 'Fabric'
-pod 'mopub-ios-sdk'
+pod 'Crashlytics'
+#pod 'mopub-ios-sdk'
 pod 'MagicalRecord/Shorthand'
-pod 'EVTopTabBar'
-pod "LocationManager"
+#pod "LocationManager"
 end
 

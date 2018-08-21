@@ -27,67 +27,67 @@ class CXCommentRatingViewController: UIViewController,FloatRatingViewDelegate,UI
     
     
     func customizeHeaderView() {
-        self.navigationController?.navigationBar.translucent = false;
+        self.navigationController?.navigationBar.isTranslucent = false;
         self.navigationController?.navigationBar.barTintColor = UIColor.navBarColor()
         
         let lImage = UIImage(named: "left_aarow.png") as UIImage?
-        let button = UIButton (type: UIButtonType.Custom) as UIButton
-        button.frame = CGRectMake(0, 0, 40, 40)
-        button.setImage(lImage, forState: .Normal)
-        button.backgroundColor = UIColor.clearColor()
-        button.addTarget(self, action: #selector(CXCommentRatingViewController.backAction), forControlEvents: .TouchUpInside)
+        let button = UIButton (type: UIButtonType.custom) as UIButton
+        button.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+        button.setImage(lImage, for: UIControlState())
+        button.backgroundColor = UIColor.clear
+        button.addTarget(self, action: #selector(CXCommentRatingViewController.backAction), for: .touchUpInside)
         
-        let navSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem:UIBarButtonSystemItem.FixedSpace,target: nil, action: nil)
+        let navSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem:UIBarButtonSystemItem.fixedSpace,target: nil, action: nil)
         navSpacer.width = -16;
         self.navigationItem.leftBarButtonItems = [navSpacer,UIBarButtonItem.init(customView: button)]
         
         
         let tLabel : UILabel = UILabel()
-        tLabel.frame = CGRectMake(0, 0, 120, 40);
-        tLabel.backgroundColor = UIColor.clearColor()
+        tLabel.frame = CGRect(x: 0, y: 0, width: 120, height: 40);
+        tLabel.backgroundColor = UIColor.clear
         tLabel.font = UIFont.init(name: "Roboto-Bold", size: 18)
         tLabel.text = "Comments"
-        tLabel.textAlignment = NSTextAlignment.Center
-        tLabel.textColor = UIColor.whiteColor()
+        tLabel.textAlignment = NSTextAlignment.center
+        tLabel.textColor = UIColor.white
         self.navigationItem.titleView = tLabel
     }
     
     func customizeMainView() {
-        self.cScrollView = UIScrollView.init(frame: CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-65))
+        self.cScrollView = UIScrollView.init(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height-65))
         self.view.addSubview(self.cScrollView)
         
-        let labelText = UILabel.init(frame: CGRectMake(5, 0, (self.cScrollView.frame.size.width/2)-10, 45))
+        let labelText = UILabel.init(frame: CGRect(x: 5, y: 0, width: (self.cScrollView.frame.size.width/2)-10, height: 45))
         labelText.text = "YOUR RATING"
         labelText.font = UIFont(name: "Roboto-Regular", size:15)
-        labelText.textAlignment = NSTextAlignment.Left
+        labelText.textAlignment = NSTextAlignment.left
         self.cScrollView.addSubview(labelText)
         
-        self.ratingLabel = UILabel.init(frame: CGRectMake(labelText.frame.size.width+labelText.frame.origin.x+5, 0, (self.cScrollView.frame.size.width/2)-10, 45))
+        self.ratingLabel = UILabel.init(frame: CGRect(x: labelText.frame.size.width+labelText.frame.origin.x+5, y: 0, width: (self.cScrollView.frame.size.width/2)-10, height: 45))
         self.ratingLabel.text = "0.0"
         self.ratingLabel.font = UIFont(name: "Roboto-Regular",size: 15)
-        self.ratingLabel.textAlignment = NSTextAlignment.Right
+        self.ratingLabel.textAlignment = NSTextAlignment.right
         self.cScrollView.addSubview(self.ratingLabel)
         
         let ratWidth  = self.cScrollView.frame.size.width/2
         
-        self.floatRatingView = self.customizeRatingView(CGRectMake((self.cScrollView.frame.size.width-ratWidth)/2, self.ratingLabel.frame.size.height+self.ratingLabel.frame.origin.y,ratWidth, 40))
-        self.floatRatingView.backgroundColor = UIColor.clearColor()
+        self.floatRatingView = self.customizeRatingView(CGRect(x: (self.cScrollView.frame.size.width-ratWidth)/2, y: self.ratingLabel.frame.size.height+self.ratingLabel.frame.origin.y,width: ratWidth, height: 40))
+        self.floatRatingView.backgroundColor = UIColor.clear
         self.cScrollView.addSubview(self.floatRatingView)
         
-        self.commentsView = UITextView.init(frame: CGRectMake(5, self.floatRatingView.frame.size.height+self.floatRatingView.frame.origin.y, self.cScrollView.frame.size.width-10, 220))
+        self.commentsView = UITextView.init(frame: CGRect(x: 5, y: self.floatRatingView.frame.size.height+self.floatRatingView.frame.origin.y, width: self.cScrollView.frame.size.width-10, height: 220))
         self.commentsView.delegate = self
         self.commentsView.font = UIFont(name: "Roboto-Regular", size: 15)
         self.commentsView.text = "Wrire at least 50 characters"
-        self.commentsView.layer.borderColor = UIColor.darkGrayColor().CGColor
+        self.commentsView.layer.borderColor = UIColor.darkGray.cgColor
         self.commentsView.layer.borderWidth = 1
         self.cScrollView.addSubview(self.commentsView)
         self.addAccessoryViewToField(self.commentsView)
         
-        let submitBtn = UIButton.init(frame: CGRectMake(10, self.commentsView.frame.size.height+self.commentsView.frame.origin.y+10, self.cScrollView.frame.size.width-20, 40))
-        submitBtn.setTitle("Submit", forState: UIControlState.Normal)
-        submitBtn.backgroundColor = UIColor.darkGrayColor()
-        submitBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-        submitBtn.addTarget(self, action: #selector(CXCommentRatingViewController.submitAction), forControlEvents: UIControlEvents.TouchUpInside)
+        let submitBtn = UIButton.init(frame: CGRect(x: 10, y: self.commentsView.frame.size.height+self.commentsView.frame.origin.y+10, width: self.cScrollView.frame.size.width-20, height: 40))
+        submitBtn.setTitle("Submit", for: UIControlState())
+        submitBtn.backgroundColor = UIColor.darkGray
+        submitBtn.setTitleColor(UIColor.white, for: UIControlState())
+        submitBtn.addTarget(self, action: #selector(CXCommentRatingViewController.submitAction), for: UIControlEvents.touchUpInside)
         self.cScrollView.addSubview(submitBtn)
     }
     
@@ -96,33 +96,33 @@ class CXCommentRatingViewController: UIViewController,FloatRatingViewDelegate,UI
             if self.commentsView.text.characters.count < 50 {
                 self.showAlertView("Please enter at least 50 characters.", status: 0)
             }else{
-               // self.submitTheComments()
+                self.submitTheComments()
             }
         }
     }
     
-    func showAlertView(message:String, status:Int) {
-        let alert = UIAlertController(title: "Silly Monks", message: message, preferredStyle: UIAlertControllerStyle.Alert)
+    func showAlertView(_ message:String, status:Int) {
+        let alert = UIAlertController(title: "Smart Movie Ticket", message: message, preferredStyle: UIAlertControllerStyle.alert)
         //alert.addAction(UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default, handler: nil))
-        let okAction = UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default) {
+        let okAction = UIAlertAction(title: "Okay", style: UIAlertActionStyle.default) {
             UIAlertAction in
             if status == 1 {
                 //self.navigationController?.popViewControllerAnimated(true)
             }
         }
         alert.addAction(okAction)
-        self.presentViewController(alert, animated: true, completion: nil)
+        self.present(alert, animated: true, completion: nil)
     }
 
 
-    func customizeRatingView(frame:CGRect) -> FloatRatingView {
+    func customizeRatingView(_ frame:CGRect) -> FloatRatingView {
         let ratView : FloatRatingView = FloatRatingView.init(frame: frame)
         
         ratView.emptyImage = UIImage(named: "star_unsel_108.png")
         ratView.fullImage = UIImage(named: "star_sel_108.png")
         // Optional params
         ratView.delegate = self
-        ratView.contentMode = UIViewContentMode.ScaleAspectFit
+        ratView.contentMode = UIViewContentMode.scaleAspectFit
         ratView.maxRating = 5
         ratView.minRating = 0
         ratView.rating = 0
@@ -133,12 +133,12 @@ class CXCommentRatingViewController: UIViewController,FloatRatingViewDelegate,UI
         return ratView
     }
     
-    func addAccessoryViewToField(mTextView:UITextView) {
-        let numToolBar = UIToolbar.init(frame: CGRectMake(0, 0, self.view.frame.size.width, 50))
-        numToolBar.barStyle = UIBarStyle.BlackTranslucent
-        let clearBtn = UIBarButtonItem.init(title: "Clear", style: UIBarButtonItemStyle.Bordered, target: self, action: #selector(CXCommentRatingViewController.clearNumPadAction))
-        let flexSpace = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action:nil)
-        let doneBtn = UIBarButtonItem.init(title:"Done", style: UIBarButtonItemStyle.Done, target: self, action: #selector(CXCommentRatingViewController.doneNumberPadAction))
+    func addAccessoryViewToField(_ mTextView:UITextView) {
+        let numToolBar = UIToolbar.init(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 50))
+        numToolBar.barStyle = UIBarStyle.blackTranslucent
+        let clearBtn = UIBarButtonItem.init(title: "Clear", style: UIBarButtonItemStyle.bordered, target: self, action: #selector(CXCommentRatingViewController.clearNumPadAction))
+        let flexSpace = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action:nil)
+        let doneBtn = UIBarButtonItem.init(title:"Done", style: UIBarButtonItemStyle.done, target: self, action: #selector(CXCommentRatingViewController.doneNumberPadAction))
         
         numToolBar.items = [clearBtn,flexSpace,doneBtn]
         numToolBar.sizeToFit()
@@ -150,29 +150,57 @@ class CXCommentRatingViewController: UIViewController,FloatRatingViewDelegate,UI
     }
     //MARK: Submit the comment
     
-        func commentSubiturl(userID:String, jobID:String,comment:String,rating:String,commentId:String) ->String{
+        func commentSubiturl(_ userID:String, jobID:String,comment:String,rating:String,commentId:String) ->String{
     
             //let escapedString = productType.stringByAddingPercentEncodingWithAllowedCharacters(.URLHostAllowedCharacterSet())
-            let reqString = "http://sillymonksapp.com:8081/jobs/saveJobCommentJSON?userId="+userID+"&jobId="+jobID+"&comment="+comment+"&rating="+rating+"&commentId="+commentId
-            //http://sillymonksapp.com:8081/jobs/saveJobCommentJSON?/ userId=11&jobId=239&comment=excellent&rating=0.5&commentId=74
-            return reqString
+            let reqString = CXConstant.sharedInstance.PRODUCTION_BASE_URL + "/jobs/saveJobCommentJSON?userId="+userID+"&jobId="+jobID+"&comment="+comment+"&rating="+rating+"&disabled=false"
+            //http://storeongo.com:8081/jobs/saveJobCommentJSON?/ userId=11&jobId=239&comment=excellent&rating=0.5&commentId=74
+            
+            let encodedPublicUrl = reqString.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!
+
+            return encodedPublicUrl
         }
 
     func submitTheComments(){
         /*
          return getHostUrl(mContext) + "/jobs/saveJobCommentJSON?";
          / userId=11&jobId=239&comment=excellent&rating=0.5&commentId=74 /
-         
-        
          */
-        
-        
-        SMSyncService.sharedInstance.startSyncProcessWithUrl(self.commentSubiturl((NSUserDefaults.standardUserDefaults().valueForKey("USER_ID") as?String)!, jobID: self.jobID, comment: self.commentsView.text, rating: self.ratingLabel.text!, commentId: "1")) { (responseDict) in
-            
+        LoadingView.show("Submitting...", animated: true)
+        guard let userId = UserDefaults.standard.value(forKey: "USER_ID") else {
+            return
+        }
+        let number = CXConstant.resultString((userId as? AnyObject)!)
+        SMSyncService.sharedInstance.startSyncProcessWithUrl(self.commentSubiturl(number, jobID: self.jobID, comment: self.commentsView.text.trimmingCharacters(in: CharacterSet.whitespaces), rating: self.ratingLabel.text!, commentId: "1")) { (responseDict) in
+           // print(responseDict)
+            DispatchQueue.main.async(execute: { () -> Void in
+                LoadingView.hide()
+                let alert = UIAlertController(title: "Smart Movie Ticket", message:"Submitted Successfully" , preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "Okay", style: UIAlertActionStyle.default, handler: { (alert) in
+                    let viewcontrollers = self.navigationController?.viewControllers
+                    for vc in viewcontrollers!
+                    {
+                        if vc.isKind(of: SMCategoryViewController.self)
+                        {
+                            self.navigationController?.popToViewController(vc, animated: true)
+                            break
+                        }
+                    }
+                    
+                }))
+                self.present(alert, animated: true, completion: nil)  
+            })
             
         }
         
     }
+    
+    
+    /*
+     
+     
+    
+     */
     
     func clearNumPadAction() {
         self.view.endEditing(true)
@@ -182,45 +210,45 @@ class CXCommentRatingViewController: UIViewController,FloatRatingViewDelegate,UI
 
     
     func backAction() {
-        self.navigationController?.popViewControllerAnimated(true)
+        self.navigationController?.popViewController(animated: true)
     }
     
-    func floatRatingView(ratingView: FloatRatingView, isUpdating rating:Float) {
+    func floatRatingView(_ ratingView: FloatRatingView, isUpdating rating:Float) {
         //ratingView.rating = 0
 //        let signInView = CXSignInSignUpViewController.init()
 //        self.navigationController?.pushViewController(signInView, animated: true)
     }
     
-    func floatRatingView(ratingView: FloatRatingView, didUpdate rating: Float) {
+    func floatRatingView(_ ratingView: FloatRatingView, didUpdate rating: Float) {
         //ratingView.rating = 0
         self.ratingLabel.text = NSString(format: "%.1f", self.floatRatingView.rating) as String
     }
     
-    func textViewDidBeginEditing(textView: UITextView) {
+    func textViewDidBeginEditing(_ textView: UITextView) {
         if textView.text == "Wrire at least 50 characters" {
             textView.text = ""
         }
         
-        let scrollPoint = CGPointMake(0, textView.frame.origin.y)
+        let scrollPoint = CGPoint(x: 0, y: textView.frame.origin.y)
         self.cScrollView.setContentOffset(scrollPoint, animated: true)
     }
     
-    func textViewDidEndEditing(textView: UITextView) {
-        textView.text = textView.text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+    func textViewDidEndEditing(_ textView: UITextView) {
+        textView.text = textView.text.trimmingCharacters(in: CharacterSet.whitespaces)
         if textView.text == nil {
             textView.text = "Wrire at least 50 characters"
         }
-        self.cScrollView.setContentOffset(CGPointZero, animated: true)
+        self.cScrollView.setContentOffset(CGPoint.zero, animated: true)
     }
     
-    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if text == "\n" {
-            textView.contentOffset = CGPointMake(0.0, textView.contentSize.height)
+            textView.contentOffset = CGPoint(x: 0.0, y: textView.contentSize.height)
         }
         return true
     }
     
-    func textViewDidChange(textView: UITextView) {
+    func textViewDidChange(_ textView: UITextView) {
 //        let line : CGRect = textView.caretRectForPosition((textView.selectedTextRange?.start)!)
 //        let overFlow: CGFloat = (line.origin.y + line.size.height) - ((textView.contentOffset.y + textView.bounds.size.height) - textView.contentInset.bottom - textView.contentInset.top)
 //        if overFlow > 0 {

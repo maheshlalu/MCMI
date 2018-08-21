@@ -8,9 +8,8 @@
 
 import UIKit
 import SDWebImage
-import mopub_ios_sdk
+//import mopub_ios_sdk
 import CoreLocation
-import LocationManager
 
 class CXProductsViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,MPTableViewAdPlacerDelegate, MPInterstitialAdControllerDelegate {
     
@@ -27,7 +26,9 @@ class CXProductsViewController: UIViewController,UITableViewDelegate,UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.smBackgroundColor()
-  
+        self.products = CXDBSettings.getProductsWithCategory(self.productCategory)
+        self.customizeHeaderView()
+        self.customizeMainView()
 
         // Do any additional setup after loading the view.
     }
@@ -46,16 +47,16 @@ class CXProductsViewController: UIViewController,UITableViewDelegate,UITableView
 
     }
     
-    func insertNewObject(sender: AnyObject) {
-        objects.insert(NSDate(), atIndex: 0)
-        let indexPath = NSIndexPath(forRow: 0, inSection: 0)
-        self.productsTableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+    func insertNewObject(_ sender: AnyObject) {
+        objects.insert(Date() as AnyObject, at: 0)
+        let indexPath = IndexPath(row: 0, section: 0)
+        self.productsTableView.insertRows(at: [indexPath], with: .automatic)
         
         // TODO: Depending on your use of UITableView, you will need to
         // add "mp_" to other method calls in addition to this one.
         // See http://t.co/mopub-ios-native-category for a list of
         // required replacements.
-        self.productsTableView.mp_insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+        self.productsTableView.mp_insertRows(atIndexPaths: [indexPath], with: .automatic)
     }
 
     
@@ -79,17 +80,17 @@ class CXProductsViewController: UIViewController,UITableViewDelegate,UITableView
     
         // TODO: Calculate the size of your ad cell given a maximum width
         settings.viewSizeHandler = {(maxWidth: CGFloat) -> CGSize in
-            return CGSizeMake(maxWidth, 250);
+            return CGSize(width: maxWidth, height: 250);
         };
         
-        let config = MPStaticNativeAdRenderer.rendererConfigurationWithRendererSettings(settings)
+        let config = MPStaticNativeAdRenderer.rendererConfiguration(with: settings)
         
         // TODO: Create your own UITableViewCell subclass that implements MPNativeAdRendering
       //  self.placer = MPTableViewAdPlacer(tableView: self.productsTableView, viewController: self, rendererConfigurations: [config])
         
         let addPostion : MPClientAdPositioning = MPClientAdPositioning()
-        addPostion.addFixedIndexPath(NSIndexPath(forRow: 0, inSection: 0))
-        addPostion.enableRepeatingPositionsWithInterval(6)
+        addPostion.addFixedIndexPath(IndexPath(row: 0, section: 0))
+        addPostion.enableRepeatingPositions(withInterval: 6)
         
         self.placer = MPTableViewAdPlacer(tableView: self.productsTableView, viewController: self, adPositioning: addPostion, rendererConfigurations: [config])
         
@@ -98,40 +99,38 @@ class CXProductsViewController: UIViewController,UITableViewDelegate,UITableView
         // that.
         //
         // TODO: Replace this test id with your personal ad unit id
-        self.placer.loadAdsForAdUnitID(CXConstant.NATIVEADD_UNITI_ID, targeting: targeting)
+        self.placer.loadAds(forAdUnitID: CXConstant.NATIVEADD_UNITI_ID, targeting: targeting)
     }
 
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.products = CXDBSettings.getProductsWithCategory(self.productCategory)
-        self.customizeHeaderView()
-        self.customizeMainView()
+   
 
     }
     
     func customizeHeaderView() {
-        self.navigationController?.navigationBar.translucent = false;
+        self.navigationController?.navigationBar.isTranslucent = false;
         self.navigationController?.navigationBar.barTintColor = UIColor.navBarColor()
         
         let lImage = UIImage(named: "left_aarow.png") as UIImage?
-        let button = UIButton (type: UIButtonType.Custom) as UIButton
-        button.frame = CGRectMake(0, 0, 40, 40)
-        button.setImage(lImage, forState: .Normal)
-        button.backgroundColor = UIColor.clearColor()
-        button.addTarget(self, action: #selector(CXProductsViewController.backAction), forControlEvents: .TouchUpInside)
+        let button = UIButton (type: UIButtonType.custom) as UIButton
+        button.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+        button.setImage(lImage, for: UIControlState())
+        button.backgroundColor = UIColor.clear
+        button.addTarget(self, action: #selector(CXProductsViewController.backAction), for: .touchUpInside)
         
-        let navSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem:UIBarButtonSystemItem.FixedSpace,target: nil, action: nil)
+        let navSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem:UIBarButtonSystemItem.fixedSpace,target: nil, action: nil)
         navSpacer.width = -16;
         self.navigationItem.leftBarButtonItems = [navSpacer,UIBarButtonItem.init(customView: button)]
         
         let tLabel : UILabel = UILabel()
-        tLabel.frame = CGRectMake(0, 0, 120, 40);
-        tLabel.backgroundColor = UIColor.clearColor()
+        tLabel.frame = CGRect(x: 0, y: 0, width: 120, height: 40);
+        tLabel.backgroundColor = UIColor.clear
         tLabel.font = UIFont.init(name: "Roboto-Bold", size: 18)
         tLabel.text = self.productCategory.name
-        tLabel.textAlignment = NSTextAlignment.Center
-        tLabel.textColor = UIColor.whiteColor()
+        tLabel.textAlignment = NSTextAlignment.center
+        tLabel.textColor = UIColor.white
         self.navigationItem.titleView = tLabel
         
     }
@@ -144,41 +143,41 @@ class CXProductsViewController: UIViewController,UITableViewDelegate,UITableView
     }
     
     func customizeMainView() {
-        let screenWidth = UIScreen.mainScreen().bounds.size.width
-        self.productsTableView = self.customizeTableView(CGRectMake(0, 0,screenWidth, self.view.frame.size.height))
+        let screenWidth = UIScreen.main.bounds.size.width
+        self.productsTableView = self.customizeTableView(CGRect(x: 0, y: 0,width: screenWidth, height: self.view.frame.size.height))
         self.view.addSubview(self.productsTableView)
-        self.setUpmopubs()
+//        self.setUpmopubs()
 
     }
 
-    func customizeTableView(tFrame: CGRect) -> UITableView {
+    func customizeTableView(_ tFrame: CGRect) -> UITableView {
         let tabView:UITableView = UITableView.init(frame: tFrame)
         tabView.delegate = self
         tabView.dataSource = self
-        tabView.backgroundColor = UIColor.clearColor()
-        tabView.registerClass(CXProcuctTableViewCell.self, forCellReuseIdentifier: "ProductCell")
-        tabView.separatorStyle = UITableViewCellSeparatorStyle.None
+        tabView.backgroundColor = UIColor.clear
+        tabView.register(CXProcuctTableViewCell.self, forCellReuseIdentifier: "ProductCell")
+        tabView.separatorStyle = UITableViewCellSeparatorStyle.none
         tabView.contentInset = UIEdgeInsetsMake(0, 0,30, 0)
         tabView.rowHeight = UITableViewAutomaticDimension
         tabView.contentInset = UIEdgeInsetsMake(0, 0, 65, 0)
         tabView.showsVerticalScrollIndicator = false
-        tabView.scrollEnabled = true
+        tabView.isScrollEnabled = true
         return tabView;
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.products.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let identifier = "ProductCell"
         //        let cell = tableView.mp_dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! UITableViewCell
 
-        var cell: CXProcuctTableViewCell! =  tableView.mp_dequeueReusableCellWithIdentifier("ProductCell", forIndexPath: indexPath) as? CXProcuctTableViewCell
+        var cell: CXProcuctTableViewCell! =  tableView.mp_dequeueReusableCell(withIdentifier: "ProductCell", for: indexPath) as? CXProcuctTableViewCell
         if cell == nil {
-            tableView.registerNib(UINib(nibName: "CXProcuctTableViewCell", bundle: nil), forCellReuseIdentifier: identifier)
-            cell = tableView.dequeueReusableCellWithIdentifier(identifier) as? CXProcuctTableViewCell
+            tableView.register(UINib(nibName: "CXProcuctTableViewCell", bundle: nil), forCellReuseIdentifier: identifier)
+            cell = tableView.dequeueReusableCell(withIdentifier: identifier) as? CXProcuctTableViewCell
             cell.backgroundColor = UIColor.smBackgroundColor()
         }
         let produkt = self.products[indexPath.row] as? CX_Products
@@ -186,48 +185,47 @@ class CXProductsViewController: UIViewController,UITableViewDelegate,UITableView
         return cell;
     }
     
-     func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
-        if tableView.editing {return .Delete}
-        return .None
+     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+        if tableView.isEditing {return .delete}
+        return .none
     }
     
     /*
      
      */
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return CXConstant.PRODUCT_CELL_HEIGHT;
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let product: CX_Products = self.products[indexPath.row] as! CX_Products
-       // let detailView = SMDetailViewController.init()
-       // detailView.product = product
-       // detailView.productCategory = self.productCategory
+        let detailView = SMDetailViewController.init()
+        detailView.product = product
+        detailView.productCategory = self.productCategory
         
-        let detailView = ViewPagerCntl.init()
+       /* let detailView = ViewPagerCntl.init()
         detailView.product = product
         detailView.itemIndex = indexPath.row
-        detailView.productCategory = self.productCategory
+        detailView.productCategory = self.productCategory*/
         self.navigationController?.pushViewController(detailView, animated: true)
 
 
     }
     
-    func configureProductCell(cell: CXProcuctTableViewCell,product:CX_Products) {
+    func configureProductCell(_ cell: CXProcuctTableViewCell,product:CX_Products) {
         let prodImage :String = self.getInitialAttachmentProduct(product)
-        
-        cell.productImageView.sd_setImageWithURL(NSURL(string:prodImage)!, placeholderImage: UIImage(named: "smlogo.png"), options:SDWebImageOptions.RefreshCached)
+        cell.productImageView.sd_setImage(with: URL(string:prodImage)!, placeholderImage: UIImage(named: "smlogo.png"), options:SDWebImageOptions.refreshCached)
         cell.productDesc.text =  CXDBSettings.getProductInfo(product)
     }
 
     
-    func getInitialAttachmentProduct(product: CX_Products) -> String {
+    func getInitialAttachmentProduct(_ product: CX_Products) -> String {
         let attachements : NSArray = CXDBSettings.getProductAttachments(product)
         var prodImgUrl = ""
         if attachements.count > 0 {
-            let attachment:NSDictionary = attachements.objectAtIndex(0) as! NSDictionary
-            prodImgUrl = attachment.valueForKey("URL") as! String
+            let attachment:NSDictionary = attachements.object(at: 0) as! NSDictionary
+            prodImgUrl = attachment.value(forKey: "URL") as! String
         }
         return prodImgUrl
     }

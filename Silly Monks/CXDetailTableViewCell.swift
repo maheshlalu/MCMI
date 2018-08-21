@@ -12,6 +12,7 @@ class CXDetailTableViewCell: UITableViewCell {
     
     var bgView : UIView!
     var headerLbl: UILabel!
+    var headerBtn: UIButton!
     var detailCollectionView: UICollectionView!
     var productCategories:CX_Product_Category!
     
@@ -20,7 +21,7 @@ class CXDetailTableViewCell: UITableViewCell {
         // Initialization code
     }
     
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         
         // Configure the view for the selected state
@@ -29,10 +30,11 @@ class CXDetailTableViewCell: UITableViewCell {
     override init(style : UITableViewCellStyle, reuseIdentifier:String?){
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.backgroundColor = UIColor.smBackgroundColor()
-        self.backgroundView?.backgroundColor = UIColor.clearColor()
-        self.selectionStyle = UITableViewCellSelectionStyle.None
+        self.backgroundView?.backgroundColor = UIColor.clear
+        self.selectionStyle = UITableViewCellSelectionStyle.none
         self.customizeBgView()
         self.customizeDetailCollectionView()
+       
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -44,7 +46,7 @@ class CXDetailTableViewCell: UITableViewCell {
     }
     
     func customizeBgView(){
-        let cellWidth = UIScreen.mainScreen().bounds.size.width
+        let cellWidth = UIScreen.main.bounds.size.width
         let viewHeight:CGFloat = CXConstant.RELATED_ARTICLES_CELL_HEIGHT-10
         //        var cellFrame = CGRectMake(0, 0, self.frame.size.width, viewHeight)
         //
@@ -56,38 +58,43 @@ class CXDetailTableViewCell: UITableViewCell {
         //            cellFrame = CGRectMake(5, 5, CXConstant.DetailTableView_Width, viewHeight)
         //        }
         
-        let cellFrame = CGRectMake(10, 0, cellWidth-20, viewHeight-25)
+        let cellFrame = CGRect(x: 10, y: 0, width: cellWidth-20, height: viewHeight-25)
         
         
         self.bgView = UIView.init(frame: cellFrame)//CXConstant.DetailTableView_Width
-        self.bgView.layer.borderColor = UIColor.grayColor().CGColor
+        self.bgView.layer.borderColor = UIColor.gray.cgColor
         self.bgView.layer.borderWidth = 1.0
-        self.bgView.backgroundColor = UIColor.whiteColor()//UIColor.whiteColor()
+        self.bgView.backgroundColor = UIColor.white//UIColor.whiteColor()
         self.addSubview(self.bgView)
         
-        self.headerLbl = UILabel.init(frame: CGRectMake(0, 0, self.bgView.frame.size.width, 30))
+        self.headerLbl = UILabel.init(frame: CGRect(x: 0, y: 0, width: self.bgView.frame.size.width, height: 30))
         self.headerLbl.font = UIFont(name:"Roboto-Bold", size:16)
-        self.headerLbl.textAlignment = NSTextAlignment.Center
+        self.headerLbl.textAlignment = NSTextAlignment.center
         self.headerLbl.textColor = CXConstant.titleLabelColor
         self.bgView.addSubview(self.headerLbl)
+        
+        self.headerBtn = UIButton.init(frame: CGRect(x: 0, y: 0, width: self.bgView.frame.size.width, height: 30))
+        self.headerBtn.backgroundColor = UIColor.clear
+        self.bgView.addSubview(self.headerBtn)
     }
     
+    
     func customizeDetailCollectionView(){
-        let cellWidth = UIScreen.mainScreen().bounds.size.width
+        let cellWidth = UIScreen.main.bounds.size.width
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 0, left:2, bottom:0, right: 2)
         layout.minimumInteritemSpacing = -8
         layout.minimumLineSpacing = 2.2
         layout.itemSize = CXConstant.DetailCollectionCellSize
-        self.detailCollectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: layout)
+        self.detailCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
         self.detailCollectionView.showsHorizontalScrollIndicator = false
-        self.detailCollectionView.frame = CGRectMake(2, 30, cellWidth-4, CXConstant.DetailCollectionViewFrame.size.height-35)
+        self.detailCollectionView.frame = CGRect(x: 2, y: 30, width: cellWidth-4, height: CXConstant.DetailCollectionViewFrame.size.height-35)
         
         // CXConstant.DetailCollectionViewFrame
-        layout.scrollDirection = UICollectionViewScrollDirection.Horizontal
-        self.detailCollectionView.registerClass(CXDetailCollectionViewCell.self, forCellWithReuseIdentifier: "DetailCollectionViewCell")
-        self.detailCollectionView.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: "CollectionCellID")
-        self.detailCollectionView.backgroundColor = UIColor.clearColor()
+        layout.scrollDirection = UICollectionViewScrollDirection.horizontal
+        self.detailCollectionView.register(CXDetailCollectionViewCell.self, forCellWithReuseIdentifier: "DetailCollectionViewCell")
+        self.detailCollectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "CollectionCellID")
+        self.detailCollectionView.backgroundColor = UIColor.clear
         self.addSubview(self.detailCollectionView)
     }
 }
@@ -104,10 +111,11 @@ extension CXDetailTableViewCell {
         }
     }
     
-    func setCollectionViewDataSourceDelegate<D: protocol<UICollectionViewDataSource, UICollectionViewDelegate>>(dataSourceDelegate: D, forRow row: Int) {
+    func setCollectionViewDataSourceDelegate<D: UICollectionViewDataSource & UICollectionViewDelegate>(_ dataSourceDelegate: D, forRow row: Int) {
         self.detailCollectionView.delegate = dataSourceDelegate
         self.detailCollectionView.dataSource = dataSourceDelegate
         self.detailCollectionView.tag = row
+        self.headerBtn.tag = detailCollectionView.tag
         self.detailCollectionView.reloadData()
     }
     

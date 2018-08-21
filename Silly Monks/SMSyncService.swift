@@ -10,12 +10,12 @@ import UIKit
 
 private var _SingletonSharedInstance:SMSyncService! = SMSyncService()
 
-public class SMSyncService: NSObject , NSURLSessionDelegate{
+open class SMSyncService: NSObject , URLSessionDelegate{
     class var sharedInstance : SMSyncService {
         return _SingletonSharedInstance
     }
     
-    private override init() {
+    fileprivate override init() {
         
     }
     
@@ -23,33 +23,27 @@ public class SMSyncService: NSObject , NSURLSessionDelegate{
         _SingletonSharedInstance = nil
     }
     
-    public func startSyncProcessWithUrl(iUrl:String, completion:(responseDict:NSDictionary) -> Void) {
-        print("Requested Url:\(iUrl)")
+    open func startSyncProcessWithUrl(_ iUrl:String, completion:@escaping (_ responseDict:NSDictionary) -> Void) {
+       // print("Requested Url:\(iUrl)")
         let urlPath: String = iUrl
-        let url: NSURL = NSURL(string: urlPath)!
-        let request1: NSURLRequest = NSURLRequest(URL: url)
+        let url: URL = URL(string: urlPath)!
+        let request1: URLRequest = URLRequest(url: url)
         //let session = NSURLSession.sharedSession()
         
-        let urlconfig = NSURLSessionConfiguration.defaultSessionConfiguration()
-        urlconfig.timeoutIntervalForRequest = 30
-        urlconfig.timeoutIntervalForResource = 60
-        let session = NSURLSession(configuration: urlconfig, delegate: self, delegateQueue: nil)
-        
-        let task = session.dataTaskWithRequest(request1) { (resData:NSData?, response:NSURLResponse?, sError:NSError?) -> Void in
+        URLSession.shared.dataTask(with: request1) { (resData, response, sError) in
             var jsonData : NSDictionary = NSDictionary()
             if sError == nil && resData != nil && response != nil {
                 do {
-                    jsonData = try NSJSONSerialization.JSONObjectWithData(resData!, options:NSJSONReadingOptions.MutableContainers ) as! NSDictionary
+                    jsonData = try JSONSerialization.jsonObject(with: resData!, options:JSONSerialization.ReadingOptions.mutableContainers ) as! NSDictionary
                 } catch {
-                    print("Error in parsing\(sError?.description)")
+                    //print("Error in parsing\(sError?.description)")
                 }
                 
-                completion(responseDict: jsonData)
+                completion(jsonData)
             } else {
-                print("Error in parsing\(sError?.description)")
+                //print("Error in parsing\(sError?.description)")
             }
-        }
-        task.resume()
+        }.resume()
     }
         
 //    public func startSyncWithUrl(cUrl:String) {
@@ -70,32 +64,32 @@ public class SMSyncService: NSObject , NSURLSessionDelegate{
 //    }
     
     
-    public func checkProductCategoryCountSyncProcessWithUrl(iUrl:String, completion:(responseDict:NSMutableArray) -> Void) {
-        print("Requested Url:\(iUrl)")
+    open func checkProductCategoryCountSyncProcessWithUrl(_ iUrl:String, completion:@escaping (_ responseDict:NSMutableArray) -> Void) {
+       // print("Requested Url:\(iUrl)")
         let urlPath: String = iUrl
-        let url: NSURL = NSURL(string: urlPath)!
-        let request1: NSURLRequest = NSURLRequest(URL: url)
+        let url: URL = URL(string: urlPath)!
+        let request1: URLRequest = URLRequest(url: url)
         //let session = NSURLSession.sharedSession()
         
-        let urlconfig = NSURLSessionConfiguration.defaultSessionConfiguration()
+        let urlconfig = URLSessionConfiguration.default
         urlconfig.timeoutIntervalForRequest = 30
         urlconfig.timeoutIntervalForResource = 60
-        let session = NSURLSession(configuration: urlconfig, delegate: self, delegateQueue: nil)
+        let session = URLSession(configuration: urlconfig, delegate: self, delegateQueue: nil)
         
-        let task = session.dataTaskWithRequest(request1) { (resData:NSData?, response:NSURLResponse?, sError:NSError?) -> Void in
+        let task = session.dataTask(with: request1, completionHandler: { (resData:Data?, response:URLResponse?, sError:NSError?) -> Void in
             var jsonData : NSMutableArray = NSMutableArray()
             if sError == nil && resData != nil && response != nil {
                 do {
-                    jsonData = try NSJSONSerialization.JSONObjectWithData(resData!, options:NSJSONReadingOptions.MutableContainers ) as! NSMutableArray
+                    jsonData = try JSONSerialization.jsonObject(with: resData!, options:JSONSerialization.ReadingOptions.mutableContainers ) as! NSMutableArray
                 } catch {
                     print("Error in parsing\(sError?.description)")
                 }
                 
-                completion(responseDict: jsonData)
+                completion(jsonData)
             } else {
                 print("Error in parsing\(sError?.description)")
             }
-        }
+        } as! (Data?, URLResponse?, Error?) -> Void) 
         task.resume()
     }
 
